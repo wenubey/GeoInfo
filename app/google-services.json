@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486266905900",
+    "project_id": "countryapp-9c5dc",
+    "storage_bucket": "countryapp-9c5dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486266905900:android:9240ab5882891946e2f889",
+        "android_client_info": {
+          "package_name": "com.wenubey.countryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyUsVyoxzf2mVQa292M1SHD56NL8eKjRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
