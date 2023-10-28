@@ -18,14 +18,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AddCircle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.facebook.CallbackManager
@@ -36,19 +33,23 @@ import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.wenubey.countryapp.R
+import com.wenubey.countryapp.BuildConfig
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CountryAppTheme {
+                val xd = BuildConfig.FACEBOOK_APP_ID
                 // A surface container using the 'background' color from the theme
                 SignInScreen {
+                    Log.i("TAG", "appId: $xd")
                     Log.i("TAG", "onCreate: Sign In successfully")
+
                 }
             }
         }

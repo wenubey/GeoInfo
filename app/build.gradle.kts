@@ -1,8 +1,13 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
+
+
 
 android {
     namespace = "com.wenubey.countryapp"
@@ -19,7 +24,17 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Get the API keys from local.properties
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "FACEBOOK_APP_ID", "\"${properties.getProperty("FACEBOOK_APP_ID")}\"")
+        buildConfigField("String", "FB_LOGIN_PROTOCOL_SCHEMA", "\"${properties.getProperty("FB_LOGIN_PROTOCOL_SCHEMA")}\"")
+        buildConfigField("String", "FACEBOOK_CLIENT_TOKEN", "\"${properties.getProperty("FACEBOOK_CLIENT_TOKEN")}\"")
     }
+
+
 
     buildTypes {
         release {
@@ -38,6 +53,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -74,7 +90,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation ("com.facebook.android:facebook-login:latest.release")
-
+    implementation("com.facebook.android:facebook-login:latest.release")
 
 }
