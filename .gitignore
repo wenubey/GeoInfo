@@ -1,5 +1,4 @@
 *.iml
-.env
 .gradle
 /local.properties
 /.idea/caches
@@ -14,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+# .gitignore
+
+.env
