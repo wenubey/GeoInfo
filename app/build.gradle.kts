@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.wenubey.countryapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.wenubey.countryapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -74,5 +74,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation ("com.facebook.android:facebook-login:latest.release")
+
 
 }
