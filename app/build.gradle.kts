@@ -92,4 +92,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.facebook.android:facebook-login:latest.release")
 
+    //Google Maps
+    implementation ("com.google.maps.android:maps-compose:1.0.0")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
 }
