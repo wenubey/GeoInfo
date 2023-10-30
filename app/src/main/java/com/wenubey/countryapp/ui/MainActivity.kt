@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun GoogleMaps(geocoder: Geocoder) {
-
+    // Warsaw Example
     val warsaw = LatLng(52.237049, 21.017532)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(warsaw, 10f)
