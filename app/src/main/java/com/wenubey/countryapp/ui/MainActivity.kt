@@ -16,17 +16,21 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import java.util.Locale
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CountryAppTheme {
+
                 val geocoder = Geocoder(this, Locale.getDefault())
                 GoogleMaps(geocoder = geocoder)
+
             }
         }
     }
 }
+
 
 
 
@@ -75,5 +79,3 @@ fun Geocoder.getCountryName(
         address(null)
     }
 }
-
-

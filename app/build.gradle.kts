@@ -1,10 +1,9 @@
-import java.util.Properties
 
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id ("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 
@@ -25,13 +24,6 @@ android {
             useSupportLibrary = true
         }
 
-        // Get the API keys from local.properties
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-
-        buildConfigField("String", "FACEBOOK_APP_ID", "\"${properties.getProperty("FACEBOOK_APP_ID")}\"")
-        buildConfigField("String", "FB_LOGIN_PROTOCOL_SCHEMA", "\"${properties.getProperty("FB_LOGIN_PROTOCOL_SCHEMA")}\"")
-        buildConfigField("String", "FACEBOOK_CLIENT_TOKEN", "\"${properties.getProperty("FACEBOOK_CLIENT_TOKEN")}\"")
     }
 
 
@@ -88,13 +80,14 @@ dependencies {
     //Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.4.0"))
     implementation("com.google.firebase:firebase-auth")
-    implementation ("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Facebook for login
     implementation("com.facebook.android:facebook-login:latest.release")
 
     //Google Maps
     implementation ("com.google.maps.android:maps-compose:1.0.0")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
-
 }
