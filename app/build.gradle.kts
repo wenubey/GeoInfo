@@ -90,4 +90,20 @@ dependencies {
     implementation ("com.google.maps.android:maps-compose:1.0.0")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // Dependency Injection
+    val koinVersion = "3.5.0"
+    implementation ("io.insert-koin:koin-androidx-compose:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+
+    //Room
+    val roomVersion = "2.6.0"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+
+
+    //Gson
+    implementation ("com.google.code.gson:gson:2.10.1")
+    
 }

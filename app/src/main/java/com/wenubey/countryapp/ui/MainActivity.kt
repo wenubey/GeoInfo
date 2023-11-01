@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.ui
 
 import android.location.Geocoder
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -14,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.getCountryName
 import java.util.Locale
 
 
@@ -59,23 +59,3 @@ fun GoogleMaps(geocoder: Geocoder) {
     }
 }
 
-
-@Suppress("DEPRECATION")
-fun Geocoder.getCountryName(
-    latitude: Double,
-    longitude: Double,
-    address: (countryName: String?) -> Unit
-) {
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getFromLocation(latitude, longitude, 1) { address(it.firstOrNull()?.countryName) }
-        return
-    }
-
-    try {
-        address(getFromLocation(latitude, longitude, 1)?.firstOrNull()?.countryName)
-    } catch(e: Exception) {
-        //will catch if there is an internet problem
-        address(null)
-    }
-}
