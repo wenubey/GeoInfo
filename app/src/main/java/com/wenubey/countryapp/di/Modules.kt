@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.di
 
 import androidx.room.Room
-import com.wenubey.countryapp.data.local.CountryCacheDao
 import com.wenubey.countryapp.data.local.CountryDatabase
 import com.wenubey.countryapp.utils.Constants.DATABASE_NAME
 import org.koin.android.ext.koin.androidApplication
@@ -17,7 +16,8 @@ val appModules = module {
     }
     single {
         val database = get<CountryDatabase>()
-        database.countryCacheDo
+        database.countryCacheDao
+        database.countryUserFavouriteDao
     }
 }
 
