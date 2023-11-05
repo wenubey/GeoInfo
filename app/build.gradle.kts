@@ -95,6 +95,7 @@ dependencies {
     val koinVersion = "3.5.0"
     implementation ("io.insert-koin:koin-androidx-compose:$koinVersion")
     implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation ("io.insert-koin:koin-core:$koinVersion")
 
     //Room
     val roomVersion = "2.6.0"
@@ -102,8 +103,13 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-
     //Gson
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    // Retrofit
+    val retrofitVersion = "2.9.0"
+    implementation ("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation ("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
     
 }

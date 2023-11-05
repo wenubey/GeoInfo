@@ -1,7 +1,7 @@
 package com.wenubey.countryapp
 
 import android.app.Application
-import com.wenubey.countryapp.di.appModules
+import com.wenubey.countryapp.di.injectFeature
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +14,7 @@ class CountryApp: Application() {
         startKoin {
             androidLogger()
             androidContext(this@CountryApp)
-            modules(appModules)
+            injectFeature()
         }
     }
 }

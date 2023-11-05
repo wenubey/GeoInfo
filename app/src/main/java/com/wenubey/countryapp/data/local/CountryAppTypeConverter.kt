@@ -3,11 +3,12 @@ package com.wenubey.countryapp.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.wenubey.countryapp.data.local.entities.CoatOfArmsEntity
+import com.wenubey.countryapp.data.local.entities.CountryNameEntity
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
 import com.wenubey.countryapp.data.local.entities.FlagEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
 import com.wenubey.countryapp.data.local.entities.LanguageEntity
+import com.wenubey.countryapp.data.local.entities.NativeNameEntity
 
 class CountryAppTypeConverter {
 
@@ -18,6 +19,22 @@ class CountryAppTypeConverter {
     private fun <T> toJson(data: T?): String? {
         return data?.let { Gson().toJson(it) }
     }
+
+    @TypeConverter
+    fun nameFromJson(json: String?): CountryNameEntity? =
+        fromJson(json, object : TypeToken<CountryNameEntity>() {})
+
+    @TypeConverter
+    fun nameToJson(countryNameEntity: CountryNameEntity?): String? =
+        toJson(countryNameEntity)
+
+    @TypeConverter
+    fun nativeNameFromJson(json: String?): NativeNameEntity? =
+        fromJson(json, object : TypeToken<NativeNameEntity>() {})
+
+    @TypeConverter
+    fun nativeNameToJson(nativeNameEntity: NativeNameEntity?): String? =
+        toJson(nativeNameEntity)
 
     @TypeConverter
     fun currencyFromJson(json: String?): CurrencyEntity? =
@@ -42,14 +59,6 @@ class CountryAppTypeConverter {
     @TypeConverter
     fun flagToJson(flagEntity: FlagEntity?): String? =
         toJson(flagEntity)
-
-    @TypeConverter
-    fun coatOfArmsFromJson(json: String?): CoatOfArmsEntity? =
-        fromJson(json, object : TypeToken<CoatOfArmsEntity>() {})
-
-    @TypeConverter
-    fun coatOfArmsToJson(coatOfArmsEntity: CoatOfArmsEntity?): String? =
-        toJson(coatOfArmsEntity)
 
     @TypeConverter
     fun historyFromJson(json: String?): HistoryEntity? =
