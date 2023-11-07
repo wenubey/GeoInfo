@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CountryRepository {
 
-    suspend fun getAllCountries(fetchFromRemote: Boolean): Flow<Resource<List<Country>>>
+    suspend fun getAllCountries(fetchFromRemote: Boolean): Result<List<Country>>
 
-    suspend fun getCountry(fetchFromRemote: Boolean, countryName: String): Flow<Resource<Country>>
+    suspend fun getCountry(fetchFromRemote: Boolean = false, countryName: String): Result<Country>
 }

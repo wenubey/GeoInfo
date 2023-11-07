@@ -12,5 +12,8 @@ object Constants {
     const val BASE_URL_HISTORIES = "https://api.api-ninjas.com/v1/"
 
     // LOG CONSTANTS
-    const val TAG = "countriesTAG"
+    const val TAG = "TAG"
+
+    // ERROR MESSAGES
+    const val UNKNOWN_ERROR = "An unknown error occurred"
 }

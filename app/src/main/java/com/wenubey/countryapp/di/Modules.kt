@@ -6,10 +6,12 @@ import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.data.repository.CountryRepositoryImpl
+import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.utils.Constants.BASE_URL_COUNTRIES
 import com.wenubey.countryapp.utils.Constants.BASE_URL_HISTORIES
 import com.wenubey.countryapp.utils.Constants.DATABASE_NAME
 import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -36,7 +38,7 @@ val databaseModule = module {
             androidApplication(),
             CountryDatabase::class.java,
             DATABASE_NAME
-        )
+        ).build()
     }
     factory { get<CountryDatabase>().countryCacheDao }
     factory { get<CountryDatabase>().countryUserFavouriteDao }
@@ -46,24 +48,25 @@ val repositoryModule = module {
     single<CountryRepository> { CountryRepositoryImpl(get(), get(), get(), get()) }
 }
 
-val viewModelModule = module {
 
+val viewModelModule = module {
+    viewModel { CountryViewModel(get()) }
 }
 
 val retrofitModules = module {
-    single {
-        val countryRetrofit = Retrofit.Builder()
+    single<CountryInfoApi> {
+         Retrofit.Builder()
             .baseUrl(BASE_URL_COUNTRIES)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-            .create<CountryInfoApi>()
+            .create()
     }
-    single {
-        val historyRetrofit = Retrofit.Builder()
+    single<CountryHistoryApi> {
+        Retrofit.Builder()
             .baseUrl(BASE_URL_HISTORIES)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
-            .create<CountryHistoryApi>()
+            .create()
     }
 }
 

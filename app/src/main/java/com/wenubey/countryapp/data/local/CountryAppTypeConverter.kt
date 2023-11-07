@@ -3,11 +3,8 @@ package com.wenubey.countryapp.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.wenubey.countryapp.data.local.entities.CountryNameEntity
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
-import com.wenubey.countryapp.data.local.entities.FlagEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
-import com.wenubey.countryapp.data.local.entities.LanguageEntity
 import com.wenubey.countryapp.data.local.entities.NativeNameEntity
 
 class CountryAppTypeConverter {
@@ -21,50 +18,50 @@ class CountryAppTypeConverter {
     }
 
     @TypeConverter
-    fun nameFromJson(json: String?): CountryNameEntity? =
-        fromJson(json, object : TypeToken<CountryNameEntity>() {})
+    fun mapStringsFromJson(json: String?): Map<String, String>? =
+        fromJson(json, object : TypeToken<Map<String,String>>() {})
 
     @TypeConverter
-    fun nameToJson(countryNameEntity: CountryNameEntity?): String? =
-        toJson(countryNameEntity)
+    fun mapStringsToJson(data: Map<String,String>?): String? =
+        toJson(data)
 
     @TypeConverter
-    fun nativeNameFromJson(json: String?): NativeNameEntity? =
-        fromJson(json, object : TypeToken<NativeNameEntity>() {})
+    fun nativeNameFromJson(json: String?): Map<String,NativeNameEntity>? =
+        fromJson(json, object : TypeToken<Map<String, NativeNameEntity>>() {})
 
     @TypeConverter
-    fun nativeNameToJson(nativeNameEntity: NativeNameEntity?): String? =
-        toJson(nativeNameEntity)
+    fun nativeNameToJson(nativeName: Map<String, NativeNameEntity>?): String? =
+        toJson(nativeName)
 
     @TypeConverter
-    fun currencyFromJson(json: String?): CurrencyEntity? =
-        fromJson(json, object : TypeToken<CurrencyEntity>() {})
+    fun latLngFromJson(json: String?): List<Double>? =
+        fromJson(json, object : TypeToken<List<Double>>() {})
 
     @TypeConverter
-    fun currencyToJson(currencyEntity: CurrencyEntity?): String? =
+    fun latLngToJson(latLng: List<Double>?): String? =
+        toJson(latLng)
+
+    @TypeConverter
+    fun currencyFromJson(json: String?): Map<String,CurrencyEntity>? =
+        fromJson(json, object : TypeToken<Map<String,CurrencyEntity>>() {})
+
+    @TypeConverter
+    fun currencyToJson(currencyEntity: Map<String,CurrencyEntity>?): String? =
         toJson(currencyEntity)
 
     @TypeConverter
-    fun languageFromJson(json: String?): LanguageEntity? =
-        fromJson(json, object : TypeToken<LanguageEntity>() {})
+    fun historyFromJson(json: String?): List<HistoryEntity>? =
+        fromJson(json, object : TypeToken<List<HistoryEntity>>() {})
 
     @TypeConverter
-    fun languageToJson(languageEntity: LanguageEntity?): String? =
-        toJson(languageEntity)
-
-    @TypeConverter
-    fun flagFromJson(json: String?): FlagEntity? =
-        fromJson(json, object : TypeToken<FlagEntity>() {})
-
-    @TypeConverter
-    fun flagToJson(flagEntity: FlagEntity?): String? =
-        toJson(flagEntity)
-
-    @TypeConverter
-    fun historyFromJson(json: String?): HistoryEntity? =
-        fromJson(json, object : TypeToken<HistoryEntity>() {})
-
-    @TypeConverter
-    fun historyToJson(historyEntity: HistoryEntity?): String? =
+    fun historyToJson(historyEntity: List<HistoryEntity>?): String? =
         toJson(historyEntity)
+
+    @TypeConverter
+    fun capitalFromJson(json: String?): List<String>? =
+        fromJson(json, object :TypeToken<List<String>>() {})
+
+    @TypeConverter
+    fun capitalToJson(capital: List<String>?): String? =
+        toJson(capital)
 }

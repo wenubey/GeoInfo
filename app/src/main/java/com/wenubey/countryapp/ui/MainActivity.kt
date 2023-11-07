@@ -8,54 +8,32 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.wenubey.countryapp.ui.country.CountryDataState
+import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.getCountryName
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 
 class MainActivity : ComponentActivity() {
+    private val countryViewModel: CountryViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             CountryAppTheme {
 
-                val geocoder = Geocoder(this, Locale.getDefault())
-                GoogleMaps(geocoder = geocoder)
-
             }
         }
     }
 }
 
-
-
-
-@Composable
-fun GoogleMaps(geocoder: Geocoder) {
-    // Warsaw Example
-    val warsaw = LatLng(52.237049, 21.017532)
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(warsaw, 10f)
-    }
-
-
-    GoogleMap(
-        modifier = Modifier
-            .fillMaxSize(),
-        cameraPositionState = cameraPositionState,
-        onMapClick = { latLng ->
-            geocoder.getCountryName(latLng.latitude,latLng.longitude) { countryName ->
-                if (countryName != null) {
-                    Log.i("TAG", "GoogleMaps: Country Name: $countryName")
-                }
-            }
-        }
-    ) {
-
-    }
-}
 
