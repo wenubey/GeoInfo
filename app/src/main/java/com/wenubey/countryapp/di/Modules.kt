@@ -1,6 +1,7 @@
 package com.wenubey.countryapp.di
 
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.wenubey.countryapp.data.local.CountryDatabase
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
@@ -27,7 +28,8 @@ private val loadFeature by lazy {
             databaseModule,
             repositoryModule,
             viewModelModule,
-            retrofitModules
+            retrofitModules,
+            authModule
         )
     )
 }
@@ -46,6 +48,10 @@ val databaseModule = module {
 
 val repositoryModule = module {
     single<CountryRepository> { CountryRepositoryImpl(get(), get(), get(), get()) }
+}
+
+val authModule = module {
+    single { FirebaseAuth.getInstance() }
 }
 
 

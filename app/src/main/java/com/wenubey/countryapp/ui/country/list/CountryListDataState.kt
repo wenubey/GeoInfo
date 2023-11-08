@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.country
+package com.wenubey.countryapp.ui.country.list
 
 import com.wenubey.countryapp.domain.model.Country
 

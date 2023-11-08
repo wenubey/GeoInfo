@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenubey.countryapp.domain.repository.CountryRepository
+import com.wenubey.countryapp.ui.country.detail.CountryDataState
+import com.wenubey.countryapp.ui.country.list.CountryListDataState
+import com.wenubey.countryapp.ui.country.list.CountryListEvent
 import com.wenubey.countryapp.utils.Constants.UNKNOWN_ERROR
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
