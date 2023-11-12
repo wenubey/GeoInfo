@@ -72,6 +72,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-compose")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose")
     implementation ("androidx.navigation:navigation-compose:2.7.5")
+    implementation ("androidx.compose.material:material-icons-extended")
 
 
     testImplementation("junit:junit:4.13.2")
@@ -87,6 +88,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    val playServicesAuthVersion = "20.7.0"
+    implementation ("com.google.android.gms:play-services-auth:$playServicesAuthVersion")
 
     //Facebook for login
     implementation("com.facebook.android:facebook-login:16.2.0")

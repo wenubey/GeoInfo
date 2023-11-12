@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "486266905900-tn1nffgjo26h6ar2hiahh5adbdc03tv9.apps.googleusercontent.com",
+          "client_id": "486266905900-v1qvg9aja0tlkfrg5rtn0nr8hr16hosg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.wenubey.countryapp",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "486266905900-clktgctagb6loc1k7boegc1puu3bnbbf.apps.googleusercontent.com",
+          "client_id": "486266905900-k06iv9cpqjb0ekjjngmrtmc68gpqvr8j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "486266905900-clktgctagb6loc1k7boegc1puu3bnbbf.apps.googleusercontent.com",
+              "client_id": "486266905900-k06iv9cpqjb0ekjjngmrtmc68gpqvr8j.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

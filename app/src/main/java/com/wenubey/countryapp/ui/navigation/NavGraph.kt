@@ -4,23 +4,34 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.wenubey.countryapp.ui.auth.AuthScreen
-import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.auth.sign_in.SignInScreen
+import com.wenubey.countryapp.ui.auth.sign_up.SignUpScreen
+import com.wenubey.countryapp.ui.map.MapScreen
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController,
-    countryViewModel: CountryViewModel,
-    ) {
+) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.AuthScreen.route,
+        startDestination = Screen.SignInScreen.route,
     ) {
-        composable(route = Screen.AuthScreen.route) {
-            AuthScreen()
+        composable(route = Screen.SignUpScreen.route) {
+            SignUpScreen(
+                navigateBack = {
+                    navHostController.popBackStack()
+                },
+            )
+        }
+        composable(route = Screen.SignInScreen.route) {
+            SignInScreen(
+                navigateToForgotPasswordScreen = { /*TODO*/ },
+                navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
+                navigateToProfileScreen = {navHostController.navigate(Screen.MapScreen.route)},
+            )
         }
         composable(route = Screen.MapScreen.route) {
-            //MapScreen()
+            MapScreen()
         }
     }
 }

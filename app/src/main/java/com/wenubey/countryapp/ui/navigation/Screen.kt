@@ -1,9 +1,13 @@
 package com.wenubey.countryapp.ui.navigation
 
 sealed class Screen(val route: String) {
-    object AuthScreen : Screen(route = "authScreen")
+    object SignUpScreen: Screen(route = "signUpScreen")
+
+    object SignInScreen: Screen(route = "signInScreen")
 
     object MapScreen: Screen(route = "mapScreen")
+
+    object VerifyEmailScreen: Screen(route =  "verifyEmailScreen")
 
     object ListScreen: Screen(route = "listScreen")
 

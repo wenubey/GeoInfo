@@ -1,7 +1,9 @@
 package com.wenubey.countryapp.utils
 
-sealed class Resource<T>(val data: T? = null, val error: String? = null) {
-    class Success<T>(data: T?): Resource<T>(data)
-    class Error<T>(error: String?, data: T?= null): Resource<T>(data, error)
-    class Loading<T>(val isLoading: Boolean = true): Resource<T>(null)
+sealed class Resource<out T> {
+    object Loading: Resource<Nothing>()
+
+    data class Success<out T>(val data: T?): Resource<T>()
+
+    data class Error(val error: Exception): Resource<Nothing>()
 }
