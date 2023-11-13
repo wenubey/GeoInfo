@@ -20,6 +20,7 @@ import com.wenubey.countryapp.domain.repository.auth.GoogleSignInRepository
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.domain.repository.auth.TwitterAuthRepository
 import com.wenubey.countryapp.ui.auth.AuthViewModel
+import com.wenubey.countryapp.ui.auth.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.auth.sign_in.SignInViewModel
 import com.wenubey.countryapp.ui.auth.sign_up.SignUpViewModel
 import com.wenubey.countryapp.ui.country.CountryViewModel
@@ -82,6 +83,7 @@ val viewModelModules = module {
     viewModel { SignInViewModel(get(), get(), get(), get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { AuthViewModel(get()) }
+    viewModel { ProfileViewModel(get()) }
 }
 
 val retrofitModules = module {

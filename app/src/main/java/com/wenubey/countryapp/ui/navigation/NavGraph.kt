@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.wenubey.countryapp.ui.auth.email_verify.VerifyEmailScreen
 import com.wenubey.countryapp.ui.auth.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.auth.sign_up.SignUpScreen
 import com.wenubey.countryapp.ui.map.MapScreen
@@ -31,7 +32,20 @@ fun NavGraph(
             )
         }
         composable(route = Screen.MapScreen.route) {
-            MapScreen()
+            MapScreen(
+                navigateToProfileScreen = {
+                    //FIXME activate when profile screen created
+                    //navHostController.navigate(Screen.ProfileScreen.route)
+                }
+            )
+        }
+        composable(route = Screen.VerifyEmailScreen.route) {
+            VerifyEmailScreen(
+                navigateToProfileScreen = {
+                    //FIXME activate when profile screen created
+                    //navHostController.navigate(Screen.ProfileScreen.route)
+                }
+            )
         }
     }
 }

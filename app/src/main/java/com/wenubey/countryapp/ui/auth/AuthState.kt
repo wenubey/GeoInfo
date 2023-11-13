@@ -13,7 +13,7 @@ import org.koin.androidx.compose.getViewModel
 fun AuthState(
     navHostController: NavHostController
 ) {
-   val viewModel: AuthViewModel = getViewModel()
+    val viewModel: AuthViewModel = getViewModel()
     val isUserSignedOut = viewModel.getAuthState().collectAsState().value
     if (isUserSignedOut) {
         Log.i(TAG, "viewModel.isUserSignedOut: $isUserSignedOut ")
@@ -24,7 +24,7 @@ fun AuthState(
             NavigateToMapsScreen(navController = navHostController)
         } else {
             Log.i(TAG, "viewModel.isEmailNotVerified: ${viewModel.isEmailVerified}")
-            //NavigateToVerifyEmailScreen(navController = navHostController)
+            NavigateToVerifyEmailScreen(navController = navHostController)
         }
     }
 }

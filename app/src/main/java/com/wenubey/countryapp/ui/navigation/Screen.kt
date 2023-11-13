@@ -7,6 +7,8 @@ sealed class Screen(val route: String) {
 
     object MapScreen: Screen(route = "mapScreen")
 
+    object ProfileScreen: Screen(route = "profileScreen")
+
     object VerifyEmailScreen: Screen(route =  "verifyEmailScreen")
 
     object ListScreen: Screen(route = "listScreen")

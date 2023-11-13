@@ -36,6 +36,7 @@ object Constants {
     const val GOOGLE_SIGN_IN_BUTTON_DESCRIPTION = "Sign in with Google"
     const val FACEBOOK_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
     const val TWITTER_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
+    const val PROFILE_PHOTO_DESCRIPTION = "Your profile photo"
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
