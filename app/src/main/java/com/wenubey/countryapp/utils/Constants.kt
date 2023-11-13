@@ -60,6 +60,7 @@ object Constants {
     const val SIGN_IN_SCREEN_TITLE = "Sign In"
     const val PROFILE_SCREEN_TITLE = "Profile"
     const val SIGN_UP_SCREEN_TITLE = "Sign Up"
+    const val MAP_SCREEN_TITLE = "Map"
     const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
 
     // BUTTONS

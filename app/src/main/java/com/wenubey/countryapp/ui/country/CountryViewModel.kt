@@ -30,7 +30,7 @@ class CountryViewModel(
     private var searchJob: Job? = null
 
     init {
-        getAllCountries(true)
+        getAllCountries()
     }
 
     fun onEvent(event: CountryListEvent) {
@@ -38,6 +38,7 @@ class CountryViewModel(
             is CountryListEvent.Refresh -> {
                 getAllCountries(true)
             }
+
             is CountryListEvent.OnSearchQueryChange -> {
                 searchQuery.value = event.query
                 searchJob?.cancel()
@@ -45,12 +46,11 @@ class CountryViewModel(
                     // Delay for user typing time
                     delay(500L)
                     val result =
-                        repo.getCountry(fetchFromRemote = false, countryName = searchQuery.value)
-
+                        repo.getSearchedCountries(fetchFromRemote = false, countryName = event.query)
                     countryListDataState =
                         if (result.isSuccess) {
                             countryListDataState.copy(
-                                data = listOf(result.getOrThrow())
+                                countries = result.getOrNull()
                             )
                         } else if (result.isFailure) {
                             countryListDataState.copy(
@@ -69,16 +69,16 @@ class CountryViewModel(
     private fun getAllCountries(fetchFromRemote: Boolean = false) {
         viewModelScope.launch {
             val result = repo.getAllCountries(fetchFromRemote)
-            if (result.isSuccess) {
-                countryListDataState = countryListDataState.copy(
-                    data = result.getOrNull()
+            countryListDataState = if (result.isSuccess) {
+                countryListDataState.copy(
+                    countries = result.getOrNull()
                 )
             } else if (result.isFailure) {
-                countryListDataState = countryListDataState.copy(
+                countryListDataState.copy(
                     error = result.exceptionOrNull()?.message
                 )
             } else {
-                countryListDataState = countryListDataState.copy(
+                countryListDataState.copy(
                     error = UNKNOWN_ERROR
                 )
             }
@@ -91,10 +91,10 @@ class CountryViewModel(
         countryName: String
     ) {
         viewModelScope.launch {
-            val result = repo.getCountry(fetchFromRemote,countryName)
+            val result = repo.getCountry(fetchFromRemote, countryName)
             countryDataState = if (result.isSuccess) {
                 countryDataState.copy(
-                    data = result.getOrNull()
+                    country = result.getOrNull()
                 )
             } else {
                 countryDataState.copy(

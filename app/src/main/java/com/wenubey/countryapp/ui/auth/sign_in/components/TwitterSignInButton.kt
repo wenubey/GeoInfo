@@ -1,6 +1,7 @@
 package com.wenubey.countryapp.ui.auth.sign_in.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -15,10 +16,11 @@ import com.wenubey.countryapp.utils.Constants.TWITTER_SIGN_UP_BUTTON_DESCRIPTION
 
 @Composable
 fun TwitterSignInButton(
-    twitterSingUpClicked: () -> Unit
+    twitterSignInClicked: () -> Unit,
+    paddingValues: PaddingValues
 ) {
-    Button(onClick = twitterSingUpClicked) {
+    Button(onClick = twitterSignInClicked) {
         Image(painter = painterResource(id = R.drawable.ic_twitter_logo), contentDescription = TWITTER_SIGN_UP_BUTTON_DESCRIPTION)
-        Text(text = SIGN_UP_WITH_TWITTER, modifier = Modifier.padding(6.dp), fontSize = 16.sp)
+        Text(text = SIGN_UP_WITH_TWITTER, modifier = Modifier.padding(paddingValues).padding(6.dp), fontSize = 16.sp)
     }
 }

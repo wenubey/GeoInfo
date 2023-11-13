@@ -43,8 +43,8 @@ fun SignInScreen(
                 navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
                 navigateToSignUpScreen = navigateToSignUpScreen,
                 oneTapSignIn = { viewModel.oneTapSignIn() },
-                facebookSignUpClicked = { viewModel.signUpWithFacebook(activity) },
-                twitterSingUpClicked = { viewModel.signUpWithTwitter(activity) }
+                facebookSignInClicked = { viewModel.signInWithFacebook(activity) },
+                twitterSignInClicked = { viewModel.signInWithTwitter(activity) }
             )
         }
     )

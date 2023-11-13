@@ -36,8 +36,8 @@ fun SignInContent(
     navigateToForgotPasswordScreen: () -> Unit,
     navigateToSignUpScreen: () -> Unit,
     oneTapSignIn: () -> Unit,
-    facebookSignUpClicked: (View) -> Unit,
-    twitterSingUpClicked: () -> Unit,
+    facebookSignInClicked: (View) -> Unit,
+    twitterSignInClicked: () -> Unit,
 ) {
     var email by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
@@ -66,9 +66,11 @@ fun SignInContent(
         Spacer(modifier = Modifier.height(8.dp))
         GoogleSignInContent(paddingValues = paddingValues, oneTapSignIn = oneTapSignIn)
         Spacer(modifier = Modifier.height(8.dp))
-        FacebookSignInButton(facebookSignUpClicked = facebookSignUpClicked)
+        //FIXME: UI optimization
+        FacebookSignInButton(facebookSignInClicked = facebookSignInClicked, paddingValues = paddingValues)
         Spacer(modifier = Modifier.height(8.dp))
-        TwitterSignInButton(twitterSingUpClicked = twitterSingUpClicked)
+        //FIXME: UI optimization
+        TwitterSignInButton(twitterSignInClicked = twitterSignInClicked, paddingValues = paddingValues)
         Spacer(modifier = Modifier.height(8.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(

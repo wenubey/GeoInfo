@@ -52,13 +52,13 @@ class SignInViewModel(
         isUserSigned = emailAuthRepository.signInWithEmailAndPassword(email, password)
     }
 
-    fun signUpWithFacebook(activity: Activity) = viewModelScope.launch {
+    fun signInWithFacebook(activity: Activity) = viewModelScope.launch {
         isUserSigned = Resource.Loading
 
         isUserSigned = facebookAuthRepository.signUpWithFacebook(activity)
     }
 
-    fun signUpWithTwitter(activity: Activity) = viewModelScope.launch {
+    fun signInWithTwitter(activity: Activity) = viewModelScope.launch {
         isUserSigned = Resource.Loading
 
         isUserSigned = twitterAuthRepository.signUpWithTwitter(activity = activity)

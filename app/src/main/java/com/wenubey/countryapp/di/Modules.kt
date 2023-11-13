@@ -1,6 +1,8 @@
 package com.wenubey.countryapp.di
 
 
+import android.content.Context
+import android.location.Geocoder
 import androidx.room.Room
 import com.wenubey.countryapp.data.local.CountryDatabase
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
@@ -42,9 +44,10 @@ private val loadFeature by lazy {
         listOf(
             databaseModule,
             repositoryModule,
-            viewModelModule,
+            viewModelModules,
             retrofitModules,
-            authModule
+            authModule,
+            mapModules
         )
     )
 }
@@ -74,7 +77,7 @@ val repositoryModule = module {
     factory<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
 }
 
-val viewModelModule = module {
+val viewModelModules = module {
     viewModel { CountryViewModel(get()) }
     viewModel { SignInViewModel(get(), get(), get(), get(), get()) }
     viewModel { SignUpViewModel(get()) }
@@ -96,6 +99,14 @@ val retrofitModules = module {
             .build()
             .create()
     }
+}
+
+val mapModules = module {
+    single { provideGeocoder(get()) }
+}
+
+fun provideGeocoder(context: Context): Geocoder {
+    return Geocoder(context)
 }
 
 
