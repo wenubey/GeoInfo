@@ -22,8 +22,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.analytics.FirebaseAnalytics.Event.SIGN_UP
 import com.wenubey.countryapp.utils.Constants.ALREADY_USER
+import com.wenubey.countryapp.utils.Constants.SIGN_UP
 import com.wenubey.countryapp.utils.components.EmailTextField
 import com.wenubey.countryapp.utils.components.PasswordTextField
 
