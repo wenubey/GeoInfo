@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.auth.email_verify.components
+package com.wenubey.countryapp.ui.auth.profile.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,7 +25,7 @@ import com.wenubey.countryapp.utils.Constants.SIGN_OUT
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun VerifyEmailTopBar(
+fun ProfileTopBar(
     title: String,
     signOut: () -> Unit,
     revokeAccess: () -> Unit

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wenubey.countryapp.domain.model.User
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.utils.Resource
 import kotlinx.coroutines.launch
@@ -18,8 +19,17 @@ class ProfileViewModel(
 
     var updateUserResponse by mutableStateOf<Resource<Boolean>>(Resource.Success(false))
 
+    var currentUserDataResponse by mutableStateOf<User?>(null)
+
     val currentUser get() = repo.currentUser
 
+    init {
+        getUserData()
+    }
+    private fun getUserData() = viewModelScope.launch {
+        currentUserDataResponse = repo.currentUserData()
+
+    }
     fun reloadUser() = viewModelScope.launch {
         reloadUserResponse = Resource.Loading
 

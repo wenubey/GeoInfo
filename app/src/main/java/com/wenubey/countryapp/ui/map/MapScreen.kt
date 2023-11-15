@@ -1,6 +1,5 @@
 package com.wenubey.countryapp.ui.map
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,7 +20,6 @@ import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.list.CountryListEvent
 import com.wenubey.countryapp.ui.map.components.GoogleMaps
 import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
-import com.wenubey.countryapp.utils.Constants.TAG
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,9 +62,9 @@ fun MapScreen(
                     modifier = Modifier.padding(4.dp)
                 ) {
                     countryViewModel.countryListDataState.countries?.let { countries ->
-                        Log.i(TAG, "MapScreen: data: ${countries.first().countryCommonName}")
                         LazyColumn {
                             items(countries) { item ->
+                                //TODO create ui for search result items and also add navigation to the detail screen
                                 Card(modifier = Modifier.padding(4.dp)) {
                                     Column {
                                         Text(text = item.countryCommonName ?: "")

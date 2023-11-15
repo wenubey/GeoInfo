@@ -37,6 +37,7 @@ object Constants {
     const val FACEBOOK_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
     const val TWITTER_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
     const val PROFILE_PHOTO_DESCRIPTION = "Your profile photo"
+    const val PROFILE_UPDATE_FAB_DESCRIPTION = "Update your profile"
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -51,7 +52,8 @@ object Constants {
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."
     const val ACCESS_REVOKED_MESSAGE = "Your access has been revoked."
     const val EMAIL_NOT_VERIFIED_MESSAGE = "Your email is not verified."
-    const val SENSITIVE_OPERATION_MESSAGE = "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
+    const val SENSITIVE_OPERATION_MESSAGE =
+        "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
     const val VERIFY_EMAIL_MESSAGE = "We've sent you an email with a link to verify the email."
     const val USER_SUCCESSFULLY_UPDATE_MESSAGE = "User successfully updated."
     const val USER_UPDATE_ERROR_MESSAGE = "Something went wrong"
@@ -73,4 +75,7 @@ object Constants {
     const val SIGN_IN_WITH_GOOGLE = "Sign in with Google"
     const val SIGN_UP_WITH_TWITTER = "Sign in with Twitter"
     const val SAVE = "Save"
+
+    //USER FIELDS
+    const val PROFILE_INFO = "Profile Info"
 }

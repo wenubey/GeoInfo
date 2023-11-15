@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.wenubey.countryapp.ui.auth.email_verify.components.ReloadUser
 import com.wenubey.countryapp.ui.auth.email_verify.components.RevokeAccess
 import com.wenubey.countryapp.ui.auth.email_verify.components.VerifyEmailContent
-import com.wenubey.countryapp.ui.auth.email_verify.components.VerifyEmailTopBar
+import com.wenubey.countryapp.ui.auth.profile.components.ProfileTopBar
 import com.wenubey.countryapp.ui.auth.profile.ProfileViewModel
 import com.wenubey.countryapp.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
 import com.wenubey.countryapp.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
@@ -36,7 +36,7 @@ fun VerifyEmailScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface),
         topBar = {
-            VerifyEmailTopBar(
+            ProfileTopBar(
                 title = VERIFY_EMAIL_SCREEN_TITLE,
                 signOut = { viewModel.signOut() },
                 revokeAccess = { viewModel.revokeAccess() },

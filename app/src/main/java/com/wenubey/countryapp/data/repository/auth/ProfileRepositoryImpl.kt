@@ -1,10 +1,13 @@
 package com.wenubey.countryapp.data.repository.auth
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.userProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import com.wenubey.countryapp.domain.model.User
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.Constants.USERS
 import com.wenubey.countryapp.utils.Resource
 import kotlinx.coroutines.tasks.await
@@ -12,9 +15,10 @@ import kotlinx.coroutines.tasks.await
 class ProfileRepositoryImpl(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore
-): ProfileRepository {
+) : ProfileRepository {
     override val currentUser: FirebaseUser?
         get() = auth.currentUser
+
 
     override fun signOut(): Resource<Boolean> {
         return try {
@@ -22,6 +26,20 @@ class ProfileRepositoryImpl(
             Resource.Success(true)
         } catch (e: Exception) {
             Resource.Error(e)
+        }
+    }
+
+    override suspend fun currentUserData(): User? {
+        return try {
+            val document = db.collection(USERS).document(currentUser!!.uid).get().await()
+            if (document.exists()) {
+                document.toObject(User::class.java)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "getUserData error: $e")
+            null
         }
     }
 
@@ -61,4 +79,6 @@ class ProfileRepositoryImpl(
             Resource.Error(e)
         }
     }
+
+
 }

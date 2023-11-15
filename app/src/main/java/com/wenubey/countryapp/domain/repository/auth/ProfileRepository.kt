@@ -1,11 +1,14 @@
 package com.wenubey.countryapp.domain.repository.auth
 
 import com.google.firebase.auth.FirebaseUser
+import com.wenubey.countryapp.domain.model.User
 import com.wenubey.countryapp.utils.Resource
 
 interface ProfileRepository {
 
     val currentUser: FirebaseUser?
+
+    suspend fun currentUserData(): User?
 
     fun signOut(): Resource<Boolean>
 
