@@ -8,6 +8,7 @@ import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.utils.Constants.TAG
+import com.wenubey.countryapp.utils.Utils.Companion.printLog
 
 class CountryRepositoryImpl(
     private val countryInfoApi: CountryInfoApi,
@@ -133,9 +134,8 @@ class CountryRepositoryImpl(
         val remoteCountryData = try {
             countryInfoApi.getAllCountries()
         } catch (e: Exception) {
-            e.printStackTrace()
             // Handle the error, e.g., log and return an empty list or throw an exception
-            Log.e(TAG, "getAllCountries: error: $e")
+            printLog(e)
             return Result.failure(e)
         }
         // Update the cache
@@ -150,7 +150,37 @@ class CountryRepositoryImpl(
             remoteCountryData
                 .map { it.mapToCountryEntity(null) }
                 .map { it.mapToCountry() }
-                .filter { it.countryCommonName!!.contains(countryName,true) }
+                .filter { it.countryCommonName!!.contains(countryName, true) }
         )
+    }
+
+    override suspend fun getCountryCodeFromCache(): Result<Map<String?, String?>> {
+        val localCountryData = countryCacheDao.getAllCountriesFromCache()
+        val isDbEmpty = localCountryData.isEmpty()
+        val shouldJustLoadFromCache = !isDbEmpty
+        if (shouldJustLoadFromCache) {
+            val flagEmojisWithPhoneCodes = localCountryData.map { it.flagEmojiWithPhoneCode }
+            val xd =
+                flagEmojisWithPhoneCodes
+                    .flatMap { it.entries }
+                    .sortedBy { it.key }
+                    .associate { it.toPair() }
+            return Result.success(xd)
+        }
+        val remoteCountryData = try {
+            countryInfoApi.getAllCountries()
+        } catch (e: Exception) {
+            printLog(e)
+            return Result.failure(e)
+        }
+        val newCountryCacheData = remoteCountryData.map { it.mapToCountryEntity(null) }
+        countryCacheDao.clearALl()
+        countryCacheDao.upsertAll(newCountryCacheData)
+
+        val xd1 = newCountryCacheData.map { it.flagEmojiWithPhoneCode }
+            .flatMap { it.entries }
+            .sortedBy { it.key }
+            .associate { it.toPair() }
+        return Result.success(xd1)
     }
 }

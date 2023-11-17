@@ -15,11 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.wenubey.countryapp.ui.auth.profile.ProfileViewModel
+import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.list.CountryListEvent
 import com.wenubey.countryapp.ui.map.components.GoogleMaps
 import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
+import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.Constants.SEARCH_COUNTRIES_PLACEHOLDER
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,7 +60,7 @@ fun MapScreen(
                     onActiveChange = { newValue ->
                         isSearchBarActive.value = newValue
                     },
-                    placeholder = { Text(text = "Hello World") },
+                    placeholder = { Text(text = SEARCH_COUNTRIES_PLACEHOLDER) },
                     modifier = Modifier.padding(4.dp)
                 ) {
                     countryViewModel.countryListDataState.countries?.let { countries ->

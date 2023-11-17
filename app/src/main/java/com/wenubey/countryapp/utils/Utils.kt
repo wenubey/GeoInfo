@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -27,19 +28,39 @@ fun parseDate(day: String?, month: String?, year: String?): Date? {
     }
 }
 
-fun addUserToFirestore(auth: FirebaseAuth, db: FirebaseFirestore) {
+fun addUserToFirestore(
+    auth: FirebaseAuth,
+    db: FirebaseFirestore,
+    authProvider: AuthProvider,
+    createdAt: String? = null
+) {
     auth.currentUser?.apply {
-        val user = toUser()
+        val user = toUser(authProvider, createdAt = createdAt)
         db.collection(Constants.USERS).document(uid).set(user)
     }
 }
 
-class Utils  {
+class Utils {
     companion object {
         fun printLog(e: Exception) = Log.e(TAG, e.stackTraceToString())
 
-        fun Context.makeToast(message: String?) = Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        fun Context.makeToast(message: String?) =
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
 
     }
+}
+
+fun getCurrentTime(): String {
+    val currentTime = Calendar.getInstance().time
+    val pattern = "dd/MM/yyyy - HH:mm"
+    val formatter = SimpleDateFormat(pattern, Locale.getDefault())
+    return formatter.format(currentTime)
+}
+
+enum class AuthProvider {
+    EMAIL,
+    GOOGLE,
+    FACEBOOK,
+    TWITTER
 }

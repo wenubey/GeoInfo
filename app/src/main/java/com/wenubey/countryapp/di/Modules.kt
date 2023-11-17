@@ -19,11 +19,12 @@ import com.wenubey.countryapp.domain.repository.auth.FacebookAuthRepository
 import com.wenubey.countryapp.domain.repository.auth.GoogleSignInRepository
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.domain.repository.auth.TwitterAuthRepository
-import com.wenubey.countryapp.ui.auth.AuthViewModel
-import com.wenubey.countryapp.ui.auth.profile.ProfileViewModel
-import com.wenubey.countryapp.ui.auth.sign_in.SignInViewModel
-import com.wenubey.countryapp.ui.auth.sign_up.SignUpViewModel
+import com.wenubey.countryapp.ui.AuthViewModel
+import com.wenubey.countryapp.ui.profile.ProfileViewModel
+import com.wenubey.countryapp.ui.sign_in.SignInViewModel
+import com.wenubey.countryapp.ui.sign_up.SignUpViewModel
 import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordViewModel
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.BASE_URL_COUNTRIES
 import com.wenubey.countryapp.utils.Constants.BASE_URL_HISTORIES
@@ -71,7 +72,11 @@ val repositoryModule = module {
     factory<FacebookAuthRepository> { FacebookAuthRepositoryImpl(get(), get()) }
     factory<GoogleSignInRepository> {
         GoogleSignInRepositoryImpl(
-            get(), get(), get(), get(named(Constants.SIGN_IN_REQUEST)), get(named(Constants.SIGN_UP_REQUEST))
+            get(),
+            get(),
+            get(),
+            get(named(Constants.SIGN_IN_REQUEST)),
+            get(named(Constants.SIGN_UP_REQUEST))
         )
     }
     factory<TwitterAuthRepository> { TwitterAuthRepositoryImpl(get(), get()) }
@@ -83,7 +88,8 @@ val viewModelModules = module {
     viewModel { SignInViewModel(get(), get(), get(), get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { AuthViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ForgotPasswordViewModel(get(), get()) }
 }
 
 val retrofitModules = module {

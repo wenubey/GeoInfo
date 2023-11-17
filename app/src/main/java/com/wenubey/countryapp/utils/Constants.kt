@@ -47,6 +47,8 @@ object Constants {
     const val ALREADY_VERIFIED = "Already verified?"
     const val SPAM_EMAIL = "If not, please also check the spam folder."
     const val CANCEL_OPERATION = "You canceled the operation"
+    const val CANT_CHANGE_PASSWORD = "Sorry, you log in different provider than email, you can not change or forgot your password."
+    const val SEARCH_COUNTRIES_PLACEHOLDER ="Search countries"
 
     //MESSAGES
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."

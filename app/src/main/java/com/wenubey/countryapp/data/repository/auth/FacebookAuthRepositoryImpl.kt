@@ -11,9 +11,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.repository.auth.FacebookAuthRepository
+import com.wenubey.countryapp.utils.AuthProvider
 import com.wenubey.countryapp.utils.Constants.CANCEL_OPERATION
 import com.wenubey.countryapp.utils.Resource
 import com.wenubey.countryapp.utils.addUserToFirestore
+import com.wenubey.countryapp.utils.getCurrentTime
 
 class FacebookAuthRepositoryImpl(
     private val auth: FirebaseAuth,
@@ -28,21 +30,27 @@ class FacebookAuthRepositoryImpl(
     override suspend fun signUpWithFacebook(activity: Activity): Resource<Boolean> {
         return try {
 
-            loginManager.logInWithReadPermissions(activity ,listOf("public_profile", "email"))
-            loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
+            loginManager.logInWithReadPermissions(activity, listOf("public_profile", "email"))
+            loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
                 override fun onCancel() {
                     Resource.Error(Exception(CANCEL_OPERATION))
                 }
+
                 override fun onError(error: FacebookException) {
                     Resource.Error(error)
                 }
+
                 override fun onSuccess(result: LoginResult) {
                     val token = result.accessToken.token
                     val credential = FacebookAuthProvider.getCredential(token)
                     val authResult = auth.signInWithCredential(credential).result
                     val isNewUser = authResult.additionalUserInfo?.isNewUser ?: false
                     if (isNewUser) {
-                        addUserToFirestore(db = db, auth = auth)
+                        addUserToFirestore(
+                            db = db, auth = auth,
+                            authProvider = AuthProvider.FACEBOOK,
+                            createdAt = getCurrentTime()
+                        )
                     }
                 }
             })

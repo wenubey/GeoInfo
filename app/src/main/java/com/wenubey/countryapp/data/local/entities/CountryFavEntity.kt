@@ -27,7 +27,8 @@ data class CountryFavEntity(
     val flagEntity: Map<String,String>?,
     val timezones: List<String>?,
     val coatOfArms: Map<String,String>?,
-    val historyEntity: List<HistoryEntity>?
+    val historyEntity: List<HistoryEntity>?,
+    val flagEmojiWithPhoneCode: Map<String?,String?>
 ) {
     fun mapToCountry(): Country {
         return Country(
@@ -50,6 +51,7 @@ data class CountryFavEntity(
             timezones = timezones,
             coatOfArms = coatOfArms,
             history = historyEntity?.map { it.mapToHistory() },
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
         )
     }
 }

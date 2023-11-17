@@ -7,9 +7,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.repository.auth.TwitterAuthRepository
+import com.wenubey.countryapp.utils.AuthProvider
 import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.Resource
 import com.wenubey.countryapp.utils.addUserToFirestore
+import com.wenubey.countryapp.utils.getCurrentTime
 import kotlinx.coroutines.tasks.await
 
 class TwitterAuthRepositoryImpl(
@@ -27,7 +29,7 @@ class TwitterAuthRepositoryImpl(
             Log.i(TAG, "signUpWithTwitter isUserNew: $isUserNew")
             Log.i(TAG, "signUpWithTwitter: currentUserUID: ${auth.currentUser?.uid}")
             if (isUserNew) {
-                addUserToFirestore(auth = auth, db = db)
+                addUserToFirestore(auth = auth, db = db, AuthProvider.TWITTER, createdAt = getCurrentTime())
             }
             Resource.Success(true)
         } catch (e: Exception) {

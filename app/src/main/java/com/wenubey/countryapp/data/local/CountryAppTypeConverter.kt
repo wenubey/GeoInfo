@@ -64,4 +64,12 @@ class CountryAppTypeConverter {
     @TypeConverter
     fun capitalToJson(capital: List<String>?): String? =
         toJson(capital)
+
+    @TypeConverter
+    fun countryPhoneFromJson(json: String?): Map<String?,String?>? =
+        fromJson(json, object : TypeToken<Map<String?,String?>>() {})
+
+    @TypeConverter
+    fun countryPhoneToJson(countryPhone: Map<String?,String?>?): String? =
+        toJson(countryPhone)
 }

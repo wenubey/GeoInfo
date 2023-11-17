@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.wenubey.countryapp.ui.auth.AuthState
 import com.wenubey.countryapp.ui.navigation.NavGraph
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 

@@ -7,10 +7,12 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.repository.auth.GoogleSignInRepository
+import com.wenubey.countryapp.utils.AuthProvider
 import com.wenubey.countryapp.utils.Constants.SIGN_IN_REQUEST
 import com.wenubey.countryapp.utils.Constants.SIGN_UP_REQUEST
 import com.wenubey.countryapp.utils.Resource
 import com.wenubey.countryapp.utils.addUserToFirestore
+import com.wenubey.countryapp.utils.getCurrentTime
 import kotlinx.coroutines.tasks.await
 import javax.inject.Named
 
@@ -44,7 +46,7 @@ class GoogleSignInRepositoryImpl(
             val authResult = auth.signInWithCredential(googleCredential).await()
             val isNewUser = authResult.additionalUserInfo?.isNewUser ?: false
             if (isNewUser) {
-                addUserToFirestore(db = db, auth = auth)
+                addUserToFirestore(db = db, auth = auth, authProvider = AuthProvider.GOOGLE, createdAt = getCurrentTime())
             }
             Resource.Success(true)
         } catch (e: Exception) {

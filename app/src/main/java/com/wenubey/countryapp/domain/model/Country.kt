@@ -17,16 +17,17 @@ data class Country(
     val countryCodeCCA2: String?,
     val isIndependent: Boolean?,
     val isUnMember: Boolean?,
-    val currency: Map<String,Currency>?,
+    val currency: Map<String, Currency>?,
     val region: String?,
     val subRegion: String?,
     val language: Map<String, String>?,
     val latlng: List<Double>?,
     val area: Double?,
-    val flag: Map<String,String>?,
+    val flag: Map<String, String>?,
     val timezones: List<String>?,
-    val coatOfArms: Map<String,String>?,
-    val history: List<History>?
+    val coatOfArms: Map<String, String>?,
+    val history: List<History>?,
+    val flagEmojiWithPhoneCode: Map<String?, String?>
 ) {
     fun mapToCountryCacheEntity(): CountryCacheEntity {
         return CountryCacheEntity(
@@ -48,7 +49,8 @@ data class Country(
             flagEntity = flag,
             timezones = timezones,
             coatOfArms = coatOfArms,
-            historyEntity = history?.map { it.mapToHistoryEntity() }
+            historyEntity = history?.map { it.mapToHistoryEntity() },
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
         )
     }
 
@@ -72,7 +74,8 @@ data class Country(
             flagEntity = flag,
             timezones = timezones,
             coatOfArms = coatOfArms,
-            historyEntity = history?.map { it.mapToHistoryEntity() }
+            historyEntity = history?.map { it.mapToHistoryEntity() },
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
         )
     }
 }

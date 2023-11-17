@@ -9,4 +9,6 @@ interface CountryRepository {
     suspend fun getSearchedCountries(fetchFromRemote: Boolean, countryName: String): Result<List<Country>>
 
     suspend fun getCountry(fetchFromRemote: Boolean = false, countryName: String): Result<Country>
+
+    suspend fun getCountryCodeFromCache(): Result<Map<String?,String?>>
 }

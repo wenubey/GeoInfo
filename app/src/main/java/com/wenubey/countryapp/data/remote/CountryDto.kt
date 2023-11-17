@@ -35,7 +35,11 @@ data class CountryDto(
     val timezones: List<String>?,
     @field:Json(name = "coatOfArms")
     val coatOfArmsDto: Map<String,String>?,
-    val historyDto: List<HistoryDto>?
+    val historyDto: List<HistoryDto>?,
+    @field:Json(name ="flag")
+    val flagEmoji: String?,
+    @field:Json(name = "idd")
+    val iddDto: IddDto?
 ) {
     fun mapToCountryEntity(historyDto: List<HistoryDto>?): CountryCacheEntity {
         return CountryCacheEntity(
@@ -58,6 +62,7 @@ data class CountryDto(
             timezones = timezones,
             coatOfArms = coatOfArmsDto,
             historyEntity = historyDto?.map { it.mapToHistoryEntity() },
+            flagEmojiWithPhoneCode = mapOf(flagEmoji + " ${countryNameDto?.common}" to iddDto?.mapToPhoneCode())
         )
     }
 }
@@ -104,6 +109,15 @@ data class HistoryDto(
             date = parseDate(day = day, month = month, year = year),
             event = event
         )
+    }
+}
+
+data class IddDto(
+    val root: String?,
+    val suffixes: List<String>?
+) {
+    fun mapToPhoneCode(): String {
+        return root + suffixes?.first()
     }
 }
 

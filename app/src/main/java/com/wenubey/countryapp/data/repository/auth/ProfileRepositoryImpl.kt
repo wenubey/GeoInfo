@@ -20,6 +20,7 @@ class ProfileRepositoryImpl(
         get() = auth.currentUser
 
 
+
     override fun signOut(): Resource<Boolean> {
         return try {
             auth.signOut()
@@ -62,7 +63,7 @@ class ProfileRepositoryImpl(
         }
     }
 
-    override suspend fun updateUser(newDisplayName: String, email: String): Resource<Boolean> {
+    override suspend fun updateUser(newDisplayName: String, email: String, phoneNumber: String): Resource<Boolean> {
         return try {
             val profileUpdates = userProfileChangeRequest {
                 displayName = newDisplayName
@@ -71,7 +72,8 @@ class ProfileRepositoryImpl(
             auth.currentUser?.updateEmail(email)?.await()
             val updatedValue = mapOf(
                 "displayName" to newDisplayName,
-                "email" to email
+                "email" to email,
+                "phoneNumber" to phoneNumber
             )
             db.collection(USERS).document(auth.currentUser!!.uid).update(updatedValue)
             Resource.Success(true)
@@ -79,6 +81,5 @@ class ProfileRepositoryImpl(
             Resource.Error(e)
         }
     }
-
 
 }
