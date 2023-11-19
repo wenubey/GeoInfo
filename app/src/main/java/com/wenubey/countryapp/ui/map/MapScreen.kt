@@ -15,12 +15,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.list.CountryListEvent
 import com.wenubey.countryapp.ui.map.components.GoogleMaps
 import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
-import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.utils.Constants.SEARCH_COUNTRIES_PLACEHOLDER
 import org.koin.androidx.compose.getViewModel
 
@@ -35,11 +34,12 @@ fun MapScreen(
     val isSearchBarActive = remember {
         mutableStateOf(false)
     }
+
     Scaffold(
         topBar = {
             MapScreenTopBar(
                 navigateToProfileScreen = navigateToProfileScreen,
-                profileImage = profileViewModel.currentUser?.photoUrl.toString()
+                photoUri = profileViewModel.currentUser?.photoUrl
             )
         },
         content = { paddingValues ->
@@ -48,37 +48,38 @@ fun MapScreen(
                     .padding(paddingValues = paddingValues)
                     .fillMaxSize()
             ) {
-                SearchBar(
-                    query = countryViewModel.searchQuery.value,
-                    onQueryChange = {
-                        countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
-                    },
-                    onSearch = {
-                        countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
-                    },
-                    active = isSearchBarActive.value,
-                    onActiveChange = { newValue ->
-                        isSearchBarActive.value = newValue
-                    },
-                    placeholder = { Text(text = SEARCH_COUNTRIES_PLACEHOLDER) },
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    countryViewModel.countryListDataState.countries?.let { countries ->
-                        LazyColumn {
-                            items(countries) { item ->
-                                //TODO create ui for search result items and also add navigation to the detail screen
-                                Card(modifier = Modifier.padding(4.dp)) {
-                                    Column {
-                                        Text(text = item.countryCommonName ?: "")
-                                        Text(text = item.region ?: "")
-                                        Text(text = item.subRegion ?: "")
+                    SearchBar(
+                        query = countryViewModel.searchQuery.value,
+                        onQueryChange = {
+                            countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
+                        },
+                        onSearch = {
+                            countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
+                        },
+                        active = isSearchBarActive.value,
+                        onActiveChange = { newValue ->
+                            isSearchBarActive.value = newValue
+                        },
+                        placeholder = { Text(text = SEARCH_COUNTRIES_PLACEHOLDER) },
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .weight(0.8f)
+                    ) {
+                        countryViewModel.countryListDataState.countries?.let { countries ->
+                            LazyColumn {
+                                items(countries) { item ->
+                                    //TODO create ui for search result items and also add navigation to the detail screen
+                                    Card(modifier = Modifier.padding(4.dp)) {
+                                        Column {
+                                            Text(text = item.countryCommonName ?: "")
+                                            Text(text = item.region ?: "")
+                                            Text(text = item.subRegion ?: "")
+                                        }
                                     }
                                 }
                             }
                         }
-
                     }
-                }
                 GoogleMaps(onMapClick = {})
             }
 

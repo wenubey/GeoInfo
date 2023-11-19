@@ -77,7 +77,7 @@ fun ProfileTopBar(
                     DropdownMenuItem(
                         text = { Text(text = FORGOT_PASSWORD) },
                         onClick = {
-                            //TODO user email value send
+
                             navigateToForgotPasswordScreen()
                         },
                     )
