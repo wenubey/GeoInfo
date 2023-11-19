@@ -2,6 +2,7 @@ package com.wenubey.countryapp.ui.map
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -62,8 +63,9 @@ fun MapScreen(
                         },
                         placeholder = { Text(text = SEARCH_COUNTRIES_PLACEHOLDER) },
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(4.dp)
-                            .weight(0.8f)
+
                     ) {
                         countryViewModel.countryListDataState.countries?.let { countries ->
                             LazyColumn {
@@ -80,7 +82,9 @@ fun MapScreen(
                             }
                         }
                     }
-                GoogleMaps(onMapClick = {})
+                GoogleMaps(onMapClick = {
+                    TODO("not implemented yet")
+                })
             }
 
         }
