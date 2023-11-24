@@ -12,7 +12,7 @@ data class Country(
     val countryOfficialName: String?,
     val countryNativeName: Map<String, NativeName>?,
     val capital: List<String>?,
-    val population: Double?,
+    val population: Int?,
     val topLevelDomain: List<String>?,
     val countryCodeCCA2: String?,
     val isIndependent: Boolean?,

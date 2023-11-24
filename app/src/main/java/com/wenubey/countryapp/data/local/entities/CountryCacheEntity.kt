@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.data.local.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.wenubey.countryapp.domain.model.Country
@@ -13,25 +14,45 @@ import java.util.Date
 data class CountryCacheEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
+    @ColumnInfo(name = "countryCommonName")
     val countryCommonName: String?,
+    @ColumnInfo(name = "countryOfficialName")
     val countryOfficialName: String?,
+    @ColumnInfo(name = "countryNativeName")
     val countryNativeName: Map<String, NativeNameEntity>?,
+    @ColumnInfo(name = "capital")
     val capital: List<String>?,
-    val population: Double?,
+    @ColumnInfo(name = "population")
+    val population: Int?,
+    @ColumnInfo(name = "topLevelDomain")
     val topLevelDomain: List<String>?,
+    @ColumnInfo(name = "countryCodeCCA2")
     val countryCodeCCA2: String?,
+    @ColumnInfo(name = "isIndependent")
     val isIndependent: Boolean?,
+    @ColumnInfo(name = "isUnMember")
     val isUnMember: Boolean?,
+    @ColumnInfo(name = "currencyEntity")
     val currencyEntity: Map<String,CurrencyEntity>?,
+    @ColumnInfo(name = "region")
     val region: String?,
+    @ColumnInfo(name = "subRegion")
     val subRegion: String?,
+    @ColumnInfo(name = "languageEntity")
     val languageEntity: Map<String, String>?,
+    @ColumnInfo(name = "latlng")
     val latlng: List<Double>?,
+    @ColumnInfo(name = "area")
     val area: Double?,
+    @ColumnInfo(name = "flagEntity")
     val flagEntity: Map<String,String>?,
+    @ColumnInfo(name = "timezones")
     val timezones: List<String>?,
+    @ColumnInfo(name = "coatOfArms")
     val coatOfArms: Map<String,String>?,
+    @ColumnInfo(name = "historyEntity")
     val historyEntity: List<HistoryEntity>?,
+    @ColumnInfo(name = "flagEmojiWithPhoneCode")
     val flagEmojiWithPhoneCode: Map<String?,String?>
 ) {
     fun mapToCountry(): Country {

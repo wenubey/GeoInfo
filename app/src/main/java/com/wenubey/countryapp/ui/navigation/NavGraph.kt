@@ -39,6 +39,9 @@ fun NavGraph(
             MapScreen(
                 navigateToProfileScreen = {
                     navHostController.navigate(Screen.ProfileScreen.route)
+                },
+                navigateToCountryDetailScreen = { countryName ->
+                    // TODO not implemented yet
                 }
             )
         }

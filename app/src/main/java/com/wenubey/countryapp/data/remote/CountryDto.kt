@@ -12,7 +12,7 @@ data class CountryDto(
     @field:Json(name = "name")
     val countryNameDto: CountryNameDto?,
     val capital: List<String>?,
-    val population: Double?,
+    val population: Int?,
     @field:Json(name ="tld")
     val topLevelDomain: List<String>?,
     @field:Json(name ="cca2")

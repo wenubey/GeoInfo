@@ -13,7 +13,7 @@ data class CountryFavEntity(
     val countryOfficialName: String?,
     val countryNativeName: Map<String, NativeNameEntity>?,
     val capital: List<String>?,
-    val population: Double?,
+    val population: Int?,
     val topLevelDomain: List<String>?,
     val countryCodeCCA2: String?,
     val isIndependent: Boolean?,

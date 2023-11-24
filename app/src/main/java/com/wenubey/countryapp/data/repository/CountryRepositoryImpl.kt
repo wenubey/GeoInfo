@@ -8,6 +8,7 @@ import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.utils.Constants.TAG
+import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
 
 class CountryRepositoryImpl(
@@ -18,21 +19,23 @@ class CountryRepositoryImpl(
 ) : CountryRepository {
 
 
-    override suspend fun getAllCountries(fetchFromRemote: Boolean): Result<List<Country>> {
-        val localCountryData = countryCacheDao.getAllCountriesFromCache()
+    override suspend fun getAllCountries(
+        fetchFromRemote: Boolean,
+        options: CountryListOptions
+    ): Result<List<Country>> {
+        val localCountryData = getSortedFilteredCountries(options)
         val isDbEmpty = localCountryData.isEmpty()
         val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
         if (shouldJustLoadFromCache) {
             // Return data from cache
             return Result.success(
-                localCountryData.map { it.mapToCountry() }
+               localCountryData
             )
         }
         val remoteCountryData = try {
             countryInfoApi.getAllCountries()
         } catch (e: Exception) {
             e.printStackTrace()
-            // Handle the error, e.g., log and return an empty list or throw an exception
             Log.e(TAG, "getAllCountries: error: $e")
             return Result.failure(e)
         }
@@ -41,13 +44,30 @@ class CountryRepositoryImpl(
         countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) })
         Log.i(
             TAG,
-            "getAllCountries commonName: ${remoteCountryData.first().countryNameDto?.common}"
+            "getAllCountries commonName first: ${remoteCountryData.first().countryNameDto?.common}"
         )
         // Return data from the remote source
         return Result.success(
-            remoteCountryData.map { it.mapToCountryEntity(null) }.map { it.mapToCountry() }
+            getSortedFilteredCountries(options)
         )
     }
+
+    private suspend fun getSortedFilteredCountries(options: CountryListOptions = CountryListOptions.Default) : List<Country> {
+       return when(options) {
+            is CountryListOptions.Filter -> {
+                countryCacheDao.getSortedFilteredCountries(query = options.query, sortOption = null, sortOrder = null).map { it.mapToCountry() }
+            }
+            is CountryListOptions.Sort -> {
+                countryCacheDao.getSortedFilteredCountries(query = null, sortOption = options.sortOption.name, sortOrder = options.sortOrder.name).map { it.mapToCountry() }
+            }
+           is CountryListOptions.Combined -> {
+               countryCacheDao.getSortedFilteredCountries(query = options.query, sortOption = options.sortOption.name, sortOrder = options.sortOrder.name).map { it.mapToCountry() }
+           }
+           is CountryListOptions.Default -> countryCacheDao.getAllCountriesFromCache().map { it.mapToCountry() }
+        }
+    }
+
+
 
     override suspend fun getCountry(
         fetchFromRemote: Boolean,
@@ -112,46 +132,6 @@ class CountryRepositoryImpl(
         val countryData = countryCacheEntity.mapToCountry()
         return Result.success(countryData)
 
-    }
-
-    override suspend fun getSearchedCountries(
-        fetchFromRemote: Boolean,
-        countryName: String
-    ): Result<List<Country>> {
-        val localCountryData = countryCacheDao.getAllCountriesFromCache()
-        val isDbEmpty = localCountryData.isEmpty()
-        val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
-        if (shouldJustLoadFromCache) {
-            // Return data from cache
-            return Result.success(
-                localCountryData
-                    .map { it.mapToCountry() }
-                    .filter {
-                        it.countryCommonName!!.contains(countryName, true)
-                    }
-            )
-        }
-        val remoteCountryData = try {
-            countryInfoApi.getAllCountries()
-        } catch (e: Exception) {
-            // Handle the error, e.g., log and return an empty list or throw an exception
-            printLog(e)
-            return Result.failure(e)
-        }
-        // Update the cache
-        countryCacheDao.clearALl()
-        countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) })
-        Log.i(
-            TAG,
-            "getAllCountries commonName: ${remoteCountryData.first().countryNameDto?.common}"
-        )
-        // Return data from the remote source
-        return Result.success(
-            remoteCountryData
-                .map { it.mapToCountryEntity(null) }
-                .map { it.mapToCountry() }
-                .filter { it.countryCommonName!!.contains(countryName, true) }
-        )
     }
 
     override suspend fun getCountryCodeFromCache(): Result<Map<String?, String?>> {

@@ -5,5 +5,5 @@ import com.wenubey.countryapp.domain.model.Country
 data class CountryListDataState(
     val countries: List<Country>? = null,
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
 )

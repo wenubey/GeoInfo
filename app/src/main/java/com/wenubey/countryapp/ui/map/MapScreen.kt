@@ -1,33 +1,29 @@
 package com.wenubey.countryapp.ui.map
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.ui.country.CountryViewModel
-import com.wenubey.countryapp.ui.country.list.CountryListEvent
+import com.wenubey.countryapp.ui.country.list.CountryEvent
 import com.wenubey.countryapp.ui.map.components.GoogleMaps
 import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
+import com.wenubey.countryapp.ui.map.components.search_bar.CountrySearchBar
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
-import com.wenubey.countryapp.utils.Constants.SEARCH_COUNTRIES_PLACEHOLDER
+import com.wenubey.countryapp.utils.Constants.TAG
+import com.wenubey.countryapp.utils.SortOption
+import com.wenubey.countryapp.utils.SortOrder
 import org.koin.androidx.compose.getViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(
     navigateToProfileScreen: () -> Unit,
+    navigateToCountryDetailScreen: (countryName: String?) -> Unit,
 ) {
 
     val countryViewModel: CountryViewModel = getViewModel()
@@ -49,44 +45,48 @@ fun MapScreen(
                     .padding(paddingValues = paddingValues)
                     .fillMaxSize()
             ) {
-                    SearchBar(
+                countryViewModel.countryListDataState.countries?.let { countries ->
+                    CountrySearchBar(
                         query = countryViewModel.searchQuery.value,
                         onQueryChange = {
-                            countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
-                        },
-                        onSearch = {
-                            countryViewModel.onEvent(CountryListEvent.OnSearchQueryChange(it))
+                            countryViewModel.onEvent(
+                                CountryEvent.OnSearchQueryChange(it)
+                            )
                         },
                         active = isSearchBarActive.value,
-                        onActiveChange = { newValue ->
-                            isSearchBarActive.value = newValue
-                        },
-                        placeholder = { Text(text = SEARCH_COUNTRIES_PLACEHOLDER) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-
-                    ) {
-                        countryViewModel.countryListDataState.countries?.let { countries ->
-                            LazyColumn {
-                                items(countries) { item ->
-                                    //TODO create ui for search result items and also add navigation to the detail screen
-                                    Card(modifier = Modifier.padding(4.dp)) {
-                                        Column {
-                                            Text(text = item.countryCommonName ?: "")
-                                            Text(text = item.region ?: "")
-                                            Text(text = item.subRegion ?: "")
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                GoogleMaps(onMapClick = {
-                    TODO("not implemented yet")
+                        onActiveChange = {isSearchBarActive.value = it},
+                        countries = countries,
+                        onSortButtonClicked = {sortOption, sortOrder, query -> onSortButtonClicked(sortOption, sortOrder, query, countryViewModel) },
+                        onCardClick = navigateToCountryDetailScreen
+                    )
+                }
+                GoogleMaps(onMapClick = { countryName ->
+                    navigateToCountryDetailScreen(countryName)
                 })
             }
 
         }
     )
+
+}
+private fun onSortButtonClicked(sortOption: SortOption, sortOrder: SortOrder, query: String?, viewModel: CountryViewModel) {
+    if (!query.isNullOrBlank()) {
+        Log.i(TAG, "sortOption: $sortOption, sortOrder: $sortOrder, query: $query")
+        viewModel.onEvent(
+            CountryEvent.OnGetAllCountriesFilteredAndSorted(
+                query = query,
+                sortOrder =sortOrder,
+                sortOption = sortOption
+            )
+        )
+    } else {
+        Log.i(TAG, "sortOption: $sortOption, sortOrder: $sortOrder, query: $query")
+        viewModel.onEvent(
+            CountryEvent.OnSortButtonClick(
+                sortOption = sortOption,
+                sortOrder = sortOrder
+            )
+        )
+    }
+
 }

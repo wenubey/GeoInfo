@@ -38,6 +38,11 @@ object Constants {
     const val TWITTER_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
     const val PROFILE_PHOTO_DESCRIPTION = "Your profile photo"
     const val PROFILE_UPDATE_FAB_DESCRIPTION = "Update your profile"
+    const val ASC_DESC_DESCRIPTION = "Sort order country list"
+    const val COUNTRY_FLAG_CONTENT_DESCRIPTION = "This is a country flag."
+    const val POPULATION_CONTENT_DESCRIPTION = "Selected country's population"
+    const val AREA_CONTENT_DESCRIPTION = "Selected country's area"
+    const val SORT_OPTION_ICON_DESCRIPTION = "Sort options icon"
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -49,6 +54,8 @@ object Constants {
     const val CANCEL_OPERATION = "You canceled the operation"
     const val CANT_CHANGE_PASSWORD = "Sorry, you log in different provider than email, you can not change or forgot your password."
     const val SEARCH_COUNTRIES_PLACEHOLDER ="Search countries"
+    const val MAP_SEARCH_BAR_PLACEHOLDER ="Search countries, regions..."
+    const val UNDEFINED = "Undefined"
 
     //MESSAGES
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."
