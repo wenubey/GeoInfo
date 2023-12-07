@@ -7,17 +7,17 @@ import androidx.compose.ui.platform.LocalContext
 import com.wenubey.countryapp.ui.sign_up.components.SendEmailVerification
 import com.wenubey.countryapp.ui.sign_up.components.SignUp
 import com.wenubey.countryapp.ui.sign_up.components.SignUpContent
+import com.wenubey.countryapp.ui.sign_up.components.SignUpTopBar
 import com.wenubey.countryapp.utils.Constants.VERIFY_EMAIL_MESSAGE
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
-import com.wenubey.countryapp.ui.sign_up.components.SignUpTopBar
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    signUpViewModel: SignUpViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val signUpViewModel: SignUpViewModel = getViewModel()
     Scaffold(
         topBar = {
             SignUpTopBar(navigateBack = navigateBack)

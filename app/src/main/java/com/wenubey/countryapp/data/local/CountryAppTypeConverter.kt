@@ -5,7 +5,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
+import com.wenubey.countryapp.data.local.entities.LanguageEntity
 import com.wenubey.countryapp.data.local.entities.NativeNameEntity
+import com.wenubey.countryapp.data.local.entities.TranslationEntity
 
 class CountryAppTypeConverter {
 
@@ -72,4 +74,45 @@ class CountryAppTypeConverter {
     @TypeConverter
     fun countryPhoneToJson(countryPhone: Map<String?,String?>?): String? =
         toJson(countryPhone)
+
+    @TypeConverter
+    fun giniFromJson(json: String?): Map<String?,Double?>? =
+        fromJson(json, object : TypeToken<Map<String?, Double?>>() {})
+
+    @TypeConverter
+    fun giniToJson(gini: Map<String?, Double?>?): String? =
+        toJson(gini)
+
+    @TypeConverter
+    fun demonymFromJson(json: String?): Map<String?, Map<String?,String?>?>? =
+        fromJson(json, object : TypeToken<Map<String?, Map<String?, String?>?>>() {})
+
+    @TypeConverter
+    fun demonymToJson(demonym: Map<String?, Map<String?, String?>?>?): String? =
+        toJson(demonym)
+
+    @TypeConverter
+    fun translationsFromJson(json: String?): Map<String?, TranslationEntity?>? =
+        fromJson(json, object : TypeToken<Map<String?, TranslationEntity?>>() {})
+
+    @TypeConverter
+    fun translationsToJson(translations: Map<String?, TranslationEntity?>? ): String? =
+        toJson(translations)
+
+    @TypeConverter
+    fun continentsFromJson(json: String?): List<String?>? =
+        fromJson(json, object : TypeToken<List<String?>?>() {})
+
+    @TypeConverter
+    fun continentsToJson(continents: List<String?>?): String? =
+        toJson(continents)
+
+    @TypeConverter
+    fun languageEntityFromJson(json: String?): LanguageEntity? =
+        fromJson(json, object : TypeToken<LanguageEntity?>() {})
+
+    @TypeConverter
+    fun languageEntityToJson(languageEntity: LanguageEntity?): String? =
+        toJson(languageEntity)
+
 }

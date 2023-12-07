@@ -13,8 +13,8 @@ sealed class Screen(val route: String) {
 
     object VerifyEmailScreen: Screen(route =  "verifyEmailScreen")
 
-    object ListScreen: Screen(route = "listScreen")
+    object CountryListScreen: Screen(route = "countryListScreen")
 
-    data class DetailScreen(val countryName: String): Screen(route = "detailScreen")
+    object CountryDetailScreen: Screen(route = "countryDetailScreen")
 
 }

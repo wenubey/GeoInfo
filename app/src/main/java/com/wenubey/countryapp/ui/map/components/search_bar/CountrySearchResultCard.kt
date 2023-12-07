@@ -39,7 +39,7 @@ import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 @Composable
 fun CountrySearchResultCard(
     country: Country,
-    onCardClick: (countryName: String?) -> Unit
+    onCardClick: (countryCode: String?, countryName: String?) -> Unit
 ) {
 
     Card(
@@ -54,7 +54,7 @@ fun CountrySearchResultCard(
                 .padding(4.dp)
                 .fillMaxWidth()
                 .clickable {
-                    onCardClick(country.countryCommonName)
+                    onCardClick(country.countryCodeCCA2, country.countryCommonName)
                 }
         ) {
             CountryFlag(country = country)
@@ -130,6 +130,6 @@ fun AreaPopulationRow(
 @Preview(showBackground = true)
 @Composable
 fun CountrySearchResultCardPreview() {
-    CountrySearchResultCard(country = fakeCountry.copy(flag = null), {})
+    CountrySearchResultCard(country = fakeCountry.copy(flag = null), {countryCode, countryName ->  })
 }
 

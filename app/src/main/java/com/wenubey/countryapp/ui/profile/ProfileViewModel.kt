@@ -6,14 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wenubey.countryapp.domain.model.User
-import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.utils.Resource
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val repo: ProfileRepository,
-    private val countryRepo: CountryRepository,
 ) :ViewModel() {
 
     var revokeAccessResponse by mutableStateOf<Resource<Boolean>>(Resource.Success(false))
@@ -22,15 +20,12 @@ class ProfileViewModel(
 
     var updateUserResponse by mutableStateOf<Resource<Boolean>>(Resource.Success(false))
 
-    var countryPhoneCodes by mutableStateOf<Map<String?,String?>>(emptyMap())
-
     var currentUserDataResponse by mutableStateOf<User?>(null)
 
     val currentUser get() = repo.currentUser
 
     init {
         getUserData()
-        getCountryCodes()
     }
     fun getUserData() = viewModelScope.launch {
         currentUserDataResponse = repo.currentUserData()
@@ -57,15 +52,4 @@ class ProfileViewModel(
         updateUserResponse = repo.updateUser(newDisplayName, email, phoneNumber)
     }
 
-    private fun getCountryCodes() = viewModelScope.launch {
-
-        val countryPhoneCodesResult = countryRepo.getCountryCodeFromCache()
-        countryPhoneCodes = if (countryPhoneCodesResult.isSuccess) {
-            countryPhoneCodesResult.getOrNull()!!
-        } else {
-            emptyMap()
-        }
-
-
-    }
 }

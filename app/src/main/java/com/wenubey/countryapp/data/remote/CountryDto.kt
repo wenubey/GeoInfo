@@ -4,8 +4,10 @@ import com.squareup.moshi.Json
 import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
+import com.wenubey.countryapp.data.local.entities.LanguageEntity
 import com.wenubey.countryapp.data.local.entities.NativeNameEntity
-import com.wenubey.countryapp.utils.parseDate
+import com.wenubey.countryapp.data.local.entities.TranslationEntity
+import com.wenubey.countryapp.utils.parseEventDate
 
 
 data class CountryDto(
@@ -13,33 +15,39 @@ data class CountryDto(
     val countryNameDto: CountryNameDto?,
     val capital: List<String>?,
     val population: Int?,
-    @field:Json(name ="tld")
+    @field:Json(name = "tld")
     val topLevelDomain: List<String>?,
-    @field:Json(name ="cca2")
+    @field:Json(name = "cca2")
     val countryCodeCCA2: String?,
-    @field:Json(name ="independent")
-    val isIndependent: Boolean?,
-    @field:Json(name ="unMember")
-    val isUnMember: Boolean?,
     @field:Json(name = "currencies")
     val currencyDto: Map<String, CurrencyDto>?,
     val region: String?,
-    @field:Json(name= "subregion")
+    @field:Json(name = "subregion")
     val subRegion: String?,
     @field:Json(name = "languages")
-    val languageDto: Map<String,String>?,
+    val languageDto: Map<String, String>?,
     val latlng: List<Double>?,
     val area: Double?,
     @field:Json(name = "flags")
     val flagDto: Map<String, String>?,
     val timezones: List<String>?,
     @field:Json(name = "coatOfArms")
-    val coatOfArmsDto: Map<String,String>?,
+    val coatOfArmsDto: Map<String, String>?,
     val historyDto: List<HistoryDto>?,
-    @field:Json(name ="flag")
+    @field:Json(name = "flag")
     val flagEmoji: String?,
     @field:Json(name = "idd")
-    val iddDto: IddDto?
+    val iddDto: IddDto?,
+    @field:Json(name = "gini")
+    val gini: Map<String?, Double?>?,
+    @field:Json(name = "demonyms")
+    val demonyms: Map<String?, Map<String?, String?>?>?,
+    @field:Json(name = "translations")
+    val translations: Map<String?, TranslationDto?>?,
+    @field:Json(name = "continents")
+    val continents: List<String?>?,
+    @field:Json(name = "borders")
+    val borders: List<String?>?
 ) {
     fun mapToCountryEntity(historyDto: List<HistoryDto>?): CountryCacheEntity {
         return CountryCacheEntity(
@@ -50,20 +58,23 @@ data class CountryDto(
             population = population,
             topLevelDomain = topLevelDomain,
             countryCodeCCA2 = countryCodeCCA2,
-            isIndependent = isIndependent,
-            isUnMember = isUnMember,
             currencyEntity = currencyDto?.mapValues { it.value.mapToCurrencyEntity() },
             region = region,
             subRegion = subRegion,
-            languageEntity = languageDto,
+            languageEntity = LanguageEntity(data = languageDto),
             latlng = latlng,
             area = area,
             flagEntity = flagDto,
             timezones = timezones,
             coatOfArms = coatOfArmsDto,
             historyEntity = historyDto?.map { it.mapToHistoryEntity() },
-            flagEmojiWithPhoneCode = mapOf(flagEmoji + " ${countryNameDto?.common}" to iddDto?.mapToPhoneCode())
-        )
+            flagEmojiWithPhoneCode = mapOf(flagEmoji + " ${countryNameDto?.common}" to iddDto?.mapToPhoneCode()),
+            gini = gini ?: mapOf(),
+            demonyms = demonyms,
+            translations = translations?.mapValues { it.value?.mapToTranslationEntity() } ?: mapOf(),
+            continents = continents,
+            borders = borders
+            )
     }
 }
 
@@ -106,7 +117,7 @@ data class HistoryDto(
 ) {
     fun mapToHistoryEntity(): HistoryEntity {
         return HistoryEntity(
-            date = parseDate(day = day, month = month, year = year),
+            date = parseEventDate(day = day, month = month, year = year),
             event = event
         )
     }
@@ -121,3 +132,14 @@ data class IddDto(
     }
 }
 
+data class TranslationDto(
+    val official: String?,
+    val common: String?
+) {
+    fun mapToTranslationEntity(): TranslationEntity {
+        return TranslationEntity(
+            official = official,
+            common = common
+        )
+    }
+}

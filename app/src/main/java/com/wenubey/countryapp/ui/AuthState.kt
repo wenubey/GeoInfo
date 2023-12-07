@@ -7,13 +7,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.wenubey.countryapp.ui.navigation.Screen
 import com.wenubey.countryapp.utils.Constants.TAG
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
+import java.util.Locale
 
 @Composable
 fun AuthState(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    viewModel: AuthViewModel = koinViewModel(),
 ) {
-    val viewModel: AuthViewModel = getViewModel()
     val isUserSignedOut = viewModel.getAuthState().collectAsState().value
     if (isUserSignedOut) {
         Log.i(TAG, "viewModel.isUserSignedOut: $isUserSignedOut ")
@@ -39,7 +40,7 @@ private fun NavigateToSignInScreen(navController: NavController) =
 
 @Composable
 private fun NavigateToMapsScreen(navController: NavController) =
-    navController.navigate(Screen.MapScreen.route) {
+    navController.navigate(Screen.MapScreen.route + "/${Locale.getDefault().displayCountry}") {
         popUpTo(navController.graph.id) {
             inclusive = true
         }

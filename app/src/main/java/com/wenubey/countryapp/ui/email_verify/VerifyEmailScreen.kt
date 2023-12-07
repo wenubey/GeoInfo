@@ -14,19 +14,19 @@ import androidx.compose.ui.platform.LocalContext
 import com.wenubey.countryapp.ui.email_verify.components.ReloadUser
 import com.wenubey.countryapp.ui.email_verify.components.RevokeAccess
 import com.wenubey.countryapp.ui.email_verify.components.VerifyEmailContent
-import com.wenubey.countryapp.ui.profile.components.ProfileTopBar
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
+import com.wenubey.countryapp.ui.profile.components.ProfileTopBar
 import com.wenubey.countryapp.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
 import com.wenubey.countryapp.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun VerifyEmailScreen(
     navigateToProfileScreen: () -> Unit,
-    navigateBack: () -> Unit
+    navigateBack: () -> Unit,
+    viewModel: ProfileViewModel = koinViewModel()
 ) {
-    val viewModel: ProfileViewModel = getViewModel()
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()

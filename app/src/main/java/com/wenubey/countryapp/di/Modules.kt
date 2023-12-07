@@ -1,8 +1,6 @@
 package com.wenubey.countryapp.di
 
 
-import android.content.Context
-import android.location.Geocoder
 import androidx.room.Room
 import com.wenubey.countryapp.data.local.CountryDatabase
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
@@ -20,39 +18,23 @@ import com.wenubey.countryapp.domain.repository.auth.GoogleSignInRepository
 import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.domain.repository.auth.TwitterAuthRepository
 import com.wenubey.countryapp.ui.AuthViewModel
+import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordViewModel
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.sign_in.SignInViewModel
 import com.wenubey.countryapp.ui.sign_up.SignUpViewModel
-import com.wenubey.countryapp.ui.country.CountryViewModel
-import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordViewModel
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.BASE_URL_COUNTRIES
 import com.wenubey.countryapp.utils.Constants.BASE_URL_HISTORIES
 import com.wenubey.countryapp.utils.Constants.DATABASE_NAME
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.context.loadKoinModules
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
-
-fun injectFeature() = loadFeature
-
-private val loadFeature by lazy {
-    loadKoinModules(
-        listOf(
-            databaseModule,
-            repositoryModule,
-            viewModelModules,
-            retrofitModules,
-            authModule,
-            mapModules
-        )
-    )
-}
 
 val databaseModule = module {
     single {
@@ -88,7 +70,7 @@ val viewModelModules = module {
     viewModel { SignInViewModel(get(), get(), get(), get(), get()) }
     viewModel { SignUpViewModel(get()) }
     viewModel { AuthViewModel(get()) }
-    viewModel { ProfileViewModel(get(), get()) }
+    viewModel { ProfileViewModel(get()) }
     viewModel { ForgotPasswordViewModel(get(), get()) }
 }
 
@@ -109,12 +91,6 @@ val retrofitModules = module {
     }
 }
 
-val mapModules = module {
-    single { provideGeocoder(get()) }
-}
 
-fun provideGeocoder(context: Context): Geocoder {
-    return Geocoder(context)
-}
 
 

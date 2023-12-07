@@ -7,3 +7,4 @@ data class CountryDataState(
     val isLoading: Boolean = false,
     val error: String? = null,
 )
+

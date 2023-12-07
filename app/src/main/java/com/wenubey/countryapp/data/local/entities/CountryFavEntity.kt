@@ -16,19 +16,22 @@ data class CountryFavEntity(
     val population: Int?,
     val topLevelDomain: List<String>?,
     val countryCodeCCA2: String?,
-    val isIndependent: Boolean?,
-    val isUnMember: Boolean?,
     val currencyEntity: Map<String,CurrencyEntity>?,
     val region: String?,
     val subRegion: String?,
-    val language: Map<String, String>?,
+    val language: LanguageEntity?,
     val latlng: List<Double>?,
     val area: Double?,
     val flagEntity: Map<String,String>?,
     val timezones: List<String>?,
     val coatOfArms: Map<String,String>?,
     val historyEntity: List<HistoryEntity>?,
-    val flagEmojiWithPhoneCode: Map<String?,String?>
+    val flagEmojiWithPhoneCode: Map<String?,String?>,
+    val gini: Map<String?, Double?>,
+    val demonyms: Map<String?, Map<String?, String?>?>?,
+    val translations: Map<String?, TranslationEntity?>,
+    val continents: List<String?>?,
+    val borders: List<String?>?,
 ) {
     fun mapToCountry(): Country {
         return Country(
@@ -39,19 +42,22 @@ data class CountryFavEntity(
             population = population,
             topLevelDomain = topLevelDomain,
             countryCodeCCA2 = countryCodeCCA2,
-            isIndependent = isIndependent,
-            isUnMember = isUnMember,
             currency = currencyEntity?.mapValues { it.value.mapToCurrency() },
             region = region,
             subRegion = subRegion,
-            language = language,
+            language = language?.data,
             latlng = latlng,
             area = area,
             flag = flagEntity,
             timezones = timezones,
             coatOfArms = coatOfArms,
             history = historyEntity?.map { it.mapToHistory() },
-            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode,
+            gini = gini,
+            demonyms = demonyms,
+            translations = translations.mapValues { it.value?.mapToTranslation() },
+            continents = continents,
+            borders = borders
         )
     }
 }

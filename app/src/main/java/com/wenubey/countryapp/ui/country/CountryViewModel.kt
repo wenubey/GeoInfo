@@ -31,18 +31,23 @@ class CountryViewModel(
     var searchQuery = mutableStateOf("")
         private set
 
-    var selectedSortOption = mutableStateOf(SortOption.NAME)
+    private var selectedSortOption = mutableStateOf(SortOption.NAME)
+
+    private var selectedSortOrder = mutableStateOf(SortOrder.ASC)
+
+    var countryPhoneCodes by mutableStateOf<Map<String?,String?>>(emptyMap())
         private set
-    var selectedSortOrder = mutableStateOf(SortOrder.ASC)
+
+    var countryLanguageNames by mutableStateOf<Map<String, String>>(emptyMap())
         private set
 
     private var searchJob: Job? = null
     private var countrySortJob: Job? = null
     private var combinedJob: Job? = null
     init {
-        getAllCountries(
-            fetchFromRemote = true
-        )
+        getAllCountries()
+        getCountryCodes()
+        getCountryLanguages()
     }
 
     fun onEvent(event: CountryEvent) {
@@ -105,7 +110,7 @@ class CountryViewModel(
                 }
             }
             is CountryEvent.OnGetCountry -> {
-                getCountry(false, event.query)
+                getCountry(false, event.countryName, event.countryCode)
             }
 
         }
@@ -122,22 +127,26 @@ class CountryViewModel(
 
    private fun getCountry(
         fetchFromRemote: Boolean = false,
-        countryName: String
+        countryName: String,
+        countryCode: String
     ) {
         viewModelScope.launch {
-            val result = repo.getCountry(fetchFromRemote, countryName)
+            val result = repo.getCountry(fetchFromRemote, countryName, countryCode)
             countryDataState = processCountryResult(result)
         }
     }
 
     private fun processCountryResult(result: Result<Country>): CountryDataState {
         return if (result.isSuccess) {
+            CountryDataState(isLoading = true)
             CountryDataState(
-                country = result.getOrNull()
+                country = result.getOrNull(),
+                isLoading = false
             )
         } else {
             CountryDataState(
-                error = result.exceptionOrNull()?.message
+                error = result.exceptionOrNull()?.message,
+                isLoading = false,
             )
         }
     }
@@ -158,5 +167,23 @@ class CountryViewModel(
         }
     }
 
+    private fun getCountryCodes() = viewModelScope.launch {
 
+        val countryPhoneCodesResult = repo.getCountryCodeFromCache()
+        countryPhoneCodes = if (countryPhoneCodesResult.isSuccess) {
+            countryPhoneCodesResult.getOrNull()!!
+        } else {
+            emptyMap()
+        }
+
+    }
+
+    private fun getCountryLanguages() = viewModelScope.launch {
+        val countryLanguagesResult = repo.getLanguages()
+        countryLanguageNames = if (countryLanguagesResult.isSuccess) {
+            countryLanguagesResult.getOrNull()!!
+        } else {
+            emptyMap()
+        }
+    }
 }

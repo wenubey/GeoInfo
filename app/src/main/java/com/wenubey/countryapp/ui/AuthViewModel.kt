@@ -8,6 +8,7 @@ class AuthViewModel(
     private val repo: EmailAuthRepository
 ): ViewModel() {
 
+
     init {
         getAuthState()
     }

@@ -1,8 +1,6 @@
 package com.wenubey.countryapp.utils
 
 import android.content.Context
-import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -10,24 +8,27 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.model.Currency
 import com.wenubey.countryapp.domain.model.NativeName
+import com.wenubey.countryapp.domain.model.Translation
 import com.wenubey.countryapp.domain.model.toUser
 import com.wenubey.countryapp.utils.Constants.TAG
+import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
-fun parseDate(day: String?, month: String?, year: String?): Date? {
-    val dateString = "$month/$day/$year"
-    return if (Build.VERSION.SDK_INT > VERSION_CODES.O) {
-        val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy")
-        val localDate = LocalDate.parse(dateString, formatter)
-        Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
-    } else {
-        SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse(dateString)
+fun parseEventDate(day: String?, month: String?, year: String?): String? {
+    return try {
+        val isBC = year?.startsWith('-') == true
+        val absYear = year?.removePrefix("-")?.toIntOrNull() ?: 0
+
+        val formattedYear = if (isBC) {
+            "BC $absYear"
+        } else {
+            absYear.toString()
+        }
+        return "$month/$day/$formattedYear"
+    } catch (e: ParseException) {
+        null
     }
 }
 
@@ -68,6 +69,15 @@ enum class AuthProvider {
     TWITTER
 }
 
+val countryNameMapping = mapOf(
+    "Türkiye" to "Turkey",
+    "The Bahamas" to "Bahamas"
+)
+
+fun normalizeCountryName(countryName: String?): String? {
+    return countryNameMapping[countryName] ?: countryName
+}
+
 val fakeCountry = Country(
     countryCommonName = "Poland",
     countryOfficialName = "Poland Republic",
@@ -76,7 +86,6 @@ val fakeCountry = Country(
     ),
     topLevelDomain = listOf(".pl"),
     countryCodeCCA2 = "PL",
-    isIndependent = true,
     currency = mapOf(
         "PLN" to Currency(name = "Polish złoty", symbol = "zł")
     ),
@@ -101,6 +110,19 @@ val fakeCountry = Country(
         "🇵🇱 Poland" to "+48"
     ),
     history = null,
-    isUnMember = true
+    demonyms = mapOf(),
+    translations = mapOf(
+        "deu" to Translation(official = "Republik Polen", common = "Polen")
+    ),
+    gini = mapOf(
+        "2018" to 30.2
+    ),
+    continents = listOf(
+        "Europe"
+    ),
+    borders = listOf(
+        "TR",
+        "DE"
+    )
 )
 

@@ -4,8 +4,9 @@ import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
 import com.wenubey.countryapp.data.local.entities.CountryFavEntity
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
+import com.wenubey.countryapp.data.local.entities.LanguageEntity
 import com.wenubey.countryapp.data.local.entities.NativeNameEntity
-import java.util.Date
+import com.wenubey.countryapp.data.local.entities.TranslationEntity
 
 data class Country(
     val countryCommonName: String?,
@@ -15,8 +16,6 @@ data class Country(
     val population: Int?,
     val topLevelDomain: List<String>?,
     val countryCodeCCA2: String?,
-    val isIndependent: Boolean?,
-    val isUnMember: Boolean?,
     val currency: Map<String, Currency>?,
     val region: String?,
     val subRegion: String?,
@@ -27,7 +26,12 @@ data class Country(
     val timezones: List<String>?,
     val coatOfArms: Map<String, String>?,
     val history: List<History>?,
-    val flagEmojiWithPhoneCode: Map<String?, String?>
+    val flagEmojiWithPhoneCode: Map<String?, String?>,
+    val gini: Map<String?, Double?>,
+    val demonyms: Map<String?, Map<String?, String?>?>?,
+    val translations: Map<String?, Translation?>,
+    val continents: List<String?>?,
+    val borders: List<String?>?
 ) {
     fun mapToCountryCacheEntity(): CountryCacheEntity {
         return CountryCacheEntity(
@@ -38,19 +42,22 @@ data class Country(
             population = population,
             topLevelDomain = topLevelDomain,
             countryCodeCCA2 = countryCodeCCA2,
-            isIndependent = isIndependent,
-            isUnMember = isUnMember,
             currencyEntity = currency?.mapValues { it.value.mapToCurrencyEntity() },
             region = region,
             subRegion = subRegion,
-            languageEntity = language,
+            languageEntity = LanguageEntity(data = language),
             latlng = latlng,
             area = area,
             flagEntity = flag,
             timezones = timezones,
             coatOfArms = coatOfArms,
             historyEntity = history?.map { it.mapToHistoryEntity() },
-            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode,
+            gini = gini,
+            demonyms = demonyms,
+            translations = translations.mapValues { it.value?.mapToTranslationEntity() },
+            continents = continents,
+            borders = borders
         )
     }
 
@@ -63,19 +70,22 @@ data class Country(
             population = population,
             topLevelDomain = topLevelDomain,
             countryCodeCCA2 = countryCodeCCA2,
-            isIndependent = isIndependent,
-            isUnMember = isUnMember,
             currencyEntity = currency?.mapValues { it.value.mapToCurrencyEntity() },
             region = region,
             subRegion = subRegion,
-            language = language,
+            language = LanguageEntity(data = language),
             latlng = latlng,
             area = area,
             flagEntity = flag,
             timezones = timezones,
             coatOfArms = coatOfArms,
             historyEntity = history?.map { it.mapToHistoryEntity() },
-            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode,
+            gini = gini,
+            demonyms = demonyms,
+            translations = translations.mapValues { it.value?.mapToTranslationEntity() },
+            continents = continents,
+            borders = borders
         )
     }
 }
@@ -105,7 +115,7 @@ data class Currency(
 }
 
 data class History(
-    val date: Date?,
+    val date: String?,
     val event: String?
 ) {
     fun mapToHistoryEntity(): HistoryEntity {
@@ -115,5 +125,18 @@ data class History(
         )
     }
 }
+
+data class Translation(
+    val official: String?,
+    val common: String?,
+) {
+    fun mapToTranslationEntity(): TranslationEntity {
+        return TranslationEntity(
+            official = official,
+            common = common
+        )
+    }
+}
+
 
 

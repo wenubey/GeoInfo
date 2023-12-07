@@ -6,12 +6,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.wenubey.countryapp.ui.country.detail.CountryDetailScreen
 import com.wenubey.countryapp.ui.email_verify.VerifyEmailScreen
 import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordScreen
 import com.wenubey.countryapp.ui.map.MapScreen
 import com.wenubey.countryapp.ui.profile.ProfileScreen
 import com.wenubey.countryapp.ui.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.sign_up.SignUpScreen
+import java.util.Locale
 
 @Composable
 fun NavGraph(
@@ -35,14 +37,24 @@ fun NavGraph(
                 navigateToProfileScreen = { navHostController.navigate(Screen.MapScreen.route) },
             )
         }
-        composable(route = Screen.MapScreen.route) {
+        composable(route = Screen.MapScreen.route + "/{countryName}",
+            arguments = listOf(
+                navArgument("countryName") {
+                    type = NavType.StringType
+                    defaultValue = Locale.getDefault().displayCountry
+                }
+            )
+        ) {
             MapScreen(
                 navigateToProfileScreen = {
                     navHostController.navigate(Screen.ProfileScreen.route)
                 },
-                navigateToCountryDetailScreen = { countryName ->
-                    // TODO not implemented yet
-                }
+                navigateToCountryDetailScreen = { countryCode, countryName ->
+                    if (countryCode != null && countryName != null) {
+                        navHostController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
+                    }
+                },
+                countryName = it.arguments?.getString("countryName") ?: Locale.getDefault().displayName
             )
         }
         composable(route = Screen.VerifyEmailScreen.route) {
@@ -87,5 +99,30 @@ fun NavGraph(
                 email = it.arguments?.getString("email")
             )
         }
+        composable(route = Screen.CountryDetailScreen.route + "/{countryCode}/{countryName}",
+            arguments = listOf(
+                navArgument("countryCode") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                },
+                navArgument("countryName") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            )
+        ) {
+            CountryDetailScreen(
+                countryCode = it.arguments?.getString("countryCode") ?: "",
+                countryName = it.arguments?.getString("countryName") ?: "",
+                navigateBack = { navHostController.popBackStack() },
+                navigateToMapScreen = { countryName ->
+                    navHostController.navigate(Screen.MapScreen.route + "/${countryName}")
+                }
+            )
+        }
     }
+
+
 }
+
+

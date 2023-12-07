@@ -11,29 +11,33 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.wenubey.countryapp.ui.navigation.NavGraph
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import org.koin.compose.KoinContext
 
 
 class MainActivity : ComponentActivity() {
     private lateinit var navHostController: NavHostController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CountryAppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    navHostController = rememberNavController()
-                    NavGraph(
-                        navHostController = navHostController,
-                    )
-                    AuthState(navHostController = navHostController)
+            KoinContext {
+                CountryAppTheme {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        navHostController = rememberNavController()
+                        NavGraph(
+                            navHostController = navHostController,
+                        )
+                        AuthState(navHostController = navHostController)
+                    }
                 }
             }
         }
     }
 }
+
+
 
 

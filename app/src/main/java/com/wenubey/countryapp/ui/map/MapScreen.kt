@@ -1,6 +1,5 @@
 package com.wenubey.countryapp.ui.map
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,19 +14,19 @@ import com.wenubey.countryapp.ui.map.components.GoogleMaps
 import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
 import com.wenubey.countryapp.ui.map.components.search_bar.CountrySearchBar
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
-import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.SortOption
 import com.wenubey.countryapp.utils.SortOrder
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MapScreen(
     navigateToProfileScreen: () -> Unit,
-    navigateToCountryDetailScreen: (countryName: String?) -> Unit,
+    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
+    countryName: String,
+    countryViewModel: CountryViewModel = koinViewModel(),
+    profileViewModel: ProfileViewModel = koinViewModel()
 ) {
 
-    val countryViewModel: CountryViewModel = getViewModel()
-    val profileViewModel: ProfileViewModel = getViewModel()
     val isSearchBarActive = remember {
         mutableStateOf(false)
     }
@@ -54,33 +53,47 @@ fun MapScreen(
                             )
                         },
                         active = isSearchBarActive.value,
-                        onActiveChange = {isSearchBarActive.value = it},
+                        onActiveChange = { isSearchBarActive.value = it },
                         countries = countries,
-                        onSortButtonClicked = {sortOption, sortOrder, query -> onSortButtonClicked(sortOption, sortOrder, query, countryViewModel) },
+                        onSortButtonClicked = { sortOption, sortOrder, query ->
+                            onSortButtonClicked(
+                                sortOption,
+                                sortOrder,
+                                query,
+                                countryViewModel
+                            )
+                        },
                         onCardClick = navigateToCountryDetailScreen
                     )
                 }
-                GoogleMaps(onMapClick = { countryName ->
-                    navigateToCountryDetailScreen(countryName)
-                })
+                GoogleMaps(
+                    onMapClick = { countryName, countryCode ->
+                        navigateToCountryDetailScreen(countryCode, countryName)
+                    },
+                    currentCountryName = countryName,
+                )
             }
 
         }
     )
 
 }
-private fun onSortButtonClicked(sortOption: SortOption, sortOrder: SortOrder, query: String?, viewModel: CountryViewModel) {
+
+private fun onSortButtonClicked(
+    sortOption: SortOption,
+    sortOrder: SortOrder,
+    query: String?,
+    viewModel: CountryViewModel
+) {
     if (!query.isNullOrBlank()) {
-        Log.i(TAG, "sortOption: $sortOption, sortOrder: $sortOrder, query: $query")
         viewModel.onEvent(
             CountryEvent.OnGetAllCountriesFilteredAndSorted(
                 query = query,
-                sortOrder =sortOrder,
+                sortOrder = sortOrder,
                 sortOption = sortOption
             )
         )
     } else {
-        Log.i(TAG, "sortOption: $sortOption, sortOrder: $sortOrder, query: $query")
         viewModel.onEvent(
             CountryEvent.OnSortButtonClick(
                 sortOption = sortOption,

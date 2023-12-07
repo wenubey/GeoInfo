@@ -25,7 +25,7 @@ fun CountrySearchBar(
     onActiveChange: (Boolean) -> Unit,
     countries: List<Country>,
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String?) -> Unit,
-    onCardClick: (countryName: String?) -> Unit,
+    onCardClick: (countryCode: String?, countryName: String?) -> Unit,
 ) {
     SearchBar(
         query = query,

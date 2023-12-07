@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
+import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.email_verify.components.RevokeAccess
 import com.wenubey.countryapp.ui.profile.components.ProfileContent
 import com.wenubey.countryapp.ui.profile.components.ProfileTopBar
@@ -17,21 +18,22 @@ import com.wenubey.countryapp.ui.profile.components.UpdateUser
 import com.wenubey.countryapp.ui.profile.components.UserInfoUpdateDialog
 import com.wenubey.countryapp.ui.profile.components.UserUpdateFAB
 import com.wenubey.countryapp.utils.Constants.PROFILE_SCREEN_TITLE
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
     navigateBack: () -> Unit,
-    navigateToForgotPasswordScreen: (email: String) -> Unit
+    navigateToForgotPasswordScreen: (email: String) -> Unit,
+    profileViewModel: ProfileViewModel = koinViewModel(),
+    countryViewModel: CountryViewModel = koinViewModel()
 ) {
-    val viewModel: ProfileViewModel = getViewModel()
     val snackBarHostState = remember { SnackbarHostState() }
     val showDialog = remember { mutableStateOf(false) }
-    var email by remember { mutableStateOf(TextFieldValue(viewModel.currentUser?.email ?: "")) }
+    var email by remember { mutableStateOf(TextFieldValue(profileViewModel.currentUser?.email ?: "")) }
     var displayName by remember {
         mutableStateOf(
             TextFieldValue(
-                viewModel.currentUser?.displayName ?: ""
+                profileViewModel.currentUser?.displayName ?: ""
             )
         )
     }
@@ -40,7 +42,7 @@ fun ProfileScreen(
     }
     var phoneNumber by remember {
         mutableStateOf(
-            viewModel.currentUser?.phoneNumber ?: ""
+            profileViewModel.currentUser?.phoneNumber ?: ""
         )
     }
     val coroutineScope = rememberCoroutineScope()
@@ -49,8 +51,8 @@ fun ProfileScreen(
         topBar = {
             ProfileTopBar(
                 title = PROFILE_SCREEN_TITLE,
-                signOut = { viewModel.signOut() },
-                revokeAccess = { viewModel.revokeAccess() },
+                signOut = { profileViewModel.signOut() },
+                revokeAccess = { profileViewModel.revokeAccess() },
                 navigateBack = navigateBack,
                 navigateToForgotPasswordScreen = {
                     navigateToForgotPasswordScreen(email.text)
@@ -58,7 +60,7 @@ fun ProfileScreen(
             )
         },
         content = { paddingValues ->
-            ProfileContent(paddingValues = paddingValues, user = viewModel.currentUserDataResponse)
+            ProfileContent(paddingValues = paddingValues, user = profileViewModel.currentUserDataResponse)
         },
         snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
         floatingActionButton = {
@@ -70,7 +72,7 @@ fun ProfileScreen(
         UserInfoUpdateDialog(
             showDialog = showDialog,
             onClickConfirm = {
-                viewModel.updateUser(
+                profileViewModel.updateUser(
                     newDisplayName = displayName.text,
                     email = email.text,
                     phoneNumber = "$countryPhoneCode $phoneNumber"
@@ -83,20 +85,20 @@ fun ProfileScreen(
             onEmailValueChange = { email = it },
             onDisplayNameValueChange = { displayName = it },
             onPhoneNumberValueChange = { phoneNumber = it },
-            countryCodeMap = viewModel.countryPhoneCodes,
+            countryCodeMap = countryViewModel.countryPhoneCodes,
             onPhoneCodeValueChange = {countryPhoneCode = it!!}
 
         )
     }
 
     RevokeAccess(
-        viewModel = viewModel,
+        viewModel = profileViewModel,
         snackBarHostState = snackBarHostState,
         coroutineScope = coroutineScope
     )
 
     UpdateUser(
-        viewModel = viewModel,
+        viewModel = profileViewModel,
         snackBarHostState = snackBarHostState
     )
 }

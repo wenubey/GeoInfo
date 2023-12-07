@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
+import com.wenubey.countryapp.data.local.entities.LanguageEntity
 
 @Dao
 interface CountryCacheDao {
@@ -16,14 +17,14 @@ interface CountryCacheDao {
     @Query("SELECT * FROM countriesCache ORDER BY countryCommonName")
     suspend fun getAllCountriesFromCache(): List<CountryCacheEntity>
 
-    @Query("SELECT * FROM countriesCache WHERE countryCommonName LIKE '%' || :query || '%'")
+    @Query("SELECT * FROM countriesCache WHERE countryCodeCCA2 LIKE '%' || :query || '%'")
     suspend fun getCountry(query: String): CountryCacheEntity?
 
     @Query("DELETE FROM countriesCache")
     suspend fun clearALl()
 
-    @Query("DELETE FROM countriesCache WHERE countryCommonName LIKE '%' || :name || '%'")
-    suspend fun clearCountry(name: String)
+    @Query("DELETE FROM countriesCache WHERE countryCodeCCA2 LIKE '%' || :code || '%'")
+    suspend fun clearCountry(code: String)
 
     @Query(
         """
@@ -48,4 +49,6 @@ interface CountryCacheDao {
     suspend fun getSortedFilteredCountries(query: String?, sortOption: String?, sortOrder: String?): List<CountryCacheEntity>
 
 
+    @Query("SELECT DISTINCT languageEntity FROM countriesCache")
+    suspend fun getLanguages(): List<LanguageEntity?>
 }

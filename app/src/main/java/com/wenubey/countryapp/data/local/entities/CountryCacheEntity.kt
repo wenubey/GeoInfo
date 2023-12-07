@@ -7,8 +7,8 @@ import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.model.Currency
 import com.wenubey.countryapp.domain.model.History
 import com.wenubey.countryapp.domain.model.NativeName
+import com.wenubey.countryapp.domain.model.Translation
 import com.wenubey.countryapp.utils.Constants.CACHE_TABLE_NAME
-import java.util.Date
 
 @Entity(tableName = CACHE_TABLE_NAME)
 data class CountryCacheEntity(
@@ -28,10 +28,6 @@ data class CountryCacheEntity(
     val topLevelDomain: List<String>?,
     @ColumnInfo(name = "countryCodeCCA2")
     val countryCodeCCA2: String?,
-    @ColumnInfo(name = "isIndependent")
-    val isIndependent: Boolean?,
-    @ColumnInfo(name = "isUnMember")
-    val isUnMember: Boolean?,
     @ColumnInfo(name = "currencyEntity")
     val currencyEntity: Map<String,CurrencyEntity>?,
     @ColumnInfo(name = "region")
@@ -39,7 +35,7 @@ data class CountryCacheEntity(
     @ColumnInfo(name = "subRegion")
     val subRegion: String?,
     @ColumnInfo(name = "languageEntity")
-    val languageEntity: Map<String, String>?,
+    val languageEntity: LanguageEntity?,
     @ColumnInfo(name = "latlng")
     val latlng: List<Double>?,
     @ColumnInfo(name = "area")
@@ -53,7 +49,17 @@ data class CountryCacheEntity(
     @ColumnInfo(name = "historyEntity")
     val historyEntity: List<HistoryEntity>?,
     @ColumnInfo(name = "flagEmojiWithPhoneCode")
-    val flagEmojiWithPhoneCode: Map<String?,String?>
+    val flagEmojiWithPhoneCode: Map<String?,String?>,
+    @ColumnInfo(name = "gini")
+    val gini: Map<String?, Double?>,
+    @ColumnInfo(name = "demonyms")
+    val demonyms: Map<String?, Map<String?, String?>?>?,
+    @ColumnInfo(name = "translations")
+    val translations: Map<String?, TranslationEntity?>,
+    @ColumnInfo(name = "continents")
+    val continents: List<String?>?,
+    @ColumnInfo(name = "borders")
+    val borders: List<String?>?,
 ) {
     fun mapToCountry(): Country {
         return Country(
@@ -64,19 +70,22 @@ data class CountryCacheEntity(
             population = population,
             topLevelDomain = topLevelDomain,
             countryCodeCCA2 = countryCodeCCA2,
-            isIndependent = isIndependent,
-            isUnMember = isUnMember,
             currency = currencyEntity?.mapValues { it.value.mapToCurrency() },
             region = region,
             subRegion = subRegion,
-            language = languageEntity,
+            language = languageEntity?.data,
             latlng = latlng,
             area = area,
             flag = flagEntity,
             timezones = timezones,
             coatOfArms = coatOfArms,
             history = historyEntity?.map { it.mapToHistory() },
-            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode
+            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode,
+            gini = gini,
+            demonyms = demonyms,
+            translations = translations.mapValues { it.value?.mapToTranslation() },
+            continents = continents,
+            borders = borders
         )
     }
 }
@@ -106,7 +115,7 @@ data class CurrencyEntity(
 }
 
 data class HistoryEntity(
-    val date: Date?,
+    val date: String?,
     val event: String?
 ) {
     fun mapToHistory(): History {
@@ -116,4 +125,20 @@ data class HistoryEntity(
         )
     }
 }
+
+data class TranslationEntity(
+    val official: String?,
+    val common: String?,
+) {
+    fun mapToTranslation(): Translation {
+        return Translation(
+            official = official,
+            common = common
+        )
+    }
+}
+
+data class LanguageEntity(
+    val data: Map<String, String>?
+)
 

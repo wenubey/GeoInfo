@@ -17,7 +17,7 @@ import com.wenubey.countryapp.ui.sign_in.components.SignInTopAppBar
 import com.wenubey.countryapp.ui.sign_in.components.SignInWithGoogle
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
@@ -25,9 +25,9 @@ fun SignInScreen(
     navigateToForgotPasswordScreen: () -> Unit,
     navigateToSignUpScreen: () -> Unit,
     navigateToProfileScreen: () -> Unit,
+    viewModel: SignInViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
-    val viewModel: SignInViewModel = getViewModel()
     val activity = context as? Activity ?: return
 
     Scaffold(

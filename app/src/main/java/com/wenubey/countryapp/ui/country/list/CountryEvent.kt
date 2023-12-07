@@ -16,6 +16,6 @@ sealed class CountryEvent {
 
     data class OnGetAllCountriesFilteredAndSorted(val query: String, val sortOrder: SortOrder, val sortOption: SortOption): CountryEvent()
 
-    data class OnGetCountry(val query: String): CountryEvent()
+    data class OnGetCountry(val countryName: String, val countryCode: String): CountryEvent()
 
 }

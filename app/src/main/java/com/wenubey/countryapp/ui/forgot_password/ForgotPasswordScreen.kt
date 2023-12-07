@@ -10,14 +10,14 @@ import com.wenubey.countryapp.ui.forgot_password.compoents.ForgotPasswordTopBar
 import com.wenubey.countryapp.utils.AuthProvider
 import com.wenubey.countryapp.utils.Constants.RESET_PASSWORD_MESSAGE
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ForgotPasswordScreen(
     navigateBack: () -> Unit,
     email: String?,
+    viewModel: ForgotPasswordViewModel = koinViewModel()
 ) {
-    val viewModel: ForgotPasswordViewModel = getViewModel()
     val context = LocalContext.current
 
     val currentUserAuthProvider = viewModel.currentUserAuthProvider
