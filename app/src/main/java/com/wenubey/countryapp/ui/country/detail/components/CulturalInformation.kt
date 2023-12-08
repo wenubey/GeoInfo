@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
-import com.wenubey.countryapp.ui.country.detail.InfoHeader
 import com.wenubey.countryapp.utils.Constants
 
 @Composable

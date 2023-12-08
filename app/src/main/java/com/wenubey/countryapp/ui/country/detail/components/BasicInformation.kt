@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
-import com.wenubey.countryapp.ui.country.detail.InfoHeader
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 
@@ -24,7 +23,7 @@ fun BasicInformation(country: Country) {
         header = Constants.KNOWN_AS,
         imageVector = Icons.Default.TravelExplore,
         contentDescription = Constants.COUNTRY_KNOWN_AS_CONTENT_DESCRIPTION,
-        content = "${country.countryCommonName}, ${country.countryNativeName?.values?.first()?.common}",
+        content = "${country.countryCommonName}\n${country.countryNativeName?.values?.first()?.common}",
     )
     Divider(
         thickness = 1.dp,

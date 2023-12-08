@@ -34,7 +34,7 @@ fun NavGraph(
             SignInScreen(
                 navigateToForgotPasswordScreen = { navHostController.navigate(Screen.ForgotPasswordScreen.route) },
                 navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
-                navigateToProfileScreen = { navHostController.navigate(Screen.MapScreen.route) },
+                navigateToMapScreen = { navHostController.navigate(Screen.MapScreen.route + "/${Locale.getDefault().displayCountry}") },
             )
         }
         composable(route = Screen.MapScreen.route + "/{countryName}",

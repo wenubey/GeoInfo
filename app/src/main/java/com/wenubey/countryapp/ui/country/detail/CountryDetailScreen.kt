@@ -1,17 +1,12 @@
 package com.wenubey.countryapp.ui.country.detail
 
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
-import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.detail.components.CountryDetailTopBar
 import com.wenubey.countryapp.ui.country.list.CountryEvent
@@ -50,18 +45,11 @@ fun CountryDetailScreen(
         if (state.country != null) {
             val country = state.country
 
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(context)
-                    .data(country.flag?.get("png"))
-                    .build(),
-                placeholder = rememberVectorPainter(image = Icons.Default.Flag),
 
-                )
             Scaffold(
                 topBar = {
                     CountryDetailTopBar(
                         animation = animationTopBar,
-                        painter = painter,
                         country = country,
                         navigateBack = navigateBack
                     )
@@ -71,7 +59,6 @@ fun CountryDetailScreen(
                         country = country,
                         paddingValues = paddingValues,
                         lazyListState = lazyListState,
-                        painter = painter,
                         languages = countryViewModel.countryLanguageNames,
                         navigateToMapScreen = navigateToMapScreen,
                     )

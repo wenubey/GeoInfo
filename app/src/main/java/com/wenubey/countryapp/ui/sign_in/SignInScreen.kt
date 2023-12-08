@@ -24,7 +24,7 @@ import org.koin.androidx.compose.koinViewModel
 fun SignInScreen(
     navigateToForgotPasswordScreen: () -> Unit,
     navigateToSignUpScreen: () -> Unit,
-    navigateToProfileScreen: () -> Unit,
+    navigateToMapScreen: () -> Unit,
     viewModel: SignInViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
@@ -76,7 +76,7 @@ fun SignInScreen(
 
     SignInWithGoogle(navigateToProfileScreen = { isSigned ->
         if (isSigned) {
-            navigateToProfileScreen()
+            navigateToMapScreen()
         }
     }, viewModel = viewModel)
 

@@ -59,6 +59,8 @@ object Constants {
     const val COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION = "Selected country's genders for demonyms."
     const val COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION = "Selected country's translations from other countries."
     const val COUNTRY_MAP_CONTENT_DESCRIPTION = "Selected country's map location."
+    const val WIKIPEDIA_CONTENT_DESCRIPTION = "This button will allow you to go wikipedia for selected country's information."
+    const val COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION = "This button will open a dropdown menu."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -77,6 +79,7 @@ object Constants {
     const val GEOGRAPHICAL_INFORMATION = "Geographical Information"
     const val CULTURAL_INFORMATION = "Cultural Information"
     const val ECONOMICAL_INFORMATION = "Economical Information"
+    const val HISTORICAL_INFORMATION = "Historical Information"
     const val KNOWN_AS = "Known as:"
     const val CAPITAL = "Capital:"
     const val POPULATION = "Population:"
@@ -90,7 +93,10 @@ object Constants {
     const val LANGUAGES = "Languages:"
     const val TIMEZONES = "Timezones:"
     const val DEMONYMS = "Demonyms:"
+    const val CURRENCIES = "Currencies:"
     const val TRANSLATIONS = "Translations"
+    const val MORE_INFO_WIKIPEDIA = "More info on Wikipedia"
+    const val GO_TO_COUNTRY_LOCATION = "Go to country's location on Map"
 
     //MESSAGES
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."

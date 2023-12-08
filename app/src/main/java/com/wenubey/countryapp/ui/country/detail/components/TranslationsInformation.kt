@@ -21,10 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.utils.Constants
 
@@ -38,8 +36,6 @@ fun TranslationsInformation(
     fun toggleExpansion() {
         isExpanded = !isExpanded
     }
-
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -65,8 +61,7 @@ fun TranslationsInformation(
             )
             Text(
                 text = Constants.TRANSLATIONS,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
+                style = MaterialTheme.typography.titleMedium
             )
         }
         Column {
@@ -79,21 +74,18 @@ fun TranslationsInformation(
 
             translationsToShow?.forEach { translation ->
                 Column(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                    modifier = Modifier.padding(horizontal = 36.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = "${languages[translation.key]}",
-                        fontSize = 20.sp,
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(MaterialTheme.colorScheme.primaryContainer),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyLarge
                     )
-                    Divider(
-                        thickness = 1.dp
-                    )
-                    Text(text = "official: ${translation.value?.official}")
-                    Text(text = "common: ${translation.value?.common}")
+                    Text(text = "official: ${translation.value?.official}", style = MaterialTheme.typography.bodyMedium)
+                    Text(text = "common: ${translation.value?.common}", style = MaterialTheme.typography.bodyMedium)
                 }
             }
         }

@@ -14,19 +14,22 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.utils.Constants
 
@@ -34,10 +37,17 @@ import com.wenubey.countryapp.utils.Constants
 @Composable
 fun CountryDetailTopBar(
     animation: Boolean,
-    painter: AsyncImagePainter,
     country: Country,
     navigateBack: () -> Unit,
 ) {
+    val context = LocalContext.current
+    val painter = rememberAsyncImagePainter(
+    model = ImageRequest.Builder(context)
+        .data(country.flag?.get("png"))
+        .build(),
+    placeholder = rememberVectorPainter(image = Icons.Default.Flag),
+
+    )
 
     AnimatedVisibility(
         visible = animation,
@@ -65,8 +75,7 @@ fun CountryDetailTopBar(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = country.countryOfficialName ?: Constants.UNDEFINED,
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center
                     )
                 }

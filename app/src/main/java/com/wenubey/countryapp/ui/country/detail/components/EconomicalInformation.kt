@@ -17,12 +17,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
-import com.wenubey.countryapp.ui.country.detail.InfoHeader
 import com.wenubey.countryapp.utils.Constants
 
 @Composable
@@ -43,12 +43,12 @@ fun CurrencyRow(country: Country?) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Currencies: ")
+            Text(text = Constants.CURRENCIES, style = MaterialTheme.typography.bodyMedium)
             Column(modifier = Modifier.fillMaxHeight()) {
                 country?.currency?.forEach {
                     Text(
                         text = "${it.value.name} (${it.key})",
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Justify,
                     )
@@ -71,17 +71,17 @@ fun DemonymsRow(country: Country) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Icon(
                     imageVector = Icons.Default.Face,
                     contentDescription = Constants.COUNTRY_DEMONYMS_CONTENT_DESCRIPTION
                 )
-                Text(text = Constants.DEMONYMS)
+                Text(text = Constants.DEMONYMS, style = MaterialTheme.typography.bodyMedium)
             }
             Column {
                 country.demonyms?.forEach { demonym ->
                     Column {
-                        Text(text = "${demonym.key}")
+                        Text(text = "${demonym.key}", style = MaterialTheme.typography.bodyMedium)
                         Divider(
                             modifier = Modifier.size(
                                 height = 1.dp,
@@ -94,7 +94,7 @@ fun DemonymsRow(country: Country) {
                                     imageVector = if (entry.key!!.contains("f")) Icons.Default.Female else Icons.Default.Male,
                                     contentDescription = Constants.COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION
                                 )
-                                Text(text = entry.value ?: Constants.UNDEFINED)
+                                Text(text = entry.value ?: Constants.UNDEFINED, style = MaterialTheme.typography.bodyMedium)
                             }
                         }
                     }

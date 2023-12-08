@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.ui.country.detail.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -31,15 +31,31 @@ fun CountryInfoRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = header, fontSize = 20.sp)
+            Text(
+                text = header,
+                style = MaterialTheme.typography.bodyMedium,
+            )
             Text(
                 text = content,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Justify,
-                fontSize = 20.sp
             )
         }
     }
+}
+
+@Composable
+fun InfoHeader(
+    content: String
+) {
+    Text(
+        text = content,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .background(MaterialTheme.colorScheme.primaryContainer),
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.titleMedium
+    )
 
 }
