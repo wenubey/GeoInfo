@@ -64,6 +64,7 @@ object Constants {
     const val WIKIPEDIA_CONTENT_DESCRIPTION = "This button will allow you to go wikipedia for selected country's information."
     const val COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION = "This button will open a dropdown menu."
     const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
+    const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
