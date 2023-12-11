@@ -74,7 +74,7 @@ fun CountryDetailTopBar(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = country.countryOfficialName ?: Constants.UNDEFINED,
+                        text = country.countryCommonName ?: Constants.UNDEFINED,
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center
                     )

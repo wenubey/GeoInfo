@@ -1,7 +1,5 @@
 package com.wenubey.countryapp.ui.country.detail.components
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.MilitaryTech
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -36,6 +36,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,14 +44,16 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
+import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
 import com.wenubey.countryapp.utils.Constants
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FlagWithCountryCommonName(
     country: Country,
     navigateToMapScreen: (countryName: String?) -> Unit,
-
-    ) {
+    deepLinkViewModel: DeepLinkViewModel = koinViewModel()
+) {
     val localConfig = LocalConfiguration.current
     val context = LocalContext.current
     val screenWidth = localConfig.screenWidthDp
@@ -60,9 +63,14 @@ fun FlagWithCountryCommonName(
 
     val flagData = country.flag?.get("png")
     val coatOfArmsData = country.coatOfArms?.get("png")
+    val flagIcon = Icons.Default.Flag
+    val coatOfArmsIcon = Icons.Default.MilitaryTech
 
     var selectedImageData by remember {
         mutableStateOf(flagData)
+    }
+    var selectedIcon by remember {
+        mutableStateOf(flagIcon)
     }
 
     val isMenuExpanded = remember {
@@ -79,14 +87,25 @@ fun FlagWithCountryCommonName(
         } else {
             flagData
         }
+        selectedIcon = if (selectedIcon == flagIcon) {
+            coatOfArmsIcon
+        } else {
+            flagIcon
+        }
     }
 
+
+
     fun goToWikipedia() {
-        if (country.countryCommonName != null) {
-            val wikipediaUrl = "https://en.wikipedia.org/wiki/${country.countryCommonName}"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikipediaUrl))
-            context.startActivity(intent)
-        }
+        deepLinkViewModel.goToWikipedia(country.countryCommonName, context)
+    }
+
+    fun sendDeepLink() {
+        deepLinkViewModel.sendDeepLink(
+            countryCode = country.countryCodeCCA2 ?: "",
+            countryName = country.countryCommonName ?: "",
+            context = context
+        )
     }
 
 
@@ -119,18 +138,29 @@ fun FlagWithCountryCommonName(
         )
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = country.countryCommonName ?: Constants.UNDEFINED,
-                fontSize = 36.sp
+                modifier = Modifier.weight(0.7f),
+                text = country.countryOfficialName ?: Constants.UNDEFINED,
+                style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
+                overflow = TextOverflow.Clip
             )
-            IconButton(onClick = { toggleDropdownMenu() }) {
-                Icon(
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = Constants.COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION
-                )
+            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.weight(0.25f)) {
+                IconButton(onClick = {
+                    changeFlagToCoatOfArms()
+                }) {
+                    Icon(imageVector = selectedIcon, contentDescription = Constants.COUNTRY_SELECTED_ICON_DESCRIPTION)
+                }
+                IconButton(onClick = { toggleDropdownMenu() }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = Constants.COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION
+                    )
+                }
             }
+
 
         }
         Divider(thickness = 1.dp)
@@ -138,7 +168,8 @@ fun FlagWithCountryCommonName(
         DetailDropDownMenu(
             isMenuExpanded = isMenuExpanded,
             goToWikipedia = { goToWikipedia() },
-            navigateToMapScreen = { navigateToMapScreen(country.countryCommonName) }
+            navigateToMapScreen = { navigateToMapScreen(country.countryCommonName) },
+            shareCountryInfo = { sendDeepLink() }
         )
     }
 }
@@ -148,7 +179,8 @@ fun FlagWithCountryCommonName(
 fun DetailDropDownMenu(
     isMenuExpanded: MutableState<Boolean>,
     goToWikipedia: () -> Unit,
-    navigateToMapScreen: () -> Unit
+    navigateToMapScreen: () -> Unit,
+    shareCountryInfo: () -> Unit,
 ) {
     DropdownMenu(
         expanded = isMenuExpanded.value,
@@ -164,7 +196,10 @@ fun DetailDropDownMenu(
                         painter = painterResource(id = R.drawable.wikipedia_logo),
                         contentDescription = Constants.WIKIPEDIA_CONTENT_DESCRIPTION,
                     )
-                    Text(text = Constants.MORE_INFO_WIKIPEDIA, style = MaterialTheme.typography.bodyMedium)
+                    Text(
+                        text = Constants.MORE_INFO_WIKIPEDIA,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             },
             onClick = {
@@ -185,5 +220,12 @@ fun DetailDropDownMenu(
             navigateToMapScreen()
             isMenuExpanded.value = false
         })
+
+        DropdownMenuItem(text = {
+            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                Image(imageVector = Icons.Default.Share, contentDescription = "")
+                Text(text = "Share!")
+            }
+        }, onClick = { shareCountryInfo() })
     }
 }

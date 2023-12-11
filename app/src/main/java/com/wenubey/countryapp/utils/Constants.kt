@@ -7,9 +7,11 @@ object Constants {
     const val CACHE_TABLE_NAME = "countriesCache"
     const val FAV_TABLE_NAME = "countriesFav"
 
-    //API CALL CONSTANTS
+    //URL CONSTANTS
     const val BASE_URL_COUNTRIES = "https://restcountries.com/v3.1/"
     const val BASE_URL_HISTORIES = "https://api.api-ninjas.com/v1/"
+    const val BASE_URL_DEEP_LINK = "https://countryapp.com/detail"
+    const val BASE_URL_WIKIPEDIA = "https://en.wikipedia.org/wiki/"
 
     // LOG CONSTANTS
     const val TAG = "TAG"
@@ -61,6 +63,7 @@ object Constants {
     const val COUNTRY_MAP_CONTENT_DESCRIPTION = "Selected country's map location."
     const val WIKIPEDIA_CONTENT_DESCRIPTION = "This button will allow you to go wikipedia for selected country's information."
     const val COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION = "This button will open a dropdown menu."
+    const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"

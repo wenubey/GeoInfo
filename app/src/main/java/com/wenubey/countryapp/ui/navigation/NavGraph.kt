@@ -1,11 +1,13 @@
 package com.wenubey.countryapp.ui.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.wenubey.countryapp.ui.country.detail.CountryDetailScreen
 import com.wenubey.countryapp.ui.email_verify.VerifyEmailScreen
 import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordScreen
@@ -19,6 +21,8 @@ import java.util.Locale
 fun NavGraph(
     navHostController: NavHostController,
 ) {
+
+
     NavHost(
         navController = navHostController,
         startDestination = Screen.SignInScreen.route,
@@ -99,21 +103,29 @@ fun NavGraph(
                 email = it.arguments?.getString("email")
             )
         }
-        composable(route = Screen.CountryDetailScreen.route + "/{countryCode}/{countryName}",
+        composable(
+            route = Screen.CountryDetailScreen.route + "/{countryCode}/{countryName}",
             arguments = listOf(
                 navArgument("countryCode") {
                     type = NavType.StringType
-                    defaultValue = ""
                 },
                 navArgument("countryName") {
                     type = NavType.StringType
-                    defaultValue = ""
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "https://countryapp.com/detail/{countryCode}/{countryName}"
+                    action = Intent.ACTION_VIEW
                 }
             )
         ) {
+
+            val code = it.arguments?.getString("countryCode")
+            val name = it.arguments?.getString("countryName")
             CountryDetailScreen(
-                countryCode = it.arguments?.getString("countryCode") ?: "",
-                countryName = it.arguments?.getString("countryName") ?: "",
+                countryCode = code ?: "",
+                countryName = name ?: "",
                 navigateBack = { navHostController.popBackStack() },
                 navigateToMapScreen = { countryName ->
                     navHostController.navigate(Screen.MapScreen.route + "/${countryName}")

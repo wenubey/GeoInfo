@@ -55,7 +55,7 @@ fun InfoHeader(
             .padding(horizontal = 16.dp)
             .background(MaterialTheme.colorScheme.primaryContainer),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.titleMedium
+        style = MaterialTheme.typography.titleSmall
     )
 
 }

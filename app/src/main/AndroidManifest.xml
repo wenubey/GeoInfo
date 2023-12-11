@@ -47,6 +47,7 @@
 
                 <data android:scheme="${FB_LOGIN_PROTOCOL_SCHEMA}" />
             </intent-filter>
+
         </activity>
 
         <activity
@@ -58,6 +59,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <data
+                    android:scheme="https"
+                    android:host="countryapp.com"
+                    android:pathPattern="/detail/.*"
+                    android:pathAdvancedPattern=""
+                    />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW"/>
             </intent-filter>
         </activity>
     </application>

@@ -61,7 +61,7 @@ fun TranslationsInformation(
             )
             Text(
                 text = Constants.TRANSLATIONS,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleSmall
             )
         }
         Column {

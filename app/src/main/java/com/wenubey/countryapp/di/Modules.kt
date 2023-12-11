@@ -19,6 +19,9 @@ import com.wenubey.countryapp.domain.repository.auth.ProfileRepository
 import com.wenubey.countryapp.domain.repository.auth.TwitterAuthRepository
 import com.wenubey.countryapp.ui.AuthViewModel
 import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.deep_link.DeepLinkFacade
+import com.wenubey.countryapp.ui.deep_link.DeepLinkFacadeImpl
+import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
 import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordViewModel
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.sign_in.SignInViewModel
@@ -35,6 +38,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
+
+val deepLinkModule = module {
+    factory<DeepLinkFacade> { DeepLinkFacadeImpl() }
+}
 
 val databaseModule = module {
     single {
@@ -72,6 +79,7 @@ val viewModelModules = module {
     viewModel { AuthViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { ForgotPasswordViewModel(get(), get()) }
+    viewModel { DeepLinkViewModel(get()) }
 }
 
 val retrofitModules = module {

@@ -3,6 +3,7 @@ package com.wenubey.countryapp
 import android.app.Application
 import com.wenubey.countryapp.di.authModule
 import com.wenubey.countryapp.di.databaseModule
+import com.wenubey.countryapp.di.deepLinkModule
 import com.wenubey.countryapp.di.repositoryModule
 import com.wenubey.countryapp.di.retrofitModules
 import com.wenubey.countryapp.di.viewModelModules
@@ -19,13 +20,12 @@ class CountryApp : Application() {
             androidLogger()
             androidContext(this@CountryApp)
             modules(
-                listOf(
-                    databaseModule,
-                    repositoryModule,
-                    viewModelModules,
-                    retrofitModules,
-                    authModule,
-                )
+                authModule,
+                databaseModule,
+                repositoryModule,
+                viewModelModules,
+                retrofitModules,
+                deepLinkModule
             )
         }
     }

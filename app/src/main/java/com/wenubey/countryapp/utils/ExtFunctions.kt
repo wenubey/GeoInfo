@@ -34,3 +34,7 @@ fun SortOption.toIcon(): ImageVector {
         SortOption.POPULATION -> Icons.Filled.People
     }
 }
+
+fun String.formatToUri() :String = if (this.contains(" ")) this.replace(" ", "_") else this
+
+fun String.formatFromUri(): String = if (this.contains("_")) this.replace("_", " ") else this
