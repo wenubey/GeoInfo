@@ -111,6 +111,10 @@ object Constants {
     const val VERIFY_EMAIL_MESSAGE = "We've sent you an email with a link to verify the email."
     const val USER_SUCCESSFULLY_UPDATE_MESSAGE = "User successfully updated."
     const val USER_UPDATE_ERROR_MESSAGE = "Something went wrong"
+    const val FAV_SUCCESS_MESSAGE = "Country successfully added to favorites"
+    const val FAV_DELETE_MESSAGE = "Country successfully deleted from favorites"
+    const val FAV_ALL_DELETE_MESSAGE = "All countries successfully deleted from favorites"
+
 
     //SCREEN TITLES
     const val FORGOT_PASSWORD_SCREEN_TITLE = "Forgot Password"

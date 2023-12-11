@@ -2,7 +2,6 @@ package com.wenubey.countryapp.data.repository
 
 import android.util.Log
 import com.wenubey.countryapp.data.local.CountryCacheDao
-import com.wenubey.countryapp.data.local.CountryUserFavouriteDao
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
@@ -16,7 +15,6 @@ class CountryRepositoryImpl(
     private val countryInfoApi: CountryInfoApi,
     private val countryHistoryApi: CountryHistoryApi,
     private val countryCacheDao: CountryCacheDao,
-    private val countryUserFavouriteDao: CountryUserFavouriteDao,
 ) : CountryRepository {
 
 

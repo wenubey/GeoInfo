@@ -14,5 +14,5 @@ import com.wenubey.countryapp.data.local.entities.CountryFavEntity
 @TypeConverters(CountryAppTypeConverter::class)
 abstract class CountryDatabase : RoomDatabase() {
     abstract val countryCacheDao: CountryCacheDao
-    abstract val countryUserFavouriteDao: CountryUserFavouriteDao
+    abstract val countryFavouriteDao: CountryFavouriteDao
 }

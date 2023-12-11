@@ -7,7 +7,7 @@ import androidx.room.Upsert
 import com.wenubey.countryapp.data.local.entities.CountryFavEntity
 
 @Dao
-interface CountryUserFavouriteDao {
+interface CountryFavouriteDao {
 
     @Upsert
     fun upsertFavCountry(country: CountryFavEntity)
