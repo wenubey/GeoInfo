@@ -5,6 +5,8 @@ sealed class Screen(val route: String) {
 
     object SignInScreen: Screen(route = "signInScreen")
 
+    data class TabLayoutScreen(val args: String?): Screen(route = "tabLayoutScreen/${args}")
+
     object MapScreen: Screen(route = "mapScreen")
 
     object ProfileScreen: Screen(route = "profileScreen")
@@ -12,8 +14,6 @@ sealed class Screen(val route: String) {
     object ForgotPasswordScreen: Screen(route = "forgotPassword")
 
     object VerifyEmailScreen: Screen(route =  "verifyEmailScreen")
-
-    object CountryListScreen: Screen(route = "countryListScreen")
 
     object CountryDetailScreen: Screen(route = "countryDetailScreen")
 

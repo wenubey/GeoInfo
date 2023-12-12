@@ -40,7 +40,7 @@ private fun NavigateToSignInScreen(navController: NavController) =
 
 @Composable
 private fun NavigateToMapsScreen(navController: NavController) =
-    navController.navigate(Screen.MapScreen.route + "/${Locale.getDefault().displayCountry}") {
+    navController.navigate(Screen.TabLayoutScreen(args = "/${Locale.getDefault().displayCountry}").route) {
         popUpTo(navController.graph.id) {
             inclusive = true
         }

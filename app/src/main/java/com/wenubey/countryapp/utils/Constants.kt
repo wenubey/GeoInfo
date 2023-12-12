@@ -65,6 +65,7 @@ object Constants {
     const val COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION = "This button will open a dropdown menu."
     const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
     const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
+    const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -122,6 +123,8 @@ object Constants {
     const val PROFILE_SCREEN_TITLE = "Profile"
     const val SIGN_UP_SCREEN_TITLE = "Sign Up"
     const val MAP_SCREEN_TITLE = "Map"
+    const val COUNTRY_LIST_SCREEN_TITLE = "Country List"
+    const val COUNTRY_FAV_LIST_SCREEN_TITLE = "Country Fav List"
     const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
 
     // BUTTONS

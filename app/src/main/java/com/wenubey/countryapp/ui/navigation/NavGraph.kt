@@ -15,14 +15,13 @@ import com.wenubey.countryapp.ui.map.MapScreen
 import com.wenubey.countryapp.ui.profile.ProfileScreen
 import com.wenubey.countryapp.ui.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.sign_up.SignUpScreen
+import com.wenubey.countryapp.ui.tab_screen.TabLayoutScreen
 import java.util.Locale
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController,
 ) {
-
-
     NavHost(
         navController = navHostController,
         startDestination = Screen.SignInScreen.route,
@@ -39,6 +38,26 @@ fun NavGraph(
                 navigateToForgotPasswordScreen = { navHostController.navigate(Screen.ForgotPasswordScreen.route) },
                 navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
                 navigateToMapScreen = { navHostController.navigate(Screen.MapScreen.route + "/${Locale.getDefault().displayCountry}") },
+            )
+        }
+        composable(route = Screen.TabLayoutScreen(args = "/{countryName}").route,
+            arguments = listOf(
+                navArgument("countryName") {
+                    type = NavType.StringType
+                    defaultValue = Locale.getDefault().displayCountry
+                }
+            )
+        ) {
+            TabLayoutScreen(
+                navigateToProfileScreen = {
+                    navHostController.navigate(Screen.ProfileScreen.route)
+                },
+                navigateToCountryDetailScreen = { countryCode, countryName ->
+                    if (countryCode != null && countryName != null) {
+                        navHostController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
+                    }
+                },
+                countryName = it.arguments?.getString("countryName") ?: Locale.getDefault().displayName
             )
         }
         composable(route = Screen.MapScreen.route + "/{countryName}",
