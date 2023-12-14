@@ -19,7 +19,7 @@ import com.wenubey.countryapp.utils.Constants.ALREADY_VERIFIED
 import com.wenubey.countryapp.utils.Constants.SPAM_EMAIL
 
 @Composable
-fun VerifyEmailContent(
+fun VerifyEmail(
     paddingValues: PaddingValues,
     reloadUser: () -> Unit
 ) {
