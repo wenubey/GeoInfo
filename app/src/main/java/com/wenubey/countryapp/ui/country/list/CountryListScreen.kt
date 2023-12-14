@@ -46,3 +46,54 @@ private fun CountryListContentPreview() {
         }
     }
 }
+
+//    val isSearchBarActive = remember {
+//        mutableStateOf(false)
+//    }
+
+
+//CountrySearchBar(
+//query = countryViewModel.searchQuery.value,
+//onQueryChange = {
+//    countryViewModel.onEvent(
+//        CountryEvent.OnSearchQueryChange(it)
+//    )
+//},
+//active = isSearchBarActive.value,
+//onActiveChange = { isSearchBarActive.value = it },
+//countries = countries,
+//onSortButtonClicked = { sortOption, sortOrder, query ->
+//    onSortButtonClicked(
+//        sortOption,
+//        sortOrder,
+//        query,
+//        countryViewModel
+//    )
+//},
+//onCardClick = navigateToCountryDetailScreen
+//)
+
+
+//private fun onSortButtonClicked(
+//    sortOption: SortOption,
+//    sortOrder: SortOrder,
+//    query: String?,
+//    viewModel: CountryViewModel
+//) {
+//    if (!query.isNullOrBlank()) {
+//        viewModel.onEvent(
+//            CountryEvent.OnGetAllCountriesFilteredAndSorted(
+//                query = query,
+//                sortOrder = sortOrder,
+//                sortOption = sortOption
+//            )
+//        )
+//    } else {
+//        viewModel.onEvent(
+//            CountryEvent.OnSortButtonClick(
+//                sortOption = sortOption,
+//                sortOrder = sortOrder
+//            )
+//        )
+//    }
+//}

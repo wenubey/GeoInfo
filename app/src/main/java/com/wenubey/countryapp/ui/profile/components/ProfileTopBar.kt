@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,12 +17,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.wenubey.countryapp.utils.Constants.BACK_BUTTON_DESCRIPTION
-import com.wenubey.countryapp.utils.Constants.FORGOT_PASSWORD
 import com.wenubey.countryapp.utils.Constants.OPEN_MENU_DESCRIPTION
-import com.wenubey.countryapp.utils.Constants.REVOKE_ACCESS
-import com.wenubey.countryapp.utils.Constants.SIGN_OUT
 
+
+//TODO FIXME it is in the emailVerifyScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileTopBar(
@@ -57,41 +52,5 @@ fun ProfileTopBar(
                 }
             }
         },
-        actions = {
-            DropdownMenu(expanded = openMenu, onDismissRequest = { openMenu = !openMenu }) {
-                DropdownMenuItem(
-                    text = { Text(text = SIGN_OUT) },
-                    onClick = {
-                        signOut()
-                        openMenu = !openMenu
-                    },
-                )
-                DropdownMenuItem(
-                    text = { Text(text = REVOKE_ACCESS) },
-                    onClick = {
-                        revokeAccess()
-                        openMenu = !openMenu
-                    },
-                )
-                if (navigateToForgotPasswordScreen != null) {
-                    DropdownMenuItem(
-                        text = { Text(text = FORGOT_PASSWORD) },
-                        onClick = {
-
-                            navigateToForgotPasswordScreen()
-                        },
-                    )
-                }
-
-            }
-        },
-        navigationIcon = {
-            IconButton(onClick = navigateBack) {
-                Icon(
-                    imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = BACK_BUTTON_DESCRIPTION
-                )
-            }
-        }
     )
 }

@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.map.components.search_bar
+package com.wenubey.countryapp.ui.country.search_bar
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +16,7 @@ import com.wenubey.countryapp.utils.SortOption
 import com.wenubey.countryapp.utils.SortOrder
 
 
+//TODO add to list and favlist screen separately
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CountrySearchBar(

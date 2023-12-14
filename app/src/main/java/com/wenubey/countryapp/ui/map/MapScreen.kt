@@ -1,105 +1,53 @@
 package com.wenubey.countryapp.ui.map
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.wenubey.countryapp.ui.country.CountryViewModel
-import com.wenubey.countryapp.ui.country.list.CountryEvent
+import androidx.compose.ui.tooling.preview.Preview
 import com.wenubey.countryapp.ui.map.components.GoogleMaps
-import com.wenubey.countryapp.ui.map.components.MapScreenTopBar
-import com.wenubey.countryapp.ui.map.components.search_bar.CountrySearchBar
-import com.wenubey.countryapp.ui.profile.ProfileViewModel
-import com.wenubey.countryapp.utils.SortOption
-import com.wenubey.countryapp.utils.SortOrder
-import org.koin.androidx.compose.koinViewModel
+import com.wenubey.countryapp.ui.theme.CountryAppTheme
 
 @Composable
 fun MapScreen(
-    navigateToProfileScreen: () -> Unit,
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
     countryName: String,
-    countryViewModel: CountryViewModel = koinViewModel(),
-    profileViewModel: ProfileViewModel = koinViewModel()
 ) {
-
-    val isSearchBarActive = remember {
-        mutableStateOf(false)
-    }
-
-    Scaffold(
-        topBar = {
-            MapScreenTopBar(
-                navigateToProfileScreen = navigateToProfileScreen,
-                photoUri = profileViewModel.currentUser?.photoUrl
-            )
-        },
-        content = { paddingValues ->
-            Column(
-                Modifier
-                    .padding(paddingValues = paddingValues)
-                    .fillMaxSize()
-            ) {
-                countryViewModel.countryListDataState.countries?.let { countries ->
-                    CountrySearchBar(
-                        query = countryViewModel.searchQuery.value,
-                        onQueryChange = {
-                            countryViewModel.onEvent(
-                                CountryEvent.OnSearchQueryChange(it)
-                            )
-                        },
-                        active = isSearchBarActive.value,
-                        onActiveChange = { isSearchBarActive.value = it },
-                        countries = countries,
-                        onSortButtonClicked = { sortOption, sortOrder, query ->
-                            onSortButtonClicked(
-                                sortOption,
-                                sortOrder,
-                                query,
-                                countryViewModel
-                            )
-                        },
-                        onCardClick = navigateToCountryDetailScreen
-                    )
-                }
-                GoogleMaps(
-                    onMapClick = { countryName, countryCode ->
-                        navigateToCountryDetailScreen(countryCode, countryName)
-                    },
-                    currentCountryName = countryName,
-                )
-            }
-
-        }
+    MapScreenContent(
+        navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+        countryName = countryName,
     )
-
 }
 
-private fun onSortButtonClicked(
-    sortOption: SortOption,
-    sortOrder: SortOrder,
-    query: String?,
-    viewModel: CountryViewModel
+@Composable
+private fun MapScreenContent(
+    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ ->},
+    countryName: String = "",
 ) {
-    if (!query.isNullOrBlank()) {
-        viewModel.onEvent(
-            CountryEvent.OnGetAllCountriesFilteredAndSorted(
-                query = query,
-                sortOrder = sortOrder,
-                sortOption = sortOption
-            )
-        )
-    } else {
-        viewModel.onEvent(
-            CountryEvent.OnSortButtonClick(
-                sortOption = sortOption,
-                sortOrder = sortOrder
-            )
+    Column(
+        Modifier
+            .fillMaxSize()
+    ) {
+        GoogleMaps(
+            onMapClick = { countryName, countryCode ->
+                navigateToCountryDetailScreen(countryCode, countryName)
+            },
+            currentCountryName = countryName,
         )
     }
-
 }
+
+@Preview(name = "Dark mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+fun MapScreenContentPreview() {
+     CountryAppTheme {
+        Surface {
+            MapScreenContent()
+        }
+    }
+}
+

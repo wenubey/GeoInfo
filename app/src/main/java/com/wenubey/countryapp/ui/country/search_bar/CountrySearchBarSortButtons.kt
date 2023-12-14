@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.map.components.search_bar
+package com.wenubey.countryapp.ui.country.search_bar
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

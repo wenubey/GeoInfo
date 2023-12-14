@@ -31,6 +31,12 @@ object Constants {
     const val PASSWORD_LABEL = "Password"
     const val DISPLAY_NAME_LABEL = "Display Name"
 
+    // Navigation Constants
+    const val PROFILE_SCREEN = "profileScreen"
+    const val MAP_SCREEN = "mapScreen"
+    const val LIST_SCREEN = "listScreen"
+    const val FAV_LIST_SCREEN = "favListScreen"
+
     //CONTENT DESCRIPTIONS
     const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"
     const val PASSWORD_VISIBILITY_DESCRIPTION = "Password visibility on/off"
@@ -66,6 +72,7 @@ object Constants {
     const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
     const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
     const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
+    const val PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -123,8 +130,8 @@ object Constants {
     const val PROFILE_SCREEN_TITLE = "Profile"
     const val SIGN_UP_SCREEN_TITLE = "Sign Up"
     const val MAP_SCREEN_TITLE = "Map"
-    const val COUNTRY_LIST_SCREEN_TITLE = "Country List"
-    const val COUNTRY_FAV_LIST_SCREEN_TITLE = "Country Fav List"
+    const val COUNTRY_LIST_SCREEN_TITLE = "Countries"
+    const val COUNTRY_FAV_LIST_SCREEN_TITLE = "Favorites"
     const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
 
     // BUTTONS

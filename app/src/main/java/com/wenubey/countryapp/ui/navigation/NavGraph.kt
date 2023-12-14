@@ -11,11 +11,10 @@ import androidx.navigation.navDeepLink
 import com.wenubey.countryapp.ui.country.detail.CountryDetailScreen
 import com.wenubey.countryapp.ui.email_verify.VerifyEmailScreen
 import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordScreen
-import com.wenubey.countryapp.ui.map.MapScreen
-import com.wenubey.countryapp.ui.profile.ProfileScreen
 import com.wenubey.countryapp.ui.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.sign_up.SignUpScreen
 import com.wenubey.countryapp.ui.tab_screen.TabLayoutScreen
+import com.wenubey.countryapp.utils.Constants
 import java.util.Locale
 
 @Composable
@@ -37,53 +36,54 @@ fun NavGraph(
             SignInScreen(
                 navigateToForgotPasswordScreen = { navHostController.navigate(Screen.ForgotPasswordScreen.route) },
                 navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
-                navigateToMapScreen = { navHostController.navigate(Screen.MapScreen.route + "/${Locale.getDefault().displayCountry}") },
+                navigateToMapScreen = {
+                    navHostController.navigate(
+                        Screen.TabLayoutScreen(
+                            args = "/${Locale.getDefault().displayCountry}",
+                            subRoute = Constants.MAP_SCREEN,
+                        ).route
+                    )
+                },
             )
         }
-        composable(route = Screen.TabLayoutScreen(args = "/{countryName}").route,
+        composable(route = Screen.TabLayoutScreen(
+            args = "/{countryName}",
+            subRoute = Constants.MAP_SCREEN,
+        ).route,
             arguments = listOf(
                 navArgument("countryName") {
                     type = NavType.StringType
                     defaultValue = Locale.getDefault().displayCountry
+                },
+                navArgument("subRoute") {
+                    type = NavType.StringType
+                    defaultValue = Constants.MAP_SCREEN
                 }
-            )
+            ),
         ) {
             TabLayoutScreen(
-                navigateToProfileScreen = {
-                    navHostController.navigate(Screen.ProfileScreen.route)
-                },
                 navigateToCountryDetailScreen = { countryCode, countryName ->
                     if (countryCode != null && countryName != null) {
                         navHostController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
                     }
                 },
-                countryName = it.arguments?.getString("countryName") ?: Locale.getDefault().displayName
-            )
-        }
-        composable(route = Screen.MapScreen.route + "/{countryName}",
-            arguments = listOf(
-                navArgument("countryName") {
-                    type = NavType.StringType
-                    defaultValue = Locale.getDefault().displayCountry
-                }
-            )
-        ) {
-            MapScreen(
-                navigateToProfileScreen = {
-                    navHostController.navigate(Screen.ProfileScreen.route)
+                navigateToForgotPasswordScreen = { email ->
+                    navHostController.navigate(Screen.ForgotPasswordScreen.route + "/${email}")
                 },
-                navigateToCountryDetailScreen = { countryCode, countryName ->
-                    if (countryCode != null && countryName != null) {
-                        navHostController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
-                    }
-                },
-                countryName = it.arguments?.getString("countryName") ?: Locale.getDefault().displayName
+                countryName = it.arguments?.getString("countryName")
+                    ?: Locale.getDefault().displayName,
+                subRoutes = it.arguments?.getString("subRoute") ?: Constants.MAP_SCREEN,
             )
         }
         composable(route = Screen.VerifyEmailScreen.route) {
             VerifyEmailScreen(
                 navigateToProfileScreen = {
-                    navHostController.navigate(Screen.ProfileScreen.route) {
+                    navHostController.navigate(
+                        Screen.TabLayoutScreen(
+                            args = null,
+                            subRoute = Constants.PROFILE_SCREEN,
+                        ).route
+                    ) {
                         popUpTo(navHostController.graph.id) {
                             inclusive = true
                         }
@@ -91,18 +91,6 @@ fun NavGraph(
                 },
                 navigateBack = {
                     navHostController.popBackStack()
-                }
-            )
-        }
-        composable(
-            route = Screen.ProfileScreen.route
-        ) {
-            ProfileScreen(
-                navigateBack = {
-                    navHostController.popBackStack()
-                },
-                navigateToForgotPasswordScreen = { email ->
-                    navHostController.navigate(Screen.ForgotPasswordScreen.route + "/${email}")
                 }
             )
         }
@@ -147,7 +135,12 @@ fun NavGraph(
                 countryName = name ?: "",
                 navigateBack = { navHostController.popBackStack() },
                 navigateToMapScreen = { countryName ->
-                    navHostController.navigate(Screen.MapScreen.route + "/${countryName}")
+                    navHostController.navigate(
+                        Screen.TabLayoutScreen(
+                            args = "/${countryName}",
+                            subRoute = Constants.MAP_SCREEN,
+                        ).route
+                    )
                 }
             )
         }
