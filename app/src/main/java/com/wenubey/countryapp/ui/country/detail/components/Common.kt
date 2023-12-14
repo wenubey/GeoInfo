@@ -1,26 +1,33 @@
 package com.wenubey.countryapp.ui.country.detail.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.Constants
 
 
 @Composable
 fun CountryInfoRow(
-    imageVector: ImageVector,
-    contentDescription: String,
-    content: String,
-    header: String
+    imageVector: ImageVector = Icons.Default.DeveloperMode,
+    contentDescription: String = "",
+    content: String = Constants.PREVIEW_CONTENT,
+    header: String = Constants.PREVIEW_HEADER
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -46,10 +53,10 @@ fun CountryInfoRow(
 
 @Composable
 fun InfoHeader(
-    content: String
+    header: String = Constants.PREVIEW_HEADER
 ) {
     Text(
-        text = content,
+        text = header,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
@@ -58,4 +65,26 @@ fun InfoHeader(
         style = MaterialTheme.typography.titleSmall
     )
 
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun CountryInfoRowPreview() {
+     CountryAppTheme {
+        Surface {
+             CountryInfoRow()
+        }
+    }
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun InfoHeaderPreview() {
+     CountryAppTheme {
+        Surface {
+             InfoHeader()
+        }
+    }
 }

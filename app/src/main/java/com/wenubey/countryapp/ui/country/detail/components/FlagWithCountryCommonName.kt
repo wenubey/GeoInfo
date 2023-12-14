@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.ui.country.detail.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -31,35 +33,44 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
+import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.fakeCountry
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FlagWithCountryCommonName(
     country: Country,
     navigateToMapScreen: (countryName: String?) -> Unit,
+) {
+    FlagAndHeaderContent(country = country, navigateToMapScreen = navigateToMapScreen)
+}
+
+@Composable
+private fun FlagAndHeaderContent(
+    country: Country,
+    navigateToMapScreen: (countryName: String?) -> Unit,
     deepLinkViewModel: DeepLinkViewModel = koinViewModel()
 ) {
     val localConfig = LocalConfiguration.current
     val context = LocalContext.current
-    val screenWidth = localConfig.screenWidthDp
-    val screeHeight = localConfig.screenHeightDp
-
-    val mutableInteractionSource = MutableInteractionSource()
 
     val flagData = country.flag?.get("png")
     val coatOfArmsData = country.coatOfArms?.get("png")
@@ -77,10 +88,6 @@ fun FlagWithCountryCommonName(
         mutableStateOf(false)
     }
 
-    fun toggleDropdownMenu() {
-        isMenuExpanded.value = !isMenuExpanded.value
-    }
-
     fun changeFlagToCoatOfArms() {
         selectedImageData = if (selectedImageData == flagData) {
             coatOfArmsData
@@ -94,8 +101,6 @@ fun FlagWithCountryCommonName(
         }
     }
 
-
-
     fun goToWikipedia() {
         deepLinkViewModel.goToWikipedia(country.countryCommonName, context)
     }
@@ -108,61 +113,27 @@ fun FlagWithCountryCommonName(
         )
     }
 
-
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(selectedImageData)
             .build(),
         placeholder = rememberVectorPainter(image = Icons.Default.Flag),
     )
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            modifier = Modifier
-                .size(
-                    width = screenWidth.dp,
-                    height = (screeHeight / 3).dp
-                )
-                .clickable(
-                    interactionSource = mutableInteractionSource,
-                    indication = null,
-                    onClick = {
-                        changeFlagToCoatOfArms()
-                    }
-                ),
-            contentScale = ContentScale.Fit,
+        FlagWithCoatOfArms(
+            localConfig = localConfig,
             painter = painter,
-            contentDescription = country.flag?.get("alt")
-                ?: Constants.COUNTRY_FLAG_CONTENT_DESCRIPTION,
+            onChangeFlagToCoatOfArms = { changeFlagToCoatOfArms() },
+            country = country
         )
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                modifier = Modifier.weight(0.7f),
-                text = country.countryOfficialName ?: Constants.UNDEFINED,
-                style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
-                overflow = TextOverflow.Clip
-            )
-            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.weight(0.25f)) {
-                IconButton(onClick = {
-                    changeFlagToCoatOfArms()
-                }) {
-                    Icon(imageVector = selectedIcon, contentDescription = Constants.COUNTRY_SELECTED_ICON_DESCRIPTION)
-                }
-                IconButton(onClick = { toggleDropdownMenu() }) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = Constants.COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION
-                    )
-                }
-            }
-
-
-        }
+        CountryName(
+            country = country,
+            isMenuExpanded = isMenuExpanded,
+            selectedIcon = selectedIcon,
+            onChangeFlagToCoatOfArms = { changeFlagToCoatOfArms() })
         Divider(thickness = 1.dp)
 
         DetailDropDownMenu(
@@ -174,13 +145,76 @@ fun FlagWithCountryCommonName(
     }
 }
 
+@Composable
+private fun FlagWithCoatOfArms(
+    localConfig: Configuration = Configuration(),
+    painter: AsyncImagePainter = rememberAsyncImagePainter(model = "",placeholder = rememberVectorPainter(image = Icons.Default.Flag)),
+    onChangeFlagToCoatOfArms: () -> Unit = {},
+    country: Country = fakeCountry,
+) {
+    val screenWidth = localConfig.screenWidthDp
+    val screeHeight = localConfig.screenHeightDp
+    Image(
+        modifier = Modifier
+            .size(
+                width = screenWidth.dp,
+                height = (screeHeight / 3).dp
+            )
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null,
+                onClick = onChangeFlagToCoatOfArms,
+            ),
+        contentScale = ContentScale.Fit,
+        painter = painter,
+        contentDescription = country.flag?.get("alt")
+            ?: Constants.COUNTRY_FLAG_CONTENT_DESCRIPTION,
+    )
+}
 
 @Composable
-fun DetailDropDownMenu(
-    isMenuExpanded: MutableState<Boolean>,
-    goToWikipedia: () -> Unit,
-    navigateToMapScreen: () -> Unit,
-    shareCountryInfo: () -> Unit,
+private fun CountryName(
+    country: Country = fakeCountry,
+    isMenuExpanded: MutableState<Boolean> = mutableStateOf(false),
+    selectedIcon: ImageVector = Icons.Default.MilitaryTech,
+    onChangeFlagToCoatOfArms: () -> Unit = {},
+) {
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            modifier = Modifier.weight(0.7f),
+            text = country.countryOfficialName ?: Constants.UNDEFINED,
+            style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
+            overflow = TextOverflow.Clip
+        )
+        Row(horizontalArrangement = Arrangement.End, modifier = Modifier.weight(0.25f)) {
+            IconButton(onClick = onChangeFlagToCoatOfArms) {
+                Icon(
+                    imageVector = selectedIcon,
+                    contentDescription = Constants.COUNTRY_SELECTED_ICON_DESCRIPTION
+                )
+            }
+            IconButton(onClick = { isMenuExpanded.value = !isMenuExpanded.value }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = Constants.COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+private fun DetailDropDownMenu(
+    isMenuExpanded: MutableState<Boolean> = mutableStateOf(true),
+    goToWikipedia: () -> Unit = {},
+    navigateToMapScreen: () -> Unit = {},
+    shareCountryInfo: () -> Unit = {},
 ) {
     DropdownMenu(
         expanded = isMenuExpanded.value,
@@ -227,5 +261,27 @@ fun DetailDropDownMenu(
                 Text(text = "Share!")
             }
         }, onClick = { shareCountryInfo() })
+    }
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun CountryNamePreview() {
+     CountryAppTheme {
+        Surface {
+             CountryName()
+        }
+    }
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun DetailDropDownMenuPreview() {
+     CountryAppTheme {
+        Surface {
+             DetailDropDownMenu()
+        }
     }
 }

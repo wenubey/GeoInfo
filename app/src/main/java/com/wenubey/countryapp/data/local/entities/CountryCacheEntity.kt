@@ -73,7 +73,7 @@ data class CountryCacheEntity(
             currency = currencyEntity?.mapValues { it.value.mapToCurrency() },
             region = region,
             subRegion = subRegion,
-            language = languageEntity?.data,
+            language = languageEntity?.data ?: mapOf(),
             latlng = latlng,
             area = area,
             flag = flagEntity,

@@ -1,9 +1,9 @@
 package com.wenubey.countryapp.ui.country.detail.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -15,25 +15,29 @@ import androidx.compose.material.icons.filled.Money
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
+import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.fakeCountry
 
 @Composable
 fun EconomicInformation(country: Country) {
-    InfoHeader(content = Constants.ECONOMICAL_INFORMATION)
+    InfoHeader(header = Constants.ECONOMICAL_INFORMATION)
     CurrencyRow(country = country)
     DemonymsRow(country = country)
 }
 
 @Composable
-fun CurrencyRow(country: Country?) {
+private fun CurrencyRow(country: Country? = fakeCountry) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -44,7 +48,7 @@ fun CurrencyRow(country: Country?) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = Constants.CURRENCIES, style = MaterialTheme.typography.bodyMedium)
-            Column(modifier = Modifier.fillMaxHeight()) {
+            Column {
                 country?.currency?.forEach {
                     Text(
                         text = "${it.value.name} (${it.key})",
@@ -60,7 +64,7 @@ fun CurrencyRow(country: Country?) {
 }
 
 @Composable
-fun DemonymsRow(country: Country) {
+private fun DemonymsRow(country: Country = fakeCountry) {
     val localConfig = LocalConfiguration.current
     val screenWidth = localConfig.screenWidthDp
     Row(
@@ -71,7 +75,10 @@ fun DemonymsRow(country: Country) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
                 Icon(
                     imageVector = Icons.Default.Face,
                     contentDescription = Constants.COUNTRY_DEMONYMS_CONTENT_DESCRIPTION
@@ -94,7 +101,10 @@ fun DemonymsRow(country: Country) {
                                     imageVector = if (entry.key!!.contains("f")) Icons.Default.Female else Icons.Default.Male,
                                     contentDescription = Constants.COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION
                                 )
-                                Text(text = entry.value ?: Constants.UNDEFINED, style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    text = entry.value ?: Constants.UNDEFINED,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
                             }
                         }
                     }
@@ -104,5 +114,27 @@ fun DemonymsRow(country: Country) {
         }
     }
     Divider(thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun CurrencyRowPreview() {
+    CountryAppTheme {
+        Surface {
+            CurrencyRow()
+        }
+    }
+}
+
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Composable
+private fun DemonymsRowPreview() {
+     CountryAppTheme {
+        Surface {
+             DemonymsRow()
+        }
+    }
 }
 

@@ -109,6 +109,8 @@ object Constants {
     const val TRANSLATIONS = "Translations"
     const val MORE_INFO_WIKIPEDIA = "More info on Wikipedia"
     const val GO_TO_COUNTRY_LOCATION = "Go to country's location on Map"
+    const val PREVIEW_CONTENT = "Text for previewing UI components."
+    const val PREVIEW_HEADER = "Preview Header"
 
     //MESSAGES
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."

@@ -79,6 +79,7 @@ private fun TabLayoutContent(
     val pagerState = rememberPagerState {
         tabs.size
     }
+
     LaunchedEffect(selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
     }
@@ -126,12 +127,13 @@ private fun TabLayoutContent(
                     .fillMaxWidth()
                     .weight(1f),
                 state = pagerState,
-                ) { index ->
+                userScrollEnabled = selectedTabIndex != 0,
+            ) { index ->
                 when (index) {
                     0 -> {
                         MapScreen(
                             navigateToCountryDetailScreen = navigateToCountryDetailScreen,
-                            countryName = countryName
+                            countryName = countryName,
                         )
                     }
                     1 -> {
@@ -188,18 +190,10 @@ data class TabItem(
     val unselectedIcon: ImageVector
 )
 
-@Preview(
-    name = "Light Mode",
-    uiMode = UI_MODE_NIGHT_NO,
-    showBackground = true
-)
-@Preview(
-    name = "Dark Mode",
-    uiMode = UI_MODE_NIGHT_YES,
-    showBackground = true
-)
+@Preview(name = "Light Mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun TabLayoutContentPreview() {
+private fun TabLayoutContentPreview() {
     CountryAppTheme {
         Surface {
             TabLayoutContent()

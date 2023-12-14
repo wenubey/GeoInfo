@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.model.Currency
+import com.wenubey.countryapp.domain.model.History
 import com.wenubey.countryapp.domain.model.NativeName
 import com.wenubey.countryapp.domain.model.Translation
 import com.wenubey.countryapp.domain.model.toUser
@@ -26,7 +27,7 @@ fun parseEventDate(day: String?, month: String?, year: String?): String? {
         } else {
             absYear.toString()
         }
-        return "$month/$day/$formattedYear"
+        return "$day/$month/$formattedYear"
     } catch (e: ParseException) {
         null
     }
@@ -93,7 +94,8 @@ val fakeCountry = Country(
     region = "Europe",
     subRegion = "Central Europe",
     language = mapOf(
-        "pol" to "Polish"
+        "pol" to "Polish",
+        "tur" to "Turkish",
     ),
     latlng = listOf(52.0, 20.0),
     area = 312679.0,
@@ -109,10 +111,16 @@ val fakeCountry = Country(
     flagEmojiWithPhoneCode = mapOf(
         "🇵🇱 Poland" to "+48"
     ),
-    history = null,
-    demonyms = mapOf(),
+    history = listOf(
+        History("01/30/1018", "Poland and Holy Roman Empire conclude the Peace of Bautzen."),
+        History("01/20/1320", "Duke Wladyslaw Lokietek becomes king of Poland."),
+    ),
+    demonyms = mapOf(
+        "eng" to mapOf("f" to "Polish", "m" to "Polish")
+    ),
     translations = mapOf(
-        "deu" to Translation(official = "Republik Polen", common = "Polen")
+        "deu" to Translation(official = "Republik Polen", common = "Polen"),
+        "tur" to Translation(official = "Polonya Cumhuriyeti", common = "Polonya")
     ),
     gini = mapOf(
         "2018" to 30.2

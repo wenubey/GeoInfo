@@ -18,7 +18,7 @@ import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 
 @Composable
 fun BasicInformation(country: Country) {
-    InfoHeader(content = Constants.BASIC_INFORMATION)
+    InfoHeader(header = Constants.BASIC_INFORMATION)
     CountryInfoRow(
         header = Constants.KNOWN_AS,
         imageVector = Icons.Default.TravelExplore,

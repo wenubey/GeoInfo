@@ -45,7 +45,7 @@ data class CountryFavEntity(
             currency = currencyEntity?.mapValues { it.value.mapToCurrency() },
             region = region,
             subRegion = subRegion,
-            language = language?.data,
+            language = language?.data ?: mapOf(),
             latlng = latlng,
             area = area,
             flag = flagEntity,

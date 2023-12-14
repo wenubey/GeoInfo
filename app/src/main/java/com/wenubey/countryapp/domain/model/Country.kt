@@ -19,7 +19,7 @@ data class Country(
     val currency: Map<String, Currency>?,
     val region: String?,
     val subRegion: String?,
-    val language: Map<String, String>?,
+    val language: Map<String, String>,
     val latlng: List<Double>?,
     val area: Double?,
     val flag: Map<String, String>?,
