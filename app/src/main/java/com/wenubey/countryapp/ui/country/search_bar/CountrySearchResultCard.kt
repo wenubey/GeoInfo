@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.ui.country.search_bar
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -44,7 +43,6 @@ import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.AREA_CONTENT_DESCRIPTION
 import com.wenubey.countryapp.utils.Constants.POPULATION_CONTENT_DESCRIPTION
-import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import com.wenubey.countryapp.utils.fakeCountry
 import com.wenubey.countryapp.utils.formatWithCommasForArea
@@ -67,7 +65,7 @@ fun CountrySearchResultCard(
 private fun CardContent(
     country: Country = fakeCountry,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
-    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _, ->},
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ ->},
 ) {
     Card(
         modifier = Modifier
@@ -126,7 +124,6 @@ private fun CountryInfoColumn(
     LaunchedEffect(country.isFavorite) {
         isFav = country.isFavorite
     }
-    Log.i(TAG, "items: ${country.countryCommonName}, countryIsFav: ${country.isFavorite}, isFav: $isFav")
     Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.Start) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -134,13 +131,17 @@ private fun CountryInfoColumn(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
+                modifier = Modifier
+                    .weight(0.8f),
                 text = country.countryCommonName ?: UNDEFINED,
                 fontSize = 24.sp,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 1
+                maxLines = 1,
+                style = MaterialTheme.typography.bodyMedium,
             )
             Icon(
                 modifier = Modifier
+                    .weight(0.2f)
                     .clickable(
                         interactionSource = MutableInteractionSource(),
                         indication = null,
