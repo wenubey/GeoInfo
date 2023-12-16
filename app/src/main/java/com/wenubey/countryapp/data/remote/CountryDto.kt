@@ -73,7 +73,8 @@ data class CountryDto(
             demonyms = demonyms,
             translations = translations?.mapValues { it.value?.mapToTranslationEntity() } ?: mapOf(),
             continents = continents,
-            borders = borders
+            borders = borders,
+            isFavorite = false
             )
     }
 }

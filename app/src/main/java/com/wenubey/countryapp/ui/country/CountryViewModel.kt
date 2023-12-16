@@ -1,6 +1,8 @@
 package com.wenubey.countryapp.ui.country
 
+import android.util.Log
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -8,10 +10,11 @@ import androidx.lifecycle.viewModelScope
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.ui.country.detail.CountryDataState
-import com.wenubey.countryapp.ui.country.list.CountryListDataState
 import com.wenubey.countryapp.ui.country.list.CountryEvent
-import com.wenubey.countryapp.utils.Constants.UNKNOWN_ERROR
+import com.wenubey.countryapp.ui.country.list.CountryListDataState
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.CountryListOptions
+import com.wenubey.countryapp.utils.DataResponse
 import com.wenubey.countryapp.utils.SortOption
 import com.wenubey.countryapp.utils.SortOrder
 import kotlinx.coroutines.Job
@@ -19,7 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CountryViewModel(
-    private val repo: CountryRepository
+    private val repo: CountryRepository,
 ) : ViewModel() {
 
     var countryDataState by mutableStateOf(CountryDataState())
@@ -28,7 +31,12 @@ class CountryViewModel(
     var countryListDataState by mutableStateOf(CountryListDataState())
         private set
 
+
+
     var searchQuery = mutableStateOf("")
+        private set
+
+    var isFavoriteClicked = mutableIntStateOf(0)
         private set
 
     private var selectedSortOption = mutableStateOf(SortOption.NAME)
@@ -53,12 +61,16 @@ class CountryViewModel(
     fun onEvent(event: CountryEvent) {
         when (event) {
             is CountryEvent.Refresh -> {
+                Log.i(TAG, "WE ARE IN THE 1. EVENT")
                 getAllCountries(
                     fetchFromRemote = true,
                 )
             }
             is CountryEvent.OnSearchQueryChange -> {
+                Log.i(TAG, "WE ARE IN THE 2. EVENT")
                 searchQuery.value = event.query
+                Log.i(TAG, "onEvent isFavorite: ${event.isFavorite}")
+                isFavoriteClicked.intValue = event.isFavorite
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     // Delay for user typing time
@@ -67,23 +79,24 @@ class CountryViewModel(
                         repo.getAllCountries(
                             fetchFromRemote = false,
                             options = CountryListOptions.Filter(
-                                query = event.query
+                                query = event.query,
+                                isFavorite = event.isFavorite
                             )
                         )
                     countryListDataState = processCountriesResult(result)
                 }
             }
-            is CountryEvent.OnGetAllCountries -> {
-                getAllCountries(fetchFromRemote = true, event.options)
-            }
             is CountryEvent.OnSortButtonClick -> {
+                Log.i(TAG, "WE ARE IN THE 3. EVENT")
                 selectedSortOption.value = event.sortOption
+                isFavoriteClicked.intValue = event.isFavorite
                 countrySortJob?.cancel()
                 countrySortJob = viewModelScope.launch {
                     val result = repo.getAllCountries(
                         options = CountryListOptions.Sort(
                             sortOption = event.sortOption,
-                            sortOrder = event.sortOrder
+                            sortOrder = event.sortOrder,
+                            isFavorite = event.isFavorite
                         ),
                         fetchFromRemote = false
                     )
@@ -91,7 +104,9 @@ class CountryViewModel(
                 }
             }
             is CountryEvent.OnGetAllCountriesFilteredAndSorted -> {
+                Log.i(TAG, "WE ARE IN THE 4. EVENT")
                 if (event.query.isNotBlank()) {
+                    isFavoriteClicked.intValue = event.isFavorite
                     searchQuery.value = event.query
                     selectedSortOption.value = event.sortOption
                     selectedSortOrder.value = event.sortOrder
@@ -103,6 +118,7 @@ class CountryViewModel(
                                 sortOption = event.sortOption,
                                 sortOrder = event.sortOrder,
                                 query = event.query,
+                                isFavorite = event.isFavorite
                             )
                         )
                         countryListDataState = processCountriesResult(result)
@@ -110,9 +126,16 @@ class CountryViewModel(
                 }
             }
             is CountryEvent.OnGetCountry -> {
-                getCountry(false, event.countryName, event.countryCode)
+                isFavoriteClicked.intValue = event.isFavorite
+                getCountry(event.countryName, event.countryCode)
             }
-
+            is CountryEvent.OnFavoriteClicked -> {
+                Log.i(TAG, "WE ARE IN THE 5. EVENT")
+                isFavoriteClicked.intValue = event.isFavorite
+                getAllCountries(false, options = CountryListOptions.Favorite(
+                    event.isFavorite
+                ))
+            }
         }
     }
 
@@ -123,47 +146,41 @@ class CountryViewModel(
         }
     }
 
-
-
    private fun getCountry(
-        fetchFromRemote: Boolean = false,
         countryName: String,
         countryCode: String
     ) {
         viewModelScope.launch {
-            val result = repo.getCountry(fetchFromRemote, countryName, countryCode)
+            val result = repo.getCountry(countryName = countryName,  countryCode = countryCode)
             countryDataState = processCountryResult(result)
         }
     }
 
-    private fun processCountryResult(result: Result<Country>): CountryDataState {
-        return if (result.isSuccess) {
-            CountryDataState(isLoading = true)
-            CountryDataState(
-                country = result.getOrNull(),
-                isLoading = false
-            )
-        } else {
-            CountryDataState(
-                error = result.exceptionOrNull()?.message,
-                isLoading = false,
-            )
+    private fun processCountryResult(result: DataResponse<Country>): CountryDataState {
+        return when(result) {
+            is DataResponse.Success -> {
+                CountryDataState(country = result.data)
+            }
+            is DataResponse.Error -> {
+                CountryDataState(error = result.error.message)
+            }
+            is DataResponse.Loading -> {
+                CountryDataState(isLoading = result.isLoading)
+            }
         }
     }
 
-    private fun processCountriesResult(result: Result<List<Country>>): CountryListDataState {
-        return if (result.isSuccess) {
-            CountryListDataState(
-                countries = result.getOrNull(),
-            )
-        } else if (result.isFailure) {
-            CountryListDataState(
-                error = result.exceptionOrNull()?.message,
-            )
-        } else {
-            CountryListDataState(
-                error = UNKNOWN_ERROR,
-            )
+    private fun processCountriesResult(result: DataResponse<List<Country>>): CountryListDataState {
+        return when(result) {
+            is DataResponse.Success -> {
+                countryListDataState.copy(countries = result.data)
+            }
+            is DataResponse.Error -> {
+                countryListDataState.copy(error = result.error.message)
+            }
+            is DataResponse.Loading -> {
+                countryListDataState.copy(isLoading = result.isLoading)
+            }
         }
     }
 

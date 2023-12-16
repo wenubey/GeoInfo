@@ -5,14 +5,12 @@ import androidx.room.Room
 import com.wenubey.countryapp.data.local.CountryDatabase
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
-import com.wenubey.countryapp.data.repository.CountryFavRepositoryImpl
 import com.wenubey.countryapp.data.repository.CountryRepositoryImpl
 import com.wenubey.countryapp.data.repository.auth.EmailAuthRepositoryImpl
 import com.wenubey.countryapp.data.repository.auth.FacebookAuthRepositoryImpl
 import com.wenubey.countryapp.data.repository.auth.GoogleSignInRepositoryImpl
 import com.wenubey.countryapp.data.repository.auth.ProfileRepositoryImpl
 import com.wenubey.countryapp.data.repository.auth.TwitterAuthRepositoryImpl
-import com.wenubey.countryapp.domain.repository.CountryFavRepository
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.domain.repository.auth.EmailAuthRepository
 import com.wenubey.countryapp.domain.repository.auth.FacebookAuthRepository
@@ -54,12 +52,10 @@ val databaseModule = module {
         ).build()
     }
     factory { get<CountryDatabase>().countryCacheDao }
-    factory { get<CountryDatabase>().countryFavouriteDao }
 }
 
 val repositoryModule = module {
     single<CountryRepository> { CountryRepositoryImpl(get(), get(), get()) }
-    single<CountryFavRepository> { CountryFavRepositoryImpl(get()) }
     factory<EmailAuthRepository> { EmailAuthRepositoryImpl(get(), get()) }
     factory<FacebookAuthRepository> { FacebookAuthRepositoryImpl(get(), get()) }
     factory<GoogleSignInRepository> {

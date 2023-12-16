@@ -13,11 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Map
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -31,13 +29,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wenubey.countryapp.ui.country.favorite.CountryFavListScreen
 import com.wenubey.countryapp.ui.country.list.CountryListScreen
 import com.wenubey.countryapp.ui.map.MapScreen
 import com.wenubey.countryapp.ui.profile.ProfileScreen
@@ -70,12 +67,12 @@ private fun TabLayoutContent(
 ) {
     val tabIndex = when(subRoutes) {
         Constants.MAP_SCREEN -> 0
-        Constants.PROFILE_SCREEN -> 3
+        Constants.PROFILE_SCREEN -> 2
         else -> 0
     }
     val snackBarHostState = SnackbarHostState()
 
-    var selectedTabIndex by remember { mutableIntStateOf(tabIndex) }
+    var selectedTabIndex by rememberSaveable { mutableIntStateOf(tabIndex) }
     val pagerState = rememberPagerState {
         tabs.size
     }
@@ -137,13 +134,11 @@ private fun TabLayoutContent(
                         )
                     }
                     1 -> {
-                        CountryListScreen()
+                        CountryListScreen(
+                            navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+                        )
                     }
-
                     2 -> {
-                        CountryFavListScreen()
-                    }
-                    3 -> {
                         ProfileScreen(
                             navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
                             snackBarHostState =snackBarHostState,
@@ -156,10 +151,7 @@ private fun TabLayoutContent(
         }
 
     }
-
-
 }
-
 
 private val tabs = listOf(
     TabItem(
@@ -171,11 +163,6 @@ private val tabs = listOf(
         title = Constants.COUNTRY_LIST_SCREEN_TITLE,
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search
-    ),
-    TabItem(
-        title = Constants.COUNTRY_FAV_LIST_SCREEN_TITLE,
-        selectedIcon = Icons.Filled.Star,
-        unselectedIcon = Icons.Outlined.StarBorder
     ),
     TabItem(
         title = Constants.PROFILE_SCREEN_TITLE,

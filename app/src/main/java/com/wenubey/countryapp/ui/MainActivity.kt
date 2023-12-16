@@ -31,17 +31,16 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         navHostController = rememberNavController()
+                        deepLinkViewModel.handleDeepLink(intent, navHostController)
                         NavGraph(
                             navHostController = navHostController,
                         )
                         AuthState(navHostController = navHostController)
-                        deepLinkViewModel.handleDeepLink(intent, navHostController)
                     }
                 }
             }
         }
     }
-
 }
 
 

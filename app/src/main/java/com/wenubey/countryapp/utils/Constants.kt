@@ -5,7 +5,6 @@ object Constants {
     //ROOM CONSTANTS
     const val DATABASE_NAME = "CountryDB"
     const val CACHE_TABLE_NAME = "countriesCache"
-    const val FAV_TABLE_NAME = "countriesFav"
 
     //URL CONSTANTS
     const val BASE_URL_COUNTRIES = "https://restcountries.com/v3.1/"
@@ -15,9 +14,6 @@ object Constants {
 
     // LOG CONSTANTS
     const val TAG = "TAG"
-
-    // ERROR MESSAGES
-    const val UNKNOWN_ERROR = "An unknown error occurred"
 
     //DI NAMES
     const val SIGN_IN_REQUEST = "signInRequest"
@@ -34,8 +30,6 @@ object Constants {
     // Navigation Constants
     const val PROFILE_SCREEN = "profileScreen"
     const val MAP_SCREEN = "mapScreen"
-    const val LIST_SCREEN = "listScreen"
-    const val FAV_LIST_SCREEN = "favListScreen"
 
     //CONTENT DESCRIPTIONS
     const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"
@@ -133,7 +127,6 @@ object Constants {
     const val SIGN_UP_SCREEN_TITLE = "Sign Up"
     const val MAP_SCREEN_TITLE = "Map"
     const val COUNTRY_LIST_SCREEN_TITLE = "Countries"
-    const val COUNTRY_FAV_LIST_SCREEN_TITLE = "Favorites"
     const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
 
     // BUTTONS

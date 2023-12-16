@@ -131,6 +131,7 @@ val fakeCountry = Country(
     borders = listOf(
         "TR",
         "DE"
-    )
+    ),
+    isFavorite = true
 )
 

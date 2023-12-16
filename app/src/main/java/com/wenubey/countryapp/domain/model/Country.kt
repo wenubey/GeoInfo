@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.domain.model
 
 import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
-import com.wenubey.countryapp.data.local.entities.CountryFavEntity
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
 import com.wenubey.countryapp.data.local.entities.HistoryEntity
 import com.wenubey.countryapp.data.local.entities.LanguageEntity
@@ -31,7 +30,8 @@ data class Country(
     val demonyms: Map<String?, Map<String?, String?>?>?,
     val translations: Map<String?, Translation?>,
     val continents: List<String?>?,
-    val borders: List<String?>?
+    val borders: List<String?>?,
+    val isFavorite: Boolean
 ) {
     fun mapToCountryCacheEntity(): CountryCacheEntity {
         return CountryCacheEntity(
@@ -57,37 +57,11 @@ data class Country(
             demonyms = demonyms,
             translations = translations.mapValues { it.value?.mapToTranslationEntity() },
             continents = continents,
-            borders = borders
+            borders = borders,
+            isFavorite = isFavorite
         )
     }
 
-    fun mapToCountryFavEntity(): CountryFavEntity {
-        return CountryFavEntity(
-            countryCommonName = countryCommonName,
-            countryOfficialName = countryOfficialName,
-            countryNativeName = countryNativeName?.mapValues { it.value.mapToNativeNameEntity() },
-            capital = capital,
-            population = population,
-            topLevelDomain = topLevelDomain,
-            countryCodeCCA2 = countryCodeCCA2,
-            currencyEntity = currency?.mapValues { it.value.mapToCurrencyEntity() },
-            region = region,
-            subRegion = subRegion,
-            language = LanguageEntity(data = language),
-            latlng = latlng,
-            area = area,
-            flagEntity = flag,
-            timezones = timezones,
-            coatOfArms = coatOfArms,
-            historyEntity = history?.map { it.mapToHistoryEntity() },
-            flagEmojiWithPhoneCode = flagEmojiWithPhoneCode,
-            gini = gini,
-            demonyms = demonyms,
-            translations = translations.mapValues { it.value?.mapToTranslationEntity() },
-            continents = continents,
-            borders = borders
-        )
-    }
 }
 
 data class NativeName(

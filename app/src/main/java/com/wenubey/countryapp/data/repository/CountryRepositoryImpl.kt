@@ -8,6 +8,7 @@ import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.CountryListOptions
+import com.wenubey.countryapp.utils.DataResponse
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
 import com.wenubey.countryapp.utils.normalizeCountryName
 
@@ -21,28 +22,32 @@ class CountryRepositoryImpl(
     override suspend fun getAllCountries(
         fetchFromRemote: Boolean,
         options: CountryListOptions
-    ): Result<List<Country>> {
+    ): DataResponse<List<Country>> {
         val localCountryData = getSortedFilteredCountries(options)
         val isDbEmpty = localCountryData.isEmpty()
         val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
+        DataResponse.Loading(isLoading = true)
         if (shouldJustLoadFromCache) {
             // Return data from cache
-            return Result.success(
+            return DataResponse.Success(
                 localCountryData
             )
         }
+        DataResponse.Loading(isLoading = true)
         val remoteCountryData = try {
             countryInfoApi.getAllCountries()
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG, "getAllCountries: error: $e")
-            return Result.failure(e)
+            return DataResponse.Error(e)
         }
+
         // Update the cache
         countryCacheDao.clearALl()
-        countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) })
+        countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) }.distinct())
+
         // Return data from the remote source
-        return Result.success(
+        return DataResponse.Success(
             getSortedFilteredCountries(options)
         )
     }
@@ -53,28 +58,35 @@ class CountryRepositoryImpl(
                 countryCacheDao.getSortedFilteredCountries(
                     query = options.query,
                     sortOption = null,
-                    sortOrder = null
+                    sortOrder = null,
+                    isFavorite = null,
                 ).map { it.mapToCountry() }
             }
-
             is CountryListOptions.Sort -> {
                 countryCacheDao.getSortedFilteredCountries(
                     query = null,
                     sortOption = options.sortOption.name,
-                    sortOrder = options.sortOrder.name
+                    sortOrder = options.sortOrder.name,
+                    isFavorite = null,
                 ).map { it.mapToCountry() }
             }
-
             is CountryListOptions.Combined -> {
                 countryCacheDao.getSortedFilteredCountries(
                     query = options.query,
                     sortOption = options.sortOption.name,
-                    sortOrder = options.sortOrder.name
+                    sortOrder = options.sortOrder.name,
+                    isFavorite = options.isFavorite
                 ).map { it.mapToCountry() }
             }
+            is CountryListOptions.Favorite -> countryCacheDao.getSortedFilteredCountries(
+                query = null,
+                sortOption = null,
+                sortOrder = null,
+                isFavorite = options.isFavorite
+            ).map { it.mapToCountry() }
 
             is CountryListOptions.Default -> countryCacheDao.getAllCountriesFromCache()
-                .map { it.mapToCountry() }
+                .map { it.mapToCountry() }.distinct()
         }
     }
 
@@ -83,7 +95,7 @@ class CountryRepositoryImpl(
         fetchFromRemote: Boolean,
         countryName: String,
         countryCode: String,
-    ): Result<Country> {
+    ): DataResponse<Country> {
         val localCountryData = countryCacheDao.getCountry(countryCode)
         val historyIsNullOrEmpty =
             localCountryData?.historyEntity == null || localCountryData.historyEntity.isEmpty()
@@ -103,7 +115,7 @@ class CountryRepositoryImpl(
                 )
             } else {
                 // return data from cache
-                Result.success(localCountryData!!.mapToCountry())
+                DataResponse.Success(localCountryData!!.mapToCountry())
             }
         }
     }
@@ -111,18 +123,18 @@ class CountryRepositoryImpl(
     private suspend fun getCountryAndHistoryFromRemoteUpdateCountry(
         countryCode: String,
         countryName: String
-    ): Result<Country> {
+    ): DataResponse<Country> {
         val remoteCountryData = try {
             countryInfoApi.getCountry(countryCode)
         } catch (e: Exception) {
             Log.e(TAG, "remoteCountryData error: $e")
-            return Result.failure(e)
+            return DataResponse.Error(e)
         }
         val remoteHistoryData = try {
             countryHistoryApi.getHistoricalEvents(countryName)
         } catch (e: Exception) {
             Log.e(TAG, "getHistoricalEvents error: $e")
-            return Result.failure(e)
+            return DataResponse.Error(e)
         }.sortedBy { it.year?.toInt() }
         Log.i(TAG, "sorted histories: $remoteHistoryData")
         // Data mapped to cache entity
@@ -133,24 +145,25 @@ class CountryRepositoryImpl(
         countryCacheDao.clearCountry(countryCode)
         countryCacheDao.upsertCountry(localCountryData)
 
-        return Result.success(countryCacheDao.getCountry(countryCode)!!.mapToCountry())
+        return DataResponse.Success(countryCacheDao.getCountry(countryCode)!!.mapToCountry())
     }
 
 
     private suspend fun getHistoryFromRemoteUpdateCountry(
         countryCode: String,
         countryName: String,
-    ): Result<Country> {
+    ): DataResponse<Country> {
         val historyData = try {
+            DataResponse.Loading(true)
             countryHistoryApi.getHistoricalEvents(normalizeCountryName(countryName)!!)
         } catch (e: Exception) {
             Log.e(TAG, "getHistoryFromRemote error: $e")
-            return Result.failure(e)
+            return DataResponse.Error(e)
         }
             .sortedBy { it.year?.toInt() }
             .map { it.mapToHistoryEntity() }
 
-
+        DataResponse.Loading(true)
         val countryCacheEntity =
             countryCacheDao.getCountry(countryCode)?.copy(historyEntity = historyData)
 
@@ -160,9 +173,13 @@ class CountryRepositoryImpl(
             countryCacheDao.upsertCountry(countryCacheEntity)
         }
 
-        val countryData = countryCacheDao.getCountry(countryCode)!!.mapToCountry()
-        return Result.success(countryData)
 
+        val countryData = countryCacheDao.getCountry(countryCode)?.mapToCountry()
+        return if (countryData != null) {
+            DataResponse.Success(countryData)
+        } else {
+            DataResponse.Loading(true)
+        }
     }
 
     override suspend fun getCountryCodeFromCache(): Result<Map<String?, String?>> {
@@ -207,3 +224,5 @@ class CountryRepositoryImpl(
         return Result.success(distinctLangNames)
     }
 }
+
+

@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.ui.country.search_bar
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material.icons.filled.SentimentVeryDissatisfied
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.wenubey.countryapp.domain.model.Country
+import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.AREA_CONTENT_DESCRIPTION
 import com.wenubey.countryapp.utils.Constants.POPULATION_CONTENT_DESCRIPTION
@@ -41,7 +44,17 @@ fun CountrySearchResultCard(
     country: Country,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit
 ) {
+    CardContent(
+        country = country,
+        onCardClick = onCardClick
+    )
+}
 
+@Composable
+private fun CardContent(
+    country: Country = fakeCountry,
+    onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ ->}
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,7 +77,7 @@ fun CountrySearchResultCard(
 }
 
 @Composable
-fun CountryFlag(
+private fun CountryFlag(
     country: Country
 ) {
     val painter = rememberAsyncImagePainter(
@@ -89,7 +102,7 @@ fun CountryFlag(
 }
 
 @Composable
-fun CountryInfoColumn(
+private fun CountryInfoColumn(
     country: Country
 ) {
     Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.Start) {
@@ -105,7 +118,7 @@ fun CountryInfoColumn(
 }
 
 @Composable
-fun AreaPopulationRow(
+private fun AreaPopulationRow(
     country: Country
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -127,9 +140,14 @@ fun AreaPopulationRow(
 
 }
 
-@Preview(showBackground = true)
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
-fun CountrySearchResultCardPreview() {
-    CountrySearchResultCard(country = fakeCountry.copy(flag = null), {countryCode, countryName ->  })
+private fun CountrySearchResultCardPreview() {
+     CountryAppTheme {
+        Surface {
+            CardContent()
+        }
+    }
 }
 

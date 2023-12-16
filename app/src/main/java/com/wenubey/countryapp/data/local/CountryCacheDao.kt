@@ -26,27 +26,37 @@ interface CountryCacheDao {
     @Query("DELETE FROM countriesCache WHERE countryCodeCCA2 LIKE '%' || :code || '%'")
     suspend fun clearCountry(code: String)
 
+
     @Query(
         """
-        SELECT * FROM countriesCache WHERE
+    SELECT * FROM countriesCache 
+    WHERE
         (:query IS NULL OR countryCommonName LIKE '%' || :query || '%' OR region LIKE '%' || :query || '%') 
-        ORDER BY 
-            CASE
-        WHEN :sortOption = 'NAME' AND :sortOrder = 'ASC' THEN countryCommonName END ASC,
-    CASE
-        WHEN :sortOption = 'NAME' AND :sortOrder = 'DESC' THEN countryCommonName END DESC,
-    CASE
-        WHEN :sortOption = 'AREA' AND :sortOrder = 'ASC' THEN area END ASC,
-    CASE
-        WHEN :sortOption = 'AREA' AND :sortOrder = 'DESC' THEN area END DESC,
-    CASE
-        WHEN :sortOption = 'POPULATION' AND :sortOrder = 'ASC' THEN population END ASC,
-    CASE
-        WHEN :sortOption = 'POPULATION' AND :sortOrder = 'DESC' THEN population END DESC,
-    countryCommonName ASC;
+        AND
+        (:isFavorite IS NULL OR isFavorite = :isFavorite)
+    ORDER BY 
+        CASE
+            WHEN :sortOption = 'NAME' AND :sortOrder = 'ASC' THEN countryCommonName
+        END ASC,
+        CASE
+            WHEN :sortOption = 'NAME' AND :sortOrder = 'DESC' THEN countryCommonName
+        END DESC,
+        CASE
+            WHEN :sortOption = 'AREA' AND :sortOrder = 'ASC' THEN area
+        END ASC,
+        CASE
+            WHEN :sortOption = 'AREA' AND :sortOrder = 'DESC' THEN area
+        END DESC,
+        CASE
+            WHEN :sortOption = 'POPULATION' AND :sortOrder = 'ASC' THEN population
+        END ASC,
+        CASE
+            WHEN :sortOption = 'POPULATION' AND :sortOrder = 'DESC' THEN population
+        END DESC,
+        countryCommonName ASC;
     """
     )
-    suspend fun getSortedFilteredCountries(query: String?, sortOption: String?, sortOrder: String?): List<CountryCacheEntity>
+    suspend fun getSortedFilteredCountries(query: String?, sortOption: String?, sortOrder: String?, isFavorite: Int?): List<CountryCacheEntity>
 
 
     @Query("SELECT DISTINCT languageEntity FROM countriesCache")
