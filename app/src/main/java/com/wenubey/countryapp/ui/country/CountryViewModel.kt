@@ -144,7 +144,6 @@ class CountryViewModel(
             is CountryEvent.OnUserUpdateFavorite -> {
                 updateFavCountry(event.country, event.isFavorite)
             }
-
         }
     }
 
