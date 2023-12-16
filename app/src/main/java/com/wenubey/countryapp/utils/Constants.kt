@@ -67,6 +67,7 @@ object Constants {
     const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
     const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
     const val PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
+    const val ADD_FAV_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -115,9 +116,6 @@ object Constants {
     const val VERIFY_EMAIL_MESSAGE = "We've sent you an email with a link to verify the email."
     const val USER_SUCCESSFULLY_UPDATE_MESSAGE = "User successfully updated."
     const val USER_UPDATE_ERROR_MESSAGE = "Something went wrong"
-    const val FAV_SUCCESS_MESSAGE = "Country successfully added to favorites"
-    const val FAV_DELETE_MESSAGE = "Country successfully deleted from favorites"
-    const val FAV_ALL_DELETE_MESSAGE = "All countries successfully deleted from favorites"
 
 
     //SCREEN TITLES

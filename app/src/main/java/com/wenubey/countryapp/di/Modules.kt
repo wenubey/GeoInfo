@@ -55,7 +55,7 @@ val databaseModule = module {
 }
 
 val repositoryModule = module {
-    single<CountryRepository> { CountryRepositoryImpl(get(), get(), get()) }
+    single<CountryRepository> { CountryRepositoryImpl(get(), get(), get(), get(), get()) }
     factory<EmailAuthRepository> { EmailAuthRepositoryImpl(get(), get()) }
     factory<FacebookAuthRepository> { FacebookAuthRepositoryImpl(get(), get()) }
     factory<GoogleSignInRepository> {

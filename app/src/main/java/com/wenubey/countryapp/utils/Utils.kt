@@ -132,6 +132,6 @@ val fakeCountry = Country(
         "TR",
         "DE"
     ),
-    isFavorite = true
+    isFavorite = false
 )
 

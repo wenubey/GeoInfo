@@ -2,7 +2,6 @@ package com.wenubey.countryapp.ui.country.list
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.util.Log
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -11,7 +10,6 @@ import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.search_bar.CountrySearchBar
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.SortOption
 import com.wenubey.countryapp.utils.SortOrder
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
@@ -59,23 +57,18 @@ private fun CountryListContent(
         },
         countries = countries,
         onSortButtonClicked = { sortOption, sortOrder, query, isFavorite ->
-            onSortButtonClicked(
-                sortOption,
-                sortOrder,
-                query,
-                isFavorite,
-                countryViewModel
-            )
+            onSortButtonClicked(sortOption, sortOrder, query, isFavorite, countryViewModel)
         },
         onCardClick = navigateToCountryDetailScreen,
-        onFavoriteButtonClicked = {
+        onFavoriteFilterButtonClicked = {
             countryViewModel.onEvent(CountryEvent.OnFavoriteClicked(isFavorite = it))
         },
-        isFavorite = countryViewModel.isFavoriteClicked.intValue
-    )
-    Log.i(
-        TAG,
-        "countryViewModel.isFavoriteClicked.intValue: ${countryViewModel.isFavoriteClicked.intValue}"
+        isFavorite = countryViewModel.isFavoriteFilterClicked.intValue,
+        onFavButtonClicked =  { country, countryUpdatedFav ->
+            countryViewModel.onEvent(
+                CountryEvent.OnUserUpdateFavorite(country, countryUpdatedFav)
+            )
+        }
     )
 
 }

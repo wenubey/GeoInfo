@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -16,6 +15,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
@@ -45,8 +45,9 @@ fun CountrySearchBar(
     countries: List<Country>,
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String?, isFavorite: Int) -> Unit,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit,
-    onFavoriteButtonClicked: (Int) -> Unit,
+    onFavoriteFilterButtonClicked: (Int) -> Unit,
     isFavorite: Int,
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit,
 ) {
     SearchBarContent(
         query = query,
@@ -54,8 +55,9 @@ fun CountrySearchBar(
         countries = countries,
         onSortButtonClicked = onSortButtonClicked,
         onCardClick = onCardClick,
-        onFavoriteButtonClicked = onFavoriteButtonClicked,
-        isFavorite = isFavorite
+        onFavoriteFilterButtonClicked = onFavoriteFilterButtonClicked,
+        isFavorite = isFavorite,
+        onFavButtonClicked = onFavButtonClicked,
     )
 }
 
@@ -68,7 +70,8 @@ private fun SearchBarContent(
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String?, isFavorite: Int) -> Unit = { _, _, _, _ -> },
     onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     isFavorite: Int = 0,
-    onFavoriteButtonClicked: (Int) -> Unit = {},
+    onFavoriteFilterButtonClicked: (Int) -> Unit = {},
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ -> },
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -81,10 +84,15 @@ private fun SearchBarContent(
             onSearch = onQueryChange,
             active = false,
             onActiveChange = {},
-            placeholder = { Text(text = Constants.MAP_SEARCH_BAR_PLACEHOLDER) },
+            placeholder = {
+                    Text(
+                        modifier = Modifier.fillMaxSize(),
+                        text = Constants.MAP_SEARCH_BAR_PLACEHOLDER,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+            },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp)
         ) {
 
         }
@@ -94,12 +102,16 @@ private fun SearchBarContent(
                 CountrySearchBarSortButtons(
                     query = query,
                     onSortButtonClicked = onSortButtonClicked,
-                    onFavoriteButtonClicked = onFavoriteButtonClicked,
+                    onFavoriteFilterButtonClicked = onFavoriteFilterButtonClicked,
                     isFavorite = isFavorite
                 )
             }
             items(countries) { country ->
-                CountrySearchResultCard(country = country, onCardClick = onCardClick)
+                CountrySearchResultCard(
+                    country = country,
+                    onCardClick = onCardClick,
+                    onFavButtonClicked = onFavButtonClicked
+                )
             }
         }
 
@@ -113,7 +125,7 @@ private fun CountrySearchBarSortButtons(
     query: String,
     isFavorite: Int,
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String, isFavorite: Int) -> Unit,
-    onFavoriteButtonClicked: (Int) -> Unit
+    onFavoriteFilterButtonClicked: (Int) -> Unit
 ) {
 
     Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
@@ -136,10 +148,10 @@ private fun CountrySearchBarSortButtons(
             onClick = {
                 val newQuery: Int = if (isFavorite == 0) {
                     1
-                } else{
+                } else {
                     0
                 }
-                onFavoriteButtonClicked(newQuery)
+                onFavoriteFilterButtonClicked(newQuery)
             }
         ) {
             Row(horizontalArrangement = Arrangement.SpaceBetween) {

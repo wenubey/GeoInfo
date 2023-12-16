@@ -1,21 +1,27 @@
 package com.wenubey.countryapp.data.repository
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.data.local.CountryCacheDao
 import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
+import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.DataResponse
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
 import com.wenubey.countryapp.utils.normalizeCountryName
+import kotlinx.coroutines.tasks.await
 
 class CountryRepositoryImpl(
     private val countryInfoApi: CountryInfoApi,
     private val countryHistoryApi: CountryHistoryApi,
     private val countryCacheDao: CountryCacheDao,
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore,
 ) : CountryRepository {
 
 
@@ -62,6 +68,7 @@ class CountryRepositoryImpl(
                     isFavorite = null,
                 ).map { it.mapToCountry() }
             }
+
             is CountryListOptions.Sort -> {
                 countryCacheDao.getSortedFilteredCountries(
                     query = null,
@@ -70,6 +77,7 @@ class CountryRepositoryImpl(
                     isFavorite = null,
                 ).map { it.mapToCountry() }
             }
+
             is CountryListOptions.Combined -> {
                 countryCacheDao.getSortedFilteredCountries(
                     query = options.query,
@@ -78,15 +86,18 @@ class CountryRepositoryImpl(
                     isFavorite = options.isFavorite
                 ).map { it.mapToCountry() }
             }
-            is CountryListOptions.Favorite -> countryCacheDao.getSortedFilteredCountries(
-                query = null,
-                sortOption = null,
-                sortOrder = null,
-                isFavorite = options.isFavorite
-            ).map { it.mapToCountry() }
+
+            is CountryListOptions.Favorite -> {
+                countryCacheDao.getSortedFilteredCountries(
+                    query = null,
+                    sortOption = null,
+                    sortOrder = null,
+                    isFavorite = options.isFavorite
+                ).map { it.mapToCountry() }
+            }
 
             is CountryListOptions.Default -> countryCacheDao.getAllCountriesFromCache()
-                .map { it.mapToCountry() }.distinct()
+                .map { it.mapToCountry() }
         }
     }
 
@@ -222,6 +233,38 @@ class CountryRepositoryImpl(
             .associate { it.key to it.value }
 
         return Result.success(distinctLangNames)
+    }
+
+    override suspend fun updateFavCountry(country: Country, isFavorite: Boolean){
+        val userId = auth.currentUser?.uid
+        return if (userId != null) {
+            val currentDocument = firestore.collection(Constants.USERS).document(userId)
+
+            // Retrieve existing data and favCountries set
+            val existingData = currentDocument.get().await().data
+            val existingFavCountries = existingData?.get("favCountries") as? String ?: ""
+            val favCountriesSet = existingFavCountries.split(",").toMutableSet()
+
+            // Update favCountries set based on isFavorite status
+            if (isFavorite) {
+                favCountriesSet.add(country.countryCodeCCA2!!)
+            } else {
+                favCountriesSet.remove(country.countryCodeCCA2!!)
+            }
+
+            // Build the update map
+            val updateValue = mapOf(
+                "favCountries" to favCountriesSet.joinToString(",")
+            )
+            // Update the Firestore document
+            currentDocument.update(updateValue).await()
+            // Update the local database
+            val existingValue = countryCacheDao.getCountry(country.countryCodeCCA2)
+            val updatedValue = existingValue!!.copy(isFavorite = isFavorite)
+            countryCacheDao.upsertCountry(updatedValue)
+        } else {
+
+        }
     }
 }
 

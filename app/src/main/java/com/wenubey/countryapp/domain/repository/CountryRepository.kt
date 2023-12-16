@@ -16,4 +16,7 @@ interface CountryRepository {
     suspend fun getCountryCodeFromCache(): Result<Map<String?, String?>>
 
     suspend fun getLanguages(): Result<Map<String, String>>
+
+    suspend fun updateFavCountry(country: Country, isFavorite: Boolean)
+
 }

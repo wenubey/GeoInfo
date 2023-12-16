@@ -1,8 +1,10 @@
 package com.wenubey.countryapp.ui.country.search_bar
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,11 +16,19 @@ import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material.icons.filled.SentimentVeryDissatisfied
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -34,6 +44,7 @@ import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.AREA_CONTENT_DESCRIPTION
 import com.wenubey.countryapp.utils.Constants.POPULATION_CONTENT_DESCRIPTION
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import com.wenubey.countryapp.utils.fakeCountry
 import com.wenubey.countryapp.utils.formatWithCommasForArea
@@ -42,18 +53,21 @@ import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 @Composable
 fun CountrySearchResultCard(
     country: Country,
-    onCardClick: (countryCode: String?, countryName: String?) -> Unit
+    onCardClick: (countryCode: String?, countryName: String?) -> Unit,
+    onFavButtonClicked: (country: Country,countryUpdatedFav: Boolean) -> Unit
 ) {
     CardContent(
         country = country,
-        onCardClick = onCardClick
+        onCardClick = onCardClick,
+        onFavButtonClicked = onFavButtonClicked
     )
 }
 
 @Composable
 private fun CardContent(
     country: Country = fakeCountry,
-    onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ ->}
+    onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _, ->},
 ) {
     Card(
         modifier = Modifier
@@ -71,7 +85,7 @@ private fun CardContent(
                 }
         ) {
             CountryFlag(country = country)
-            CountryInfoColumn(country = country)
+            CountryInfoColumn(country = country, onFavButtonClicked = onFavButtonClicked)
         }
     }
 }
@@ -103,16 +117,44 @@ private fun CountryFlag(
 
 @Composable
 private fun CountryInfoColumn(
-    country: Country
+    country: Country,
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
 ) {
+    var isFav by remember {
+        mutableStateOf(country.isFavorite)
+    }
+    LaunchedEffect(country.isFavorite) {
+        isFav = country.isFavorite
+    }
+    Log.i(TAG, "items: ${country.countryCommonName}, countryIsFav: ${country.isFavorite}, isFav: $isFav")
     Column(modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.Start) {
-        Text(
-            text = country.countryCommonName ?: UNDEFINED,
-            fontSize = 24.sp,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1
-        )
-        Text(text = country.capital?.first() ?: UNDEFINED, fontSize = 14.sp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = country.countryCommonName ?: UNDEFINED,
+                fontSize = 24.sp,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
+            Icon(
+                modifier = Modifier
+                    .clickable(
+                        interactionSource = MutableInteractionSource(),
+                        indication = null,
+                        onClick = {
+                            isFav = !isFav
+                            onFavButtonClicked(country, isFav)
+                        },
+                    ),
+                imageVector = if (isFav) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                contentDescription = Constants.ADD_FAV_CONTENT_DESCRIPTION
+            )
+        }
+
+        Text(text = country.capital?.first() ?: UNDEFINED, style = MaterialTheme.typography.bodySmall)
         AreaPopulationRow(country = country)
     }
 }
@@ -134,7 +176,11 @@ private fun AreaPopulationRow(
                 imageVector = Icons.Filled.Fullscreen,
                 contentDescription = AREA_CONTENT_DESCRIPTION
             )
-            Text(text = country.area.formatWithCommasForArea(), overflow = TextOverflow.Ellipsis, maxLines = 1)
+            Text(
+                text = country.area.formatWithCommasForArea(),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
+            )
         }
     }
 
@@ -144,7 +190,7 @@ private fun AreaPopulationRow(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountrySearchResultCardPreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
             CardContent()
         }
