@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.MilitaryTech
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -49,6 +51,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
+import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.country.list.CountryEvent
 import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
@@ -67,7 +71,8 @@ fun FlagWithCountryCommonName(
 private fun FlagAndHeaderContent(
     country: Country,
     navigateToMapScreen: (countryName: String?) -> Unit,
-    deepLinkViewModel: DeepLinkViewModel = koinViewModel()
+    deepLinkViewModel: DeepLinkViewModel = koinViewModel(),
+    countryViewModel: CountryViewModel = koinViewModel(),
 ) {
     val localConfig = LocalConfiguration.current
     val context = LocalContext.current
@@ -113,6 +118,12 @@ private fun FlagAndHeaderContent(
         )
     }
 
+    fun updateFavCountry(isFavorite: Boolean) {
+        countryViewModel.onEvent(
+            CountryEvent.OnUserUpdateFavorite(country, isFavorite)
+        )
+    }
+
     val painter = rememberAsyncImagePainter(
         model = ImageRequest.Builder(context)
             .data(selectedImageData)
@@ -140,7 +151,10 @@ private fun FlagAndHeaderContent(
             isMenuExpanded = isMenuExpanded,
             goToWikipedia = { goToWikipedia() },
             navigateToMapScreen = { navigateToMapScreen(country.countryCommonName) },
-            shareCountryInfo = { sendDeepLink() }
+            shareCountryInfo = { sendDeepLink() },
+            updateFavCountry = { isFavorite ->
+                updateFavCountry(isFavorite) },
+            isFavorite = country.isFavorite
         )
     }
 }
@@ -148,7 +162,10 @@ private fun FlagAndHeaderContent(
 @Composable
 private fun FlagWithCoatOfArms(
     localConfig: Configuration = Configuration(),
-    painter: AsyncImagePainter = rememberAsyncImagePainter(model = "",placeholder = rememberVectorPainter(image = Icons.Default.Flag)),
+    painter: AsyncImagePainter = rememberAsyncImagePainter(
+        model = "",
+        placeholder = rememberVectorPainter(image = Icons.Default.Flag)
+    ),
     onChangeFlagToCoatOfArms: () -> Unit = {},
     country: Country = fakeCountry,
 ) {
@@ -215,7 +232,13 @@ private fun DetailDropDownMenu(
     goToWikipedia: () -> Unit = {},
     navigateToMapScreen: () -> Unit = {},
     shareCountryInfo: () -> Unit = {},
+    updateFavCountry: (isFavorite: Boolean) -> Unit = {},
+    isFavorite: Boolean = false,
 ) {
+    var countryIsFavorite by remember {
+        mutableStateOf(isFavorite)
+    }
+
     DropdownMenu(
         expanded = isMenuExpanded.value,
         onDismissRequest = { isMenuExpanded.value = false },
@@ -241,26 +264,46 @@ private fun DetailDropDownMenu(
                 isMenuExpanded.value = false
             },
         )
+        DropdownMenuItem(
+            text = {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Image(
+                        imageVector = Icons.Default.PinDrop,
+                        contentDescription = Constants.COUNTRY_MAP_CONTENT_DESCRIPTION,
+                        colorFilter = ColorFilter.tint(LocalContentColor.current)
+                    )
+                    Text(text = Constants.GO_TO_COUNTRY_LOCATION)
+                }
+            },
+            onClick = {
+                navigateToMapScreen()
+                isMenuExpanded.value = false
+            },
+        )
         DropdownMenuItem(text = {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Image(
-                    imageVector = Icons.Default.PinDrop,
-                    contentDescription = Constants.COUNTRY_MAP_CONTENT_DESCRIPTION,
-                    colorFilter = ColorFilter.tint(LocalContentColor.current)
+                    imageVector = Icons.Default.Share,
+                    contentDescription = Constants.SHARE_CONTENT_DESCRIPTION
                 )
-                Text(text = Constants.GO_TO_COUNTRY_LOCATION)
-            }
-        }, onClick = {
-            navigateToMapScreen()
-            isMenuExpanded.value = false
-        })
-
-        DropdownMenuItem(text = {
-            Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                Image(imageVector = Icons.Default.Share, contentDescription = "")
-                Text(text = "Share!")
+                Text(text = Constants.SHARE)
             }
         }, onClick = { shareCountryInfo() })
+        DropdownMenuItem(
+            text = {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Image(
+                        imageVector = if (countryIsFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                        contentDescription = Constants.ADD_REMOVE_FAV_CONTENT_DESCRIPTION
+                    )
+                    Text(text = Constants.FAVORITE)
+                }
+            },
+            onClick = {
+                countryIsFavorite = !countryIsFavorite
+                updateFavCountry(countryIsFavorite)
+            },
+        )
     }
 }
 
@@ -268,9 +311,9 @@ private fun DetailDropDownMenu(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryNamePreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
-             CountryName()
+            CountryName()
         }
     }
 }
@@ -279,9 +322,9 @@ private fun CountryNamePreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun DetailDropDownMenuPreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
-             DetailDropDownMenu()
+            DetailDropDownMenu()
         }
     }
 }

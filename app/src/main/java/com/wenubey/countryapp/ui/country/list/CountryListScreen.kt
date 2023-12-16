@@ -18,7 +18,7 @@ import com.wenubey.countryapp.utils.fakeCountry
 import org.koin.androidx.compose.koinViewModel
 
 
-//TODO: Create country list screen
+
 @Composable
 fun CountryListScreen(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,

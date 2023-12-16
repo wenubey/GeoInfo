@@ -68,6 +68,8 @@ object Constants {
     const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
     const val PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
     const val ADD_FAV_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
+    const val SHARE_CONTENT_DESCRIPTION = "You can share country info when you clicked this button."
+    const val ADD_REMOVE_FAV_CONTENT_DESCRIPTION = "You can add/remove favorite when you clicked this button."
 
     //TEXTS
     const val FORGOT_PASSWORD = "Forgot password?"
@@ -106,6 +108,8 @@ object Constants {
     const val GO_TO_COUNTRY_LOCATION = "Go to country's location on Map"
     const val PREVIEW_CONTENT = "Text for previewing UI components."
     const val PREVIEW_HEADER = "Preview Header"
+    const val SHARE = "Share!"
+    const val FAVORITE = "Add/Remove favorite"
 
     //MESSAGES
     const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."
