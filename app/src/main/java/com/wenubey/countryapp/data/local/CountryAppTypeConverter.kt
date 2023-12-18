@@ -1,6 +1,7 @@
 package com.wenubey.countryapp.data.local
 
 import androidx.room.TypeConverter
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.wenubey.countryapp.data.local.entities.CurrencyEntity
@@ -36,11 +37,11 @@ class CountryAppTypeConverter {
         toJson(nativeName)
 
     @TypeConverter
-    fun latLngFromJson(json: String?): List<Double>? =
-        fromJson(json, object : TypeToken<List<Double>>() {})
+    fun latLngFromJson(json: String?): LatLng? =
+        fromJson(json, object : TypeToken<LatLng?>() {})
 
     @TypeConverter
-    fun latLngToJson(latLng: List<Double>?): String? =
+    fun latLngToJson(latLng: LatLng?): String? =
         toJson(latLng)
 
     @TypeConverter
@@ -114,5 +115,6 @@ class CountryAppTypeConverter {
     @TypeConverter
     fun languageEntityToJson(languageEntity: LanguageEntity?): String? =
         toJson(languageEntity)
+
 
 }

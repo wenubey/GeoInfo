@@ -3,6 +3,7 @@ package com.wenubey.countryapp.data.local.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.model.Currency
 import com.wenubey.countryapp.domain.model.History
@@ -37,7 +38,7 @@ data class CountryCacheEntity(
     @ColumnInfo(name = "languageEntity")
     val languageEntity: LanguageEntity?,
     @ColumnInfo(name = "latlng")
-    val latlng: List<Double>?,
+    val latlng: LatLng?,
     @ColumnInfo(name = "area")
     val area: Double?,
     @ColumnInfo(name = "flagEntity")

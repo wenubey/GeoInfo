@@ -8,23 +8,32 @@ import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.MarkerComposable
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.wenubey.countryapp.ui.country.CountryViewModel
+import com.wenubey.countryapp.ui.country.list.CountryEvent
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
 @Composable
@@ -40,9 +49,11 @@ fun MapScreen(
 
 @Composable
 private fun MapScreenContent(
-    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ ->},
+    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     countryName: String = "",
+    countryViewModel: CountryViewModel = koinViewModel(),
 ) {
+    countryViewModel.onEvent(CountryEvent.OnGetAllFavoriteCountries)
     Column(
         Modifier
             .fillMaxSize()
@@ -52,6 +63,7 @@ private fun MapScreenContent(
                 navigateToCountryDetailScreen(countryCode, countryName)
             },
             currentCountryName = countryName,
+            favCountriesLatLng = countryViewModel.favCountriesLatLng
         )
     }
 }
@@ -60,11 +72,17 @@ private fun MapScreenContent(
 private fun GoogleMaps(
     onMapClick: (countryName: String?, countryCode: String?) -> Unit,
     currentCountryName: String,
+    favCountriesLatLng: List<LatLng>
 ) {
     val context = LocalContext.current
     val cameraPositionState = rememberCameraPositionState {
         runBlocking {
-            position = CameraPosition.fromLatLngZoom(getLatLngFromCountryNameSuspend(context, currentCountryName), 6f)
+            position = CameraPosition.fromLatLngZoom(
+                getLatLngFromCountryNameSuspend(
+                    context,
+                    currentCountryName
+                ), 6f
+            )
         }
     }
     val scope = rememberCoroutineScope()
@@ -74,7 +92,11 @@ private fun GoogleMaps(
         cameraPositionState = cameraPositionState,
         onMapClick = { latLng ->
             scope.launch {
-                val pickedCountry = getCountryNameFromLatLng(context = context, latitude = latLng.latitude, longitude = latLng.longitude)
+                val pickedCountry = getCountryNameFromLatLng(
+                    context = context,
+                    latitude = latLng.latitude,
+                    longitude = latLng.longitude
+                )
                 val countryCode = pickedCountry?.first
                 val countryName = pickedCountry?.second
                 onMapClick(countryName, countryCode)
@@ -84,12 +106,23 @@ private fun GoogleMaps(
             zoomControlsEnabled = false
         ),
     ) {
+        favCountriesLatLng.forEach {
+            MarkerComposable(state = MarkerState(it)) {
+                Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color.Yellow)
+            }
+        }
 
     }
 }
 
+
+
 @Suppress("DEPRECATION")
-private suspend fun getCountryNameFromLatLng(context: Context, latitude: Double, longitude: Double): Pair<String?, String?>? {
+private suspend fun getCountryNameFromLatLng(
+    context: Context,
+    latitude: Double,
+    longitude: Double
+): Pair<String?, String?>? {
     return withContext(Dispatchers.IO) {
         val geocoder = Geocoder(context, Locale.getDefault())
         try {
@@ -136,7 +169,7 @@ private suspend fun getLatLngFromCountryNameSuspend(context: Context, countryNam
 @Preview(name = "Light mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun MapScreenContentPreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
             MapScreenContent()
         }

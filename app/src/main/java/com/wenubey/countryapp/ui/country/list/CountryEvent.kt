@@ -20,4 +20,6 @@ sealed class CountryEvent {
 
     data class OnUserUpdateFavorite(val country: Country, val isFavorite: Boolean): CountryEvent()
 
+    object OnGetAllFavoriteCountries: CountryEvent()
+
 }

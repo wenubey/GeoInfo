@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.ui.country.detail.CountryDataState
@@ -29,11 +30,16 @@ class CountryViewModel(
     var countryListDataState by mutableStateOf(CountryListDataState())
         private set
 
+    var favCountriesLatLng by mutableStateOf<List<LatLng>>(emptyList())
+        private set
+
     var searchQuery = mutableStateOf("")
         private set
 
     var isFavoriteFilterClicked = mutableIntStateOf(0)
         private set
+
+
 
     private var selectedSortOption = mutableStateOf(SortOption.NAME)
 
@@ -144,6 +150,15 @@ class CountryViewModel(
             is CountryEvent.OnUserUpdateFavorite -> {
                 updateFavCountry(event.country, event.isFavorite)
             }
+            is CountryEvent.OnGetAllFavoriteCountries -> {
+                getAllFavCountries()
+            }
+        }
+    }
+
+   private fun getAllFavCountries() {
+        viewModelScope.launch {
+            favCountriesLatLng = repo.getLatLngFavCountries()
         }
     }
 

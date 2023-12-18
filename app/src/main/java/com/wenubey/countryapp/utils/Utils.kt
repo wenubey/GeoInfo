@@ -3,6 +3,7 @@ package com.wenubey.countryapp.utils
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.countryapp.domain.model.Country
@@ -97,7 +98,7 @@ val fakeCountry = Country(
         "pol" to "Polish",
         "tur" to "Turkish",
     ),
-    latlng = listOf(52.0, 20.0),
+    latlng = LatLng(52.0, 20.0),
     area = 312679.0,
     flag = mapOf(
         "png" to "https://flagcdn.com/w320/pl.png",

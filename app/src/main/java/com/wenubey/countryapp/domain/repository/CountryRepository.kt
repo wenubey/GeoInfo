@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.domain.repository
 
+import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.DataResponse
@@ -18,5 +19,7 @@ interface CountryRepository {
     suspend fun getLanguages(): Result<Map<String, String>>
 
     suspend fun updateFavCountry(country: Country, isFavorite: Boolean)
+
+    suspend fun getLatLngFavCountries(): List<LatLng>
 
 }

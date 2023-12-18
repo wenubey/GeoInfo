@@ -3,6 +3,7 @@ package com.wenubey.countryapp.data.local
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
+import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
 import com.wenubey.countryapp.data.local.entities.LanguageEntity
 
@@ -61,4 +62,7 @@ interface CountryCacheDao {
 
     @Query("SELECT DISTINCT languageEntity FROM countriesCache")
     suspend fun getLanguages(): List<LanguageEntity?>
+
+    @Query("SELECT latlng FROM countriesCache WHERE isFavorite = 1")
+    suspend fun getLatLngFavCountries(): List<LatLng>
 }

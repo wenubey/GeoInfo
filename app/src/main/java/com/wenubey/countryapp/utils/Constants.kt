@@ -12,6 +12,7 @@ object Constants {
     const val BASE_URL_DEEP_LINK = "https://countryapp.com/detail"
     const val BASE_URL_WIKIPEDIA = "https://en.wikipedia.org/wiki/"
 
+
     // LOG CONSTANTS
     const val TAG = "TAG"
 

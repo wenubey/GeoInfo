@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.utils.Constants.UNDEFINED
 
 fun Double?.formatWithCommasForArea(): String {
@@ -38,3 +39,7 @@ fun SortOption.toIcon(): ImageVector {
 fun String.formatToUri() :String = if (this.contains(" ")) this.replace(" ", "_") else this
 
 fun String.formatFromUri(): String = if (this.contains("_")) this.replace("_", " ") else this
+
+fun List<Double>?.getLatLngFromRemote(): LatLng {
+    return LatLng(this?.get(0) ?: 0.0, this?.get(1) ?: 0.0)
+}

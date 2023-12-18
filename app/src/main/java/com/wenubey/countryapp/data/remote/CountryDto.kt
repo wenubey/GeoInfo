@@ -7,6 +7,7 @@ import com.wenubey.countryapp.data.local.entities.HistoryEntity
 import com.wenubey.countryapp.data.local.entities.LanguageEntity
 import com.wenubey.countryapp.data.local.entities.NativeNameEntity
 import com.wenubey.countryapp.data.local.entities.TranslationEntity
+import com.wenubey.countryapp.utils.getLatLngFromRemote
 import com.wenubey.countryapp.utils.parseEventDate
 
 
@@ -62,7 +63,7 @@ data class CountryDto(
             region = region,
             subRegion = subRegion,
             languageEntity = LanguageEntity(data = languageDto),
-            latlng = latlng,
+            latlng = latlng.getLatLngFromRemote(),
             area = area,
             flagEntity = flagDto,
             timezones = timezones,
