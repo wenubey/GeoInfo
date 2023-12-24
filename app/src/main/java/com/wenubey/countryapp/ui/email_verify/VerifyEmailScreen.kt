@@ -44,18 +44,18 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun VerifyEmailScreen(
-    navigateToProfileScreen: () -> Unit,
+    navigateToMapScreen: () -> Unit,
     navigateBack: () -> Unit,
 ) {
     VerifyEmailContent(
-        navigateToProfileScreen = navigateToProfileScreen,
+        navigateToMapScreen = navigateToMapScreen,
         navigateBack = navigateBack,
     )
 }
 
 @Composable
 private fun VerifyEmailContent(
-    navigateToProfileScreen: () -> Unit = {},
+    navigateToMapScreen: () -> Unit = {},
     navigateBack: () -> Unit =  {},
     viewModel: ProfileViewModel = koinViewModel()
 ) {
@@ -90,7 +90,7 @@ private fun VerifyEmailContent(
         viewModel = viewModel,
         navigateToProfileScreen = {
             if (viewModel.isEmailVerified) {
-                navigateToProfileScreen()
+                navigateToMapScreen()
             } else {
                 context.makeToast(EMAIL_NOT_VERIFIED_MESSAGE)
             }

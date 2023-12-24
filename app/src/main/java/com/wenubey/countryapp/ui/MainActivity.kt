@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
 
     private val deepLinkViewModel: DeepLinkViewModel by viewModel()
     private val tabViewModel: TabViewModel by viewModel()
+    private val authViewModel: AuthViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,9 +38,9 @@ class MainActivity : ComponentActivity() {
                         deepLinkViewModel.handleDeepLink(intent, navController)
                         NavGraph(
                             navHostController = navController,
-                            tabViewModel = tabViewModel
+                            tabViewModel = tabViewModel,
                         )
-                        AuthState(navController = navController)
+                        AuthState(navController = navController, authViewModel = authViewModel)
                     }
                 }
             }

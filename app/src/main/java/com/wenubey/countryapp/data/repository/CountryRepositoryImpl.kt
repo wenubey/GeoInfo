@@ -269,6 +269,7 @@ class CountryRepositoryImpl(
     }
 
     override suspend fun getLatLngFavCountries(): List<LatLng> {
+        //TODO add fetch from firebase and sync with local and than exposed to the UI
         return countryCacheDao.getLatLngFavCountries()
     }
 }

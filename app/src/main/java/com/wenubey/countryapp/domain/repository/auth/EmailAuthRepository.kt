@@ -18,4 +18,6 @@ interface EmailAuthRepository {
     suspend fun sendPasswordResetEmail(email: String): Resource<Boolean>
 
     fun getAuthState(viewModelScope: CoroutineScope): StateFlow<Boolean>
+
+
 }

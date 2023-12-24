@@ -45,14 +45,12 @@ fun TabLayoutScreen(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
     navigateToForgotPasswordScreen: (email: String) -> Unit,
     countryName: String,
-    subRoutes: String,
     tabViewModel: TabViewModel
 ) {
     TabLayoutContent(
         navigateToCountryDetailScreen = navigateToCountryDetailScreen,
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
         countryName = countryName,
-        subRoutes = subRoutes,
         tabViewModel = tabViewModel
     )
 }
@@ -63,25 +61,14 @@ private fun TabLayoutContent(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     navigateToForgotPasswordScreen: (email: String) -> Unit = {},
     countryName: String = "",
-    subRoutes: String = "",
     tabViewModel: TabViewModel,
 ) {
-    val tabIndex = when(subRoutes) {
-        Constants.MAP_SCREEN -> 0
-        Constants.PROFILE_SCREEN -> 2
-        else -> 0
-    }
-
 
     val snackBarHostState = SnackbarHostState()
 
     var selectedTabIndex by tabViewModel.currentIndex
     val pagerState = rememberPagerState {
         tabs.size
-    }
-
-    LaunchedEffect(subRoutes) {
-        tabViewModel.setIndex(tabIndex)
     }
 
     LaunchedEffect(selectedTabIndex) {

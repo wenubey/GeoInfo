@@ -14,4 +14,5 @@ class AuthViewModel(
     fun getAuthState() = repo.getAuthState(viewModelScope)
 
     val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
+
 }

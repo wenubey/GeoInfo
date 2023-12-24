@@ -2,6 +2,7 @@ package com.wenubey.countryapp.ui.navigation
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,7 +16,6 @@ import com.wenubey.countryapp.ui.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.sign_up.SignUpScreen
 import com.wenubey.countryapp.ui.tab_screen.TabLayoutScreen
 import com.wenubey.countryapp.ui.tab_screen.TabViewModel
-import com.wenubey.countryapp.utils.Constants
 import java.util.Locale
 
 @Composable
@@ -23,6 +23,8 @@ fun NavGraph(
     navHostController: NavHostController,
     tabViewModel: TabViewModel,
 ) {
+    val context = LocalContext.current
+    val localeCountry = context.resources.configuration.locales[0].displayCountry
     NavHost(
         navController = navHostController,
         startDestination = Screen.SignInScreen.route,
@@ -41,21 +43,17 @@ fun NavGraph(
                 navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
                 navigateToMapScreen = {
                     navHostController.navigate(
-                        Screen.TabLayoutScreen.route + "/${Locale.getDefault().displayCountry}/${Constants.MAP_SCREEN}"
+                        Screen.TabLayoutScreen.route + "/$localeCountry"
                     )
                 },
             )
         }
-        composable(route = Screen.TabLayoutScreen.route + "/{countryName}/{subRoute}",
+        composable(route = Screen.TabLayoutScreen.route + "/{countryName}",
             arguments = listOf(
                 navArgument("countryName") {
                     type = NavType.StringType
                     defaultValue = Locale.getDefault().displayCountry
                 },
-                navArgument("subRoute") {
-                    type = NavType.StringType
-                    defaultValue = Constants.MAP_SCREEN
-                }
             ),
         ) {
             TabLayoutScreen(
@@ -68,16 +66,15 @@ fun NavGraph(
                     navHostController.navigate(Screen.ForgotPasswordScreen.route + "/${email}")
                 },
                 countryName = it.arguments?.getString("countryName")
-                    ?: Locale.getDefault().displayName,
-                subRoutes = it.arguments?.getString("subRoute") ?: Constants.MAP_SCREEN,
+                    ?: localeCountry,
                 tabViewModel = tabViewModel
             )
         }
         composable(route = Screen.VerifyEmailScreen.route) {
             VerifyEmailScreen(
-                navigateToProfileScreen = {
+                navigateToMapScreen = {
                     navHostController.navigate(
-                        Screen.TabLayoutScreen.route + "//${Constants.PROFILE_SCREEN}"
+                        Screen.TabLayoutScreen.route + "/$localeCountry"
                     ) {
                         popUpTo(navHostController.graph.id) {
                             inclusive = true
@@ -122,7 +119,6 @@ fun NavGraph(
                 }
             )
         ) {
-
             val code = it.arguments?.getString("countryCode")
             val name = it.arguments?.getString("countryName")
             CountryDetailScreen(
@@ -131,7 +127,7 @@ fun NavGraph(
                 navigateBack = { navHostController.popBackStack() },
                 navigateToMapScreen = { countryName ->
                     navHostController.navigate(
-                        Screen.TabLayoutScreen.route + "/${countryName}/${Constants.MAP_SCREEN}"
+                        Screen.TabLayoutScreen.route + "/${countryName}"
                     )
                 }
             )
