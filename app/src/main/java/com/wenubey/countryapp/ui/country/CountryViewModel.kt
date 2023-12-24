@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
 import com.wenubey.countryapp.ui.country.detail.CountryDataState
-import com.wenubey.countryapp.ui.country.list.CountryEvent
 import com.wenubey.countryapp.ui.country.list.CountryListDataState
 import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.DataResponse

@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.country.search_bar
+package com.wenubey.countryapp.ui.country.list
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -49,10 +49,10 @@ import com.wenubey.countryapp.utils.formatWithCommasForArea
 import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 
 @Composable
-fun CountrySearchResultCard(
+fun CountryListCard(
     country: Country,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit,
-    onFavButtonClicked: (country: Country,countryUpdatedFav: Boolean) -> Unit
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
 ) {
     CardContent(
         country = country,
@@ -65,7 +65,7 @@ fun CountrySearchResultCard(
 private fun CardContent(
     country: Country = fakeCountry,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
-    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ ->},
+    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ -> },
 ) {
     Card(
         modifier = Modifier
@@ -105,8 +105,8 @@ private fun CountryFlag(
     Image(
         modifier = Modifier
             .size(
-                height = (screenHeight * 0.1).dp,
-                width = (screenWidth * 0.25).dp,
+                height = (screenHeight * 0.15).dp,
+                width = (screenWidth * 0.30).dp,
             ),
         painter = painter,
         contentDescription = Constants.COUNTRY_FLAG_CONTENT_DESCRIPTION
@@ -141,6 +141,7 @@ private fun CountryInfoColumn(
             )
             Icon(
                 modifier = Modifier
+                    .size(30.dp)
                     .weight(0.2f)
                     .clickable(
                         interactionSource = MutableInteractionSource(),
@@ -155,7 +156,10 @@ private fun CountryInfoColumn(
             )
         }
 
-        Text(text = country.capital?.first() ?: UNDEFINED, style = MaterialTheme.typography.bodySmall)
+        Text(
+            text = country.capital?.first() ?: UNDEFINED,
+            style = MaterialTheme.typography.bodySmall
+        )
         AreaPopulationRow(country = country)
     }
 }
@@ -164,23 +168,31 @@ private fun CountryInfoColumn(
 private fun AreaPopulationRow(
     country: Country
 ) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(2.dp),
+        horizontalAlignment = Alignment.Start
+    ) {
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             Icon(
                 imageVector = Icons.Filled.People,
                 contentDescription = POPULATION_CONTENT_DESCRIPTION
             )
-            Text(text = country.population.formatWithCommasForPopulation())
+            Text(
+                text = country.population.formatWithCommasForPopulation(),
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
-        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 imageVector = Icons.Filled.Fullscreen,
                 contentDescription = AREA_CONTENT_DESCRIPTION
             )
             Text(
                 text = country.area.formatWithCommasForArea(),
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
@@ -190,7 +202,7 @@ private fun AreaPopulationRow(
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
-private fun CountrySearchResultCardPreview() {
+private fun CountryListCardContentPreview() {
     CountryAppTheme {
         Surface {
             CardContent()

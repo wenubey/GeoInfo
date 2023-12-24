@@ -8,12 +8,10 @@ class AuthViewModel(
     private val repo: EmailAuthRepository
 ): ViewModel() {
 
-
     init {
         getAuthState()
     }
-
-    fun getAuthState() = repo.getAuthState(viewModelScope = viewModelScope)
+    fun getAuthState() = repo.getAuthState(viewModelScope)
 
     val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
 }

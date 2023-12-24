@@ -1,4 +1,4 @@
-package com.wenubey.countryapp.ui.country.list
+package com.wenubey.countryapp.ui.country
 
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.utils.SortOption

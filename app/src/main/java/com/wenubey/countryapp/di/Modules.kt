@@ -26,6 +26,7 @@ import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordViewModel
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.sign_in.SignInViewModel
 import com.wenubey.countryapp.ui.sign_up.SignUpViewModel
+import com.wenubey.countryapp.ui.tab_screen.TabViewModel
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.BASE_URL_COUNTRIES
 import com.wenubey.countryapp.utils.Constants.BASE_URL_HISTORIES
@@ -79,6 +80,7 @@ val viewModelModules = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { ForgotPasswordViewModel(get(), get()) }
     viewModel { DeepLinkViewModel(get()) }
+    viewModel { TabViewModel(get()) }
 }
 
 val retrofitModules = module {

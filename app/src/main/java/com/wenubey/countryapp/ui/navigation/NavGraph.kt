@@ -14,17 +14,20 @@ import com.wenubey.countryapp.ui.forgot_password.ForgotPasswordScreen
 import com.wenubey.countryapp.ui.sign_in.SignInScreen
 import com.wenubey.countryapp.ui.sign_up.SignUpScreen
 import com.wenubey.countryapp.ui.tab_screen.TabLayoutScreen
+import com.wenubey.countryapp.ui.tab_screen.TabViewModel
 import com.wenubey.countryapp.utils.Constants
 import java.util.Locale
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController,
+    tabViewModel: TabViewModel,
 ) {
     NavHost(
         navController = navHostController,
         startDestination = Screen.SignInScreen.route,
     ) {
+
         composable(route = Screen.SignUpScreen.route) {
             SignUpScreen(
                 navigateBack = {
@@ -38,18 +41,12 @@ fun NavGraph(
                 navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
                 navigateToMapScreen = {
                     navHostController.navigate(
-                        Screen.TabLayoutScreen(
-                            args = "/${Locale.getDefault().displayCountry}",
-                            subRoute = Constants.MAP_SCREEN,
-                        ).route
+                        Screen.TabLayoutScreen.route + "/${Locale.getDefault().displayCountry}/${Constants.MAP_SCREEN}"
                     )
                 },
             )
         }
-        composable(route = Screen.TabLayoutScreen(
-            args = "/{countryName}",
-            subRoute = Constants.MAP_SCREEN,
-        ).route,
+        composable(route = Screen.TabLayoutScreen.route + "/{countryName}/{subRoute}",
             arguments = listOf(
                 navArgument("countryName") {
                     type = NavType.StringType
@@ -73,16 +70,14 @@ fun NavGraph(
                 countryName = it.arguments?.getString("countryName")
                     ?: Locale.getDefault().displayName,
                 subRoutes = it.arguments?.getString("subRoute") ?: Constants.MAP_SCREEN,
+                tabViewModel = tabViewModel
             )
         }
         composable(route = Screen.VerifyEmailScreen.route) {
             VerifyEmailScreen(
                 navigateToProfileScreen = {
                     navHostController.navigate(
-                        Screen.TabLayoutScreen(
-                            args = null,
-                            subRoute = Constants.PROFILE_SCREEN,
-                        ).route
+                        Screen.TabLayoutScreen.route + "//${Constants.PROFILE_SCREEN}"
                     ) {
                         popUpTo(navHostController.graph.id) {
                             inclusive = true
@@ -136,10 +131,7 @@ fun NavGraph(
                 navigateBack = { navHostController.popBackStack() },
                 navigateToMapScreen = { countryName ->
                     navHostController.navigate(
-                        Screen.TabLayoutScreen(
-                            args = "/${countryName}",
-                            subRoute = Constants.MAP_SCREEN,
-                        ).route
+                        Screen.TabLayoutScreen.route + "/${countryName}/${Constants.MAP_SCREEN}"
                     )
                 }
             )

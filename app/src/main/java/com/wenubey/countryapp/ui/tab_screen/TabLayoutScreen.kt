@@ -28,8 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -48,12 +46,14 @@ fun TabLayoutScreen(
     navigateToForgotPasswordScreen: (email: String) -> Unit,
     countryName: String,
     subRoutes: String,
+    tabViewModel: TabViewModel
 ) {
     TabLayoutContent(
         navigateToCountryDetailScreen = navigateToCountryDetailScreen,
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
         countryName = countryName,
         subRoutes = subRoutes,
+        tabViewModel = tabViewModel
     )
 }
 
@@ -64,27 +64,36 @@ private fun TabLayoutContent(
     navigateToForgotPasswordScreen: (email: String) -> Unit = {},
     countryName: String = "",
     subRoutes: String = "",
+    tabViewModel: TabViewModel,
 ) {
     val tabIndex = when(subRoutes) {
         Constants.MAP_SCREEN -> 0
         Constants.PROFILE_SCREEN -> 2
         else -> 0
     }
+
+
     val snackBarHostState = SnackbarHostState()
 
-    var selectedTabIndex by rememberSaveable { mutableIntStateOf(tabIndex) }
+    var selectedTabIndex by tabViewModel.currentIndex
     val pagerState = rememberPagerState {
         tabs.size
     }
 
+    LaunchedEffect(subRoutes) {
+        tabViewModel.setIndex(tabIndex)
+    }
+
     LaunchedEffect(selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
+        tabViewModel.setIndex(selectedTabIndex)
     }
     LaunchedEffect(pagerState.currentPage, pagerState.isScrollInProgress) {
         if (!pagerState.isScrollInProgress) {
             selectedTabIndex = pagerState.currentPage
         }
     }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -99,7 +108,9 @@ private fun TabLayoutContent(
                 tabs.forEachIndexed { index, item ->
                     Tab(
                         selected = index == selectedTabIndex,
-                        onClick = { selectedTabIndex = index },
+                        onClick = {
+                            tabViewModel.setIndex(index)
+                                  },
                         text = {
                             Text(
                                 text = item.title,
@@ -183,7 +194,7 @@ data class TabItem(
 private fun TabLayoutContentPreview() {
     CountryAppTheme {
         Surface {
-            TabLayoutContent()
+            //TabLayoutContent()
         }
     }
 }

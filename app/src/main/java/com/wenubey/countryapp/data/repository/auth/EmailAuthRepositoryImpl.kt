@@ -12,6 +12,7 @@ import com.wenubey.countryapp.utils.getCurrentTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.tasks.await
@@ -72,7 +73,7 @@ class EmailAuthRepositoryImpl(
         }
     }
 
-    override fun getAuthState(viewModelScope: CoroutineScope) = callbackFlow {
+    override fun getAuthState(viewModelScope: CoroutineScope): StateFlow<Boolean> =  callbackFlow {
         val authStateListener = AuthStateListener { auth ->
             trySend(auth.currentUser == null)
         }
@@ -82,3 +83,4 @@ class EmailAuthRepositoryImpl(
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), auth.currentUser == null)
 }
+

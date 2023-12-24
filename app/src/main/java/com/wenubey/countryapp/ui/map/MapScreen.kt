@@ -26,7 +26,7 @@ import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.wenubey.countryapp.ui.country.CountryViewModel
-import com.wenubey.countryapp.ui.country.list.CountryEvent
+import com.wenubey.countryapp.ui.country.CountryEvent
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import kotlinx.coroutines.Dispatchers

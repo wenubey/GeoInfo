@@ -28,7 +28,7 @@ import com.wenubey.countryapp.ui.country.detail.components.FlagWithCountryCommon
 import com.wenubey.countryapp.ui.country.detail.components.GeographicalInformation
 import com.wenubey.countryapp.ui.country.detail.components.HistoricalInformation
 import com.wenubey.countryapp.ui.country.detail.components.TranslationsInformation
-import com.wenubey.countryapp.ui.country.list.CountryEvent
+import com.wenubey.countryapp.ui.country.CountryEvent
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
 import com.wenubey.countryapp.utils.components.ProgressBar

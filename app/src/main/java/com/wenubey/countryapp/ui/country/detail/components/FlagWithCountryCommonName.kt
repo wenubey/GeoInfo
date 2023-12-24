@@ -52,7 +52,7 @@ import coil.request.ImageRequest
 import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.ui.country.CountryViewModel
-import com.wenubey.countryapp.ui.country.list.CountryEvent
+import com.wenubey.countryapp.ui.country.CountryEvent
 import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants

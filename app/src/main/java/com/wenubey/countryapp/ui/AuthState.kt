@@ -2,30 +2,29 @@ package com.wenubey.countryapp.ui
 
 import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.wenubey.countryapp.ui.navigation.Screen
+import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.TAG
 import org.koin.androidx.compose.koinViewModel
 import java.util.Locale
 
 @Composable
 fun AuthState(
-    navHostController: NavHostController,
-    viewModel: AuthViewModel = koinViewModel(),
+    navController: NavHostController,
+    authViewModel: AuthViewModel = koinViewModel(),
 ) {
-    val isUserSignedOut = viewModel.getAuthState().collectAsState().value
+    val isUserSignedOut = authViewModel.getAuthState().collectAsStateWithLifecycle().value
+    Log.i(TAG, "isUserSignedOut: $isUserSignedOut")
     if (isUserSignedOut) {
-        Log.i(TAG, "viewModel.isUserSignedOut: $isUserSignedOut ")
-        NavigateToSignInScreen(navController = navHostController)
+        NavigateToSignInScreen(navController = navController)
     } else {
-        if (viewModel.isEmailVerified) {
-            Log.i(TAG, "viewModel.isEmailVerified: ${viewModel.isEmailVerified}")
-            NavigateToMapsScreen(navController = navHostController)
+        if (authViewModel.isEmailVerified) {
+            NavigateToMapsScreen(navController = navController)
         } else {
-            Log.i(TAG, "viewModel.isEmailNotVerified: ${viewModel.isEmailVerified}")
-            NavigateToVerifyEmailScreen(navController = navHostController)
+            NavigateToVerifyEmailScreen(navController = navController)
         }
     }
 }
@@ -40,7 +39,7 @@ private fun NavigateToSignInScreen(navController: NavController) =
 
 @Composable
 private fun NavigateToMapsScreen(navController: NavController) =
-    navController.navigate(Screen.TabLayoutScreen(args = "/${Locale.getDefault().displayCountry}").route) {
+    navController.navigate(Screen.TabLayoutScreen.route + "/${Locale.getDefault().displayCountry}/${Constants.MAP_SCREEN}") {
         popUpTo(navController.graph.id) {
             inclusive = true
         }
