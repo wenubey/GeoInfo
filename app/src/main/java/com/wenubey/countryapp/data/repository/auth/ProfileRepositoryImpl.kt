@@ -70,6 +70,7 @@ class ProfileRepositoryImpl(
             }
             auth.currentUser?.updateProfile(profileUpdates)?.await()
             auth.currentUser?.updateEmail(email)?.await()
+            
             val updatedValue = mapOf(
                 "displayName" to newDisplayName,
                 "email" to email,

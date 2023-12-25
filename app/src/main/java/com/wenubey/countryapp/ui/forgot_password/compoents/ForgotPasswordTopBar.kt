@@ -8,7 +8,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import com.wenubey.countryapp.utils.Constants.BACK_BUTTON_DESCRIPTION
 import com.wenubey.countryapp.utils.Constants.FORGOT_PASSWORD_SCREEN_TITLE
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,3 +27,5 @@ fun ForgotPasswordTopBar(
         },
     )
 }
+
+private const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"

@@ -22,22 +22,12 @@ object Constants {
     //DB REF
     const val USERS = "users"
 
-    //LABELS
-    const val EMAIL_LABEL = "Email"
-    const val PASSWORD_LABEL = "Password"
-    const val DISPLAY_NAME_LABEL = "Display Name"
 
-    // Navigation Constants
-    const val PROFILE_SCREEN = "profileScreen"
-    const val MAP_SCREEN = "mapScreen"
+
 
     //CONTENT DESCRIPTIONS
-    const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"
-    const val PASSWORD_VISIBILITY_DESCRIPTION = "Password visibility on/off"
+
     const val OPEN_MENU_DESCRIPTION = "This buttons opens the menu"
-    const val GOOGLE_SIGN_IN_BUTTON_DESCRIPTION = "Sign in with Google"
-    const val FACEBOOK_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
-    const val TWITTER_SIGN_UP_BUTTON_DESCRIPTION = "Sign in with Facebook"
     const val PROFILE_PHOTO_DESCRIPTION = "Your profile photo"
     const val PROFILE_UPDATE_FAB_DESCRIPTION = "Update your profile"
     const val ASC_DESC_DESCRIPTION = "Sort order country list"
@@ -66,16 +56,15 @@ object Constants {
     const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
     const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
     const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
-    const val PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
+
     const val ADD_FAV_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
     const val SHARE_CONTENT_DESCRIPTION = "You can share country info when you clicked this button."
     const val ADD_REMOVE_FAV_CONTENT_DESCRIPTION = "You can add/remove favorite when you clicked this button."
 
     //TEXTS
-    const val FORGOT_PASSWORD = "Forgot password?"
-    const val NO_ACCOUNT = "Don't you have an account? Sign Up!"
+
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
-    const val ALREADY_USER = "Already a user? Sign in."
+
     const val ALREADY_VERIFIED = "Already verified?"
     const val SPAM_EMAIL = "If not, please also check the spam folder."
     const val CANCEL_OPERATION = "You canceled the operation"
@@ -130,17 +119,4 @@ object Constants {
     const val MAP_SCREEN_TITLE = "Map"
     const val COUNTRY_LIST_SCREEN_TITLE = "Countries"
     const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
-
-    // BUTTONS
-    const val SIGN_IN = "Sign in"
-    const val RESET_PASSWORD = "Reset"
-    const val SIGN_UP = "Sign up"
-    const val SIGN_OUT = "Sign out"
-    const val REVOKE_ACCESS = "Revoke Access"
-    const val SIGN_IN_WITH_GOOGLE = "Sign in with Google"
-    const val SIGN_UP_WITH_TWITTER = "Sign in with Twitter"
-    const val SAVE = "Save"
-
-    //USER FIELDS
-    const val PROFILE_INFO = "Profile Info"
 }

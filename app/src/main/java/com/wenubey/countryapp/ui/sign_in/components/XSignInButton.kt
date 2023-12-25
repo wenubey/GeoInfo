@@ -16,28 +16,28 @@ import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 
 @Composable
-fun FacebookSignInButton(
+fun XSignInButton(
     modifier: Modifier = Modifier,
-    facebookSignInClicked: () -> Unit,
+    twitterSignInClicked: () -> Unit,
 ) {
     Button(
         modifier = modifier,
-        onClick = facebookSignInClicked
+        onClick = twitterSignInClicked
     ) {
-        Image(painter = painterResource(id = R.drawable.ic_facebook_logo), contentDescription = FACEBOOK_SIGN_UP)
-        Text(text = FACEBOOK_SIGN_UP, modifier = Modifier.padding(6.dp), style = MaterialTheme.typography.bodyMedium)
+        Image(painter = painterResource(id = R.drawable.ic_twitter_logo), contentDescription = SIGN_UP_WITH_TWITTER)
+        Text(text = SIGN_UP_WITH_TWITTER, modifier = Modifier.padding(6.dp), style = MaterialTheme.typography.bodyMedium)
     }
 }
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
-private fun FacebookSignInButtonPreview() {
+private fun TwitterSignInButtonPreview() {
      CountryAppTheme {
         Surface {
-             FacebookSignInButton(facebookSignInClicked = {})
+             XSignInButton(twitterSignInClicked = {})
         }
     }
 }
 
-private const val FACEBOOK_SIGN_UP = "Sign up with Facebook"
+private const val SIGN_UP_WITH_TWITTER = "Sign up with X"

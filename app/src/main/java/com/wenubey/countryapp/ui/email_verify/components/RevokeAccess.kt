@@ -9,7 +9,6 @@ import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.utils.Constants.ACCESS_REVOKED_MESSAGE
 import com.wenubey.countryapp.utils.Constants.REVOKE_ACCESS_MESSAGE
 import com.wenubey.countryapp.utils.Constants.SENSITIVE_OPERATION_MESSAGE
-import com.wenubey.countryapp.utils.Constants.SIGN_OUT
 import com.wenubey.countryapp.utils.Resource
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
@@ -56,3 +55,5 @@ fun RevokeAccess(
         }
     }
 }
+
+private const val SIGN_OUT = "Sign out"

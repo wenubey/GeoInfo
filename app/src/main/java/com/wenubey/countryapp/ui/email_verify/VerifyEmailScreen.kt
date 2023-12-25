@@ -138,14 +138,14 @@ private fun VerifyEmailTopBar(
         actions = {
             DropdownMenu(expanded = openMenu, onDismissRequest = { openMenu = !openMenu }) {
                 DropdownMenuItem(
-                    text = { Text(text = Constants.SIGN_OUT) },
+                    text = { Text(text = SIGN_OUT) },
                     onClick = {
                         signOut()
                         openMenu = !openMenu
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(text = Constants.REVOKE_ACCESS) },
+                    text = { Text(text = REVOKE_ACCESS) },
                     onClick = {
                         revokeAccess()
                         openMenu = !openMenu
@@ -153,7 +153,7 @@ private fun VerifyEmailTopBar(
                 )
                 if (navigateToForgotPasswordScreen != null) {
                     DropdownMenuItem(
-                        text = { Text(text = Constants.FORGOT_PASSWORD) },
+                        text = { Text(text = FORGOT_PASSWORD) },
                         onClick = {
                             navigateToForgotPasswordScreen()
                         },
@@ -166,7 +166,7 @@ private fun VerifyEmailTopBar(
             IconButton(onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = Constants.BACK_BUTTON_DESCRIPTION
+                    contentDescription = BACK_BUTTON_DESCRIPTION
                 )
             }
         }
@@ -182,3 +182,8 @@ private fun VerifyEmailContentPreview() {
         }
     }
 }
+
+private const val FORGOT_PASSWORD = "Forgot password?"
+private const val REVOKE_ACCESS = "Revoke Access"
+private const val SIGN_OUT = "Sign out"
+private const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"

@@ -14,7 +14,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -23,9 +26,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants.DISPLAY_NAME_LABEL
-import com.wenubey.countryapp.utils.Constants.PROFILE_INFO
-import com.wenubey.countryapp.utils.Constants.SAVE
 import com.wenubey.countryapp.utils.components.EmailTextField
 
 
@@ -59,17 +59,20 @@ fun UserInfoUpdateDialog(
 @Composable
 private fun AlertDialogContent(
     showDialog: MutableState<Boolean> = mutableStateOf(false),
-    email: TextFieldValue = TextFieldValue("email"),
-    phoneNumber: String = "",
+    email: TextFieldValue = TextFieldValue(PREVIEW_EMAIL),
+    phoneNumber: String = PREVIEW_PHONE,
     onEmailValueChange: (email: TextFieldValue) -> Unit = {},
-    displayName: TextFieldValue = TextFieldValue("displayName"),
+    displayName: TextFieldValue = TextFieldValue(PREVIEW_NAME),
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit = {},
     onPhoneNumberValueChange: (phoneNumber: String) -> Unit = {},
     onPhoneCodeValueChange: (phoneCode: String?) -> Unit = {},
     onClickConfirm: () -> Unit = {},
-    countryCodeMap: Map<String?, String?> = mapOf("PL" to "+48")
+    countryCodeMap: Map<String?, String?> = fakeCountryCode
 ) {
     val focusManager = LocalFocusManager.current
+    var isButtonEnabled by remember {
+        mutableStateOf(true)
+    }
 
     AlertDialog(
         onDismissRequest = { showDialog.value = false },
@@ -79,11 +82,16 @@ private fun AlertDialogContent(
                 modifier = Modifier.padding(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                EmailTextField(email = email,
-                    onEmailValueChange = onEmailValueChange,
+                EmailTextField(
+                    email = email,
+                    onEmailValueChange = { email, isError ->
+                        onEmailValueChange(email)
+                        isButtonEnabled = isError
+                    },
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                    ))
+                    ),
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = displayName,
@@ -107,7 +115,8 @@ private fun AlertDialogContent(
         },
         confirmButton = {
             Button(
-                onClick = onClickConfirm
+                onClick = onClickConfirm,
+                enabled = isButtonEnabled,
             ) {
                 Text(text = SAVE, style = MaterialTheme.typography.bodyMedium)
             }
@@ -119,9 +128,17 @@ private fun AlertDialogContent(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun AlertDialogContentPreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
-             AlertDialogContent()
+            AlertDialogContent()
         }
     }
 }
+
+private val fakeCountryCode = mapOf<String?, String?>("\uD83C\uDDF5\uD83C\uDDF1" to "+48")
+private const val PREVIEW_EMAIL = "helloworld@helloworld.com"
+private const val PREVIEW_NAME = "Hello World"
+private const val PREVIEW_PHONE = "12345678"
+private const val DISPLAY_NAME_LABEL = "Display Name"
+private const val PROFILE_INFO = "Profile Info"
+private const val SAVE = "Save"

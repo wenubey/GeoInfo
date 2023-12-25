@@ -99,6 +99,7 @@ private fun ProfileScreenContent(
         UserInfoUpdateDialog(
             showDialog = showDialog,
             onClickConfirm = {
+                // FIXME firestore updated but not auth user
                 profileViewModel.updateUser(
                     newDisplayName = displayName.text,
                     email = email.text,
