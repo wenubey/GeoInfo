@@ -29,18 +29,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             KoinContext {
                 CountryAppTheme {
-
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
                         navController = rememberNavController()
-                        deepLinkViewModel.handleDeepLink(intent, navController)
                         NavGraph(
                             navHostController = navController,
                             tabViewModel = tabViewModel,
                         )
                         AuthState(navController = navController, authViewModel = authViewModel)
+                        deepLinkViewModel.handleDeepLink(intent, navController)
                     }
                 }
             }

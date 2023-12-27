@@ -1,6 +1,7 @@
 package com.wenubey.countryapp.ui.profile.components
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.components.EmailTextField
 
 
@@ -33,26 +35,28 @@ import com.wenubey.countryapp.utils.components.EmailTextField
 fun UserInfoUpdateDialog(
     showDialog: MutableState<Boolean>,
     email: TextFieldValue,
-    phoneNumber: String,
+    phoneNumberBody: TextFieldValue,
+    countryCode: String,
     onEmailValueChange: (email: TextFieldValue) -> Unit,
     displayName: TextFieldValue,
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit,
-    onPhoneNumberValueChange: (phoneNumber: String) -> Unit,
-    onPhoneCodeValueChange: (phoneCode: String?) -> Unit,
+    onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit,
+    onCountryCodeValueChange: (phoneCode: String?) -> Unit,
     onClickConfirm: () -> Unit,
-    countryCodeMap: Map<String?, String?>
+    countryCodeMap: Map<String?, String?>,
 ) {
     AlertDialogContent(
         showDialog = showDialog,
         email = email,
-        phoneNumber = phoneNumber,
+        phoneNumberBody = phoneNumberBody,
         onEmailValueChange = onEmailValueChange,
         displayName = displayName,
         onDisplayNameValueChange = onDisplayNameValueChange,
         onPhoneNumberValueChange = onPhoneNumberValueChange,
-        onPhoneCodeValueChange = onPhoneCodeValueChange,
+        onPhoneCodeValueChange = onCountryCodeValueChange,
         onClickConfirm = onClickConfirm,
-        countryCodeMap = countryCodeMap
+        countryCodeMap = countryCodeMap,
+        countryCode = countryCode,
     )
 }
 
@@ -60,14 +64,15 @@ fun UserInfoUpdateDialog(
 private fun AlertDialogContent(
     showDialog: MutableState<Boolean> = mutableStateOf(false),
     email: TextFieldValue = TextFieldValue(PREVIEW_EMAIL),
-    phoneNumber: String = PREVIEW_PHONE,
+    phoneNumberBody: TextFieldValue = TextFieldValue(PREVIEW_PHONE),
+    countryCode: String = "",
     onEmailValueChange: (email: TextFieldValue) -> Unit = {},
     displayName: TextFieldValue = TextFieldValue(PREVIEW_NAME),
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit = {},
-    onPhoneNumberValueChange: (phoneNumber: String) -> Unit = {},
+    onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit = {},
     onPhoneCodeValueChange: (phoneCode: String?) -> Unit = {},
     onClickConfirm: () -> Unit = {},
-    countryCodeMap: Map<String?, String?> = fakeCountryCode
+    countryCodeMap: Map<String?, String?> = fakeCountryCode,
 ) {
     val focusManager = LocalFocusManager.current
     var isButtonEnabled by remember {
@@ -82,6 +87,8 @@ private fun AlertDialogContent(
                 modifier = Modifier.padding(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Log.i(TAG, "email: ${email.text}")
+                Log.i(TAG, "displayName: ${displayName.text}")
                 EmailTextField(
                     email = email,
                     onEmailValueChange = { email, isError ->
@@ -92,7 +99,6 @@ private fun AlertDialogContent(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = displayName,
                     onValueChange = onDisplayNameValueChange,
@@ -107,7 +113,8 @@ private fun AlertDialogContent(
                 PhonePicker(
                     countryData = countryCodeMap,
                     onSelectCountryCode = onPhoneCodeValueChange,
-                    phoneNumber = phoneNumber,
+                    phoneNumberBody = phoneNumberBody,
+                    countryCode = countryCode,
                     onPhoneCodeValueChange = onPhoneNumberValueChange
                 )
 

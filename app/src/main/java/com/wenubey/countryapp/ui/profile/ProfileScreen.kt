@@ -1,10 +1,10 @@
 package com.wenubey.countryapp.ui.profile
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,24 +19,24 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.email_verify.components.RevokeAccess
-import com.wenubey.countryapp.ui.profile.components.AccountSettingsMenu
 import com.wenubey.countryapp.ui.profile.components.UpdateUser
 import com.wenubey.countryapp.ui.profile.components.User
 import com.wenubey.countryapp.ui.profile.components.UserInfoUpdateDialog
 import com.wenubey.countryapp.ui.profile.components.UserUpdateFAB
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.components.ProgressBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreen(
     navigateToForgotPasswordScreen: (email: String) -> Unit,
     snackBarHostState: SnackbarHostState,
-    paddingValues: PaddingValues
+    navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit,
 ) {
     ProfileScreenContent(
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
         snackBarHostState = snackBarHostState,
-        paddingValues = paddingValues
+        navigateToCountryDetailScreen = navigateToCountryDetailScreen
     )
 }
 
@@ -47,77 +47,76 @@ private fun ProfileScreenContent(
     snackBarHostState: SnackbarHostState = SnackbarHostState(),
     profileViewModel: ProfileViewModel = koinViewModel(),
     countryViewModel: CountryViewModel = koinViewModel(),
-    paddingValues: PaddingValues = PaddingValues()
-
+    navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit = { _, _ ->},
 ) {
+    val user = profileViewModel.currentUserDataResponse
     val showDialog = remember { mutableStateOf(false) }
-    var email by remember {
+    var email by remember(user) {
         mutableStateOf(
-            TextFieldValue(
-                profileViewModel.currentUser?.email ?: ""
-            )
+            TextFieldValue(user?.email ?: "")
         )
     }
-    var displayName by remember {
+    var displayName by remember(user) {
         mutableStateOf(
-            TextFieldValue(
-                profileViewModel.currentUser?.displayName ?: ""
-            )
+            TextFieldValue(user?.displayName ?: "")
         )
     }
-    var countryPhoneCode by remember {
-        mutableStateOf("")
+    val phoneNumber by remember(user) {
+        mutableStateOf(user?.phoneNumber ?: "")
     }
-    var phoneNumber by remember {
-        mutableStateOf(
-            profileViewModel.currentUser?.phoneNumber ?: ""
-        )
+    var phoneNumberBody by remember(user) {
+        mutableStateOf(TextFieldValue(extractPhoneBody(phoneNumber)))
+    }
+    var countryPhoneCode by remember(user) {
+        mutableStateOf(extractPhoneCode(phoneNumber = phoneNumber))
     }
     val coroutineScope = rememberCoroutineScope()
-
-    Box(
+    if (user == null) {
+        ProgressBar()
+    }
+    Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(paddingValues), contentAlignment = Alignment.Center
-    ) {
-        User(user = profileViewModel.currentUserDataResponse)
-        UserUpdateFAB(
-            onClick = { showDialog.value = !showDialog.value },
-            modifier = Modifier
-                .align(Alignment.BottomEnd),
-        )
-        AccountSettingsMenu(
-            modifier = Modifier.align(Alignment.TopEnd),
-            signOut = { profileViewModel.signOut() },
-            revokeAccess = { profileViewModel.revokeAccess() },
-            navigateToForgotPasswordScreen = {
-                navigateToForgotPasswordScreen(email.text)
-            },
-        )
+            .fillMaxSize(),
+        floatingActionButton = {
+            UserUpdateFAB(
+                onClick = { showDialog.value = !showDialog.value },
+                modifier = Modifier,
+            )
+        }
+    ) { paddingValue ->
+        Column(modifier = Modifier.padding(paddingValue).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            User(
+                user = profileViewModel.currentUserDataResponse,
+                navigateToForgotPasswordScreen = { navigateToForgotPasswordScreen(email.text) },
+                profileViewModel = profileViewModel,
+                navigateToCountryDetailScreen = navigateToCountryDetailScreen
+            )
+        }
+
     }
     if (showDialog.value) {
         UserInfoUpdateDialog(
             showDialog = showDialog,
             onClickConfirm = {
-                // FIXME firestore updated but not auth user
                 profileViewModel.updateUser(
                     newDisplayName = displayName.text,
                     email = email.text,
-                    phoneNumber = "$countryPhoneCode $phoneNumber"
+                    phoneNumber = "$countryPhoneCode $phoneNumberBody"
                 )
                 showDialog.value = false
             },
             email = email,
             displayName = displayName,
-            phoneNumber = phoneNumber,
+            phoneNumberBody = phoneNumberBody,
             onEmailValueChange = { email = it },
             onDisplayNameValueChange = { displayName = it },
-            onPhoneNumberValueChange = { phoneNumber = it },
+            onPhoneNumberValueChange = { phoneNumberBody = it },
             countryCodeMap = countryViewModel.countryPhoneCodes,
-            onPhoneCodeValueChange = { countryPhoneCode = it!! }
-
+            onCountryCodeValueChange = { countryPhoneCode = it!! },
+            countryCode = countryPhoneCode,
         )
     }
+
 
     RevokeAccess(
         viewModel = profileViewModel,
@@ -144,4 +143,9 @@ fun ProfileScreenContentPreview() {
         }
     }
 }
+
+private fun extractPhoneBody(phoneNumber: String): String = phoneNumber.substringAfterLast(" ")
+private fun extractPhoneCode(phoneNumber: String): String = phoneNumber.substringBefore(" ")
+
+
 

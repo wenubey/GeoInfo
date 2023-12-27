@@ -62,7 +62,9 @@ data class CountryCacheEntity(
     @ColumnInfo(name = "borders")
     val borders: List<String?>?,
     @ColumnInfo(name = "isFavorite")
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    @ColumnInfo(name = "flagEmoji")
+    val flagEmoji: String?,
 ) {
     fun mapToCountry(): Country {
         return Country(
@@ -89,7 +91,8 @@ data class CountryCacheEntity(
             translations = translations.mapValues { it.value?.mapToTranslation() },
             continents = continents,
             borders = borders,
-            isFavorite = isFavorite
+            isFavorite = isFavorite,
+            flagEmoji = flagEmoji,
         )
     }
 }

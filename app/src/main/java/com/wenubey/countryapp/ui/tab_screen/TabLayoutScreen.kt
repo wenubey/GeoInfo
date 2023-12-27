@@ -140,7 +140,7 @@ private fun TabLayoutContent(
                         ProfileScreen(
                             navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
                             snackBarHostState =snackBarHostState,
-                            paddingValues = paddingValues
+                            navigateToCountryDetailScreen = navigateToCountryDetailScreen
                         )
                     }
                     else -> {}

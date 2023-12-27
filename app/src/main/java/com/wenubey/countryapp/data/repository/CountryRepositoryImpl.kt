@@ -236,35 +236,38 @@ class CountryRepositoryImpl(
         return Result.success(distinctLangNames)
     }
 
-    override suspend fun updateFavCountry(country: Country, isFavorite: Boolean){
+    @Suppress("UNCHECKED_CAST")
+    override suspend fun updateFavCountry(country: Country, isFavorite: Boolean) {
         val userId = auth.currentUser?.uid
-        return if (userId != null) {
+        if (userId != null) {
             val currentDocument = firestore.collection(Constants.USERS).document(userId)
 
             // Retrieve existing data and favCountries set
             val existingData = currentDocument.get().await().data
-            val existingFavCountries = existingData?.get("favCountries") as? String ?: ""
-            val favCountriesSet = existingFavCountries.split(",").toMutableSet()
+            val existingFavCountries =
+                existingData?.get("favCountries") as? MutableMap<String, String> ?: mutableMapOf()
 
             // Update favCountries set based on isFavorite status
             if (isFavorite) {
-                favCountriesSet.add(country.countryCodeCCA2!!)
+                existingFavCountries[country.flagEmoji!!] = "${country.countryCodeCCA2} ${country.countryCommonName}"
             } else {
-                favCountriesSet.remove(country.countryCodeCCA2!!)
+               existingFavCountries.remove(country.flagEmoji!!)
             }
 
             // Build the update map
             val updateValue = mapOf(
-                "favCountries" to favCountriesSet.joinToString(",")
+                "favCountries" to existingFavCountries
             )
             // Update the Firestore document
-            currentDocument.update(updateValue).await()
+            currentDocument.update(updateValue)
+                .addOnFailureListener { Log.e(TAG, "updateFavCountry Error: $it") }
+                .await()
             // Update the local database
-            val existingValue = countryCacheDao.getCountry(country.countryCodeCCA2)
+            val existingValue = countryCacheDao.getCountry(country.countryCodeCCA2!!)
             val updatedValue = existingValue!!.copy(isFavorite = isFavorite)
             countryCacheDao.upsertCountry(updatedValue)
         } else {
-
+            Log.e(TAG, "updateFavCountry Error Can't retrieve userId!!!")
         }
     }
 
@@ -273,5 +276,7 @@ class CountryRepositoryImpl(
         return countryCacheDao.getLatLngFavCountries()
     }
 }
+
+
 
 

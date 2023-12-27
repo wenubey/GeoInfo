@@ -70,7 +70,6 @@ object Constants {
     const val CANCEL_OPERATION = "You canceled the operation"
     const val CANT_CHANGE_PASSWORD =
         "Sorry, you log in different provider than email, you can not change or forgot your password."
-    const val SEARCH_COUNTRIES_PLACEHOLDER = "Search countries"
     const val MAP_SEARCH_BAR_PLACEHOLDER = "Search countries, regions..."
     const val UNDEFINED = "Undefined"
     const val BASIC_INFORMATION = "Basic Information"

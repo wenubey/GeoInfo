@@ -26,7 +26,8 @@ data class Country(
     val translations: Map<String?, Translation?>,
     val continents: List<String?>?,
     val borders: List<String?>?,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val flagEmoji: String?,
 )
 
 data class NativeName(

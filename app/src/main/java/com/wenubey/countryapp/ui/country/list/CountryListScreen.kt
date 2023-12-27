@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.StarBorder
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -124,7 +123,7 @@ private fun CountryList(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 private fun CountryListContent(
     query: String = "",

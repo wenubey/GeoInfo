@@ -38,10 +38,12 @@ fun addUserToFirestore(
     auth: FirebaseAuth,
     db: FirebaseFirestore,
     authProvider: AuthProvider,
-    createdAt: String? = null
+    createdAt: String? = null,
+    isPhoneNumberVerified: Boolean? = false,
+    favCountries: Map<String, String>? = null,
 ) {
     auth.currentUser?.apply {
-        val user = toUser(authProvider, createdAt = createdAt)
+        val user = toUser(authProvider, createdAt = createdAt, isPhoneNumberVerified = isPhoneNumberVerified, favCountries = favCountries)
         db.collection(Constants.USERS).document(uid).set(user)
     }
 }
@@ -79,6 +81,21 @@ val countryNameMapping = mapOf(
 fun normalizeCountryName(countryName: String?): String? {
     return countryNameMapping[countryName] ?: countryName
 }
+
+val fakeCountryCodeData = mapOf<String?, String?>(
+    "🇦🇩 Andorra" to "+376",
+    "🇦🇪 United Arab Emirates" to "+971",
+    "🇦🇫 Afghanistan" to "+93",
+    "🇦🇬 Antigua and Barbuda" to "+1268",
+    "🇦🇮 Anguilla" to "+1264",
+    "🇦🇱 Albania" to "+355",
+    "🇦🇲 Armenia" to "+374",
+    "🇦🇴 Angola" to "+244",
+    "🇦🇷 Argentina" to "+54",
+    "🇲🇽 Mexico" to "+52",
+    "🇲🇾 Malaysia" to "+60",
+    "🇲🇿 Mozambique" to "+258"
+)
 
 val fakeCountry = Country(
     countryCommonName = "Poland",
@@ -133,6 +150,7 @@ val fakeCountry = Country(
         "TR",
         "DE"
     ),
-    isFavorite = false
+    isFavorite = false,
+    flagEmoji = "\uD83C\uDDF5\uD83C\uDDF1"
 )
 

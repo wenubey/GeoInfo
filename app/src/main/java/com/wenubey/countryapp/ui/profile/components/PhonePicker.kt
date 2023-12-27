@@ -4,13 +4,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
 fun PhonePicker(
     countryData: Map<String?,String?>,
     onSelectCountryCode: (String?) -> Unit,
-    phoneNumber: String,
-    onPhoneCodeValueChange: (phoneCode: String) -> Unit,
+    countryCode: String,
+    phoneNumberBody: TextFieldValue,
+    onPhoneCodeValueChange: (phoneCode: TextFieldValue) -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -18,7 +20,9 @@ fun PhonePicker(
         CountryDropdownMenu(
             countryData = countryData,
             onSelectCountryCode = onSelectCountryCode,
+            currentCountryCode = countryCode
         )
-        OutlinedTextField(value = phoneNumber, onValueChange = onPhoneCodeValueChange)
+        OutlinedTextField(value = phoneNumberBody, onValueChange = onPhoneCodeValueChange)
     }
 }
+

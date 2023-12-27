@@ -70,6 +70,7 @@ data class CountryDto(
             coatOfArms = coatOfArmsDto,
             historyEntity = historyDto?.map { it.mapToHistoryEntity() },
             flagEmojiWithPhoneCode = mapOf(flagEmoji + " ${countryNameDto?.common}" to iddDto?.mapToPhoneCode()),
+            flagEmoji = flagEmoji,
             gini = gini ?: mapOf(),
             demonyms = demonyms,
             translations = translations?.mapValues { it.value?.mapToTranslationEntity() } ?: mapOf(),

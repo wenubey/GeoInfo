@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.ui.profile.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -47,7 +46,7 @@ private fun MenuContent(
     var openMenu by remember { mutableStateOf(false) }
 
     IconButton(
-        modifier = modifier.padding(end = 12.dp, top = 12.dp),
+        modifier = modifier,
         onClick = { openMenu = !openMenu },
     ) {
         Icon(

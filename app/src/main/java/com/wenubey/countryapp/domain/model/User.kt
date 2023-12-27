@@ -11,9 +11,11 @@ data class User(
     val createdAt: String? = null,
     val emailVerified: Boolean? = null,
     val authProvider: AuthProvider? = null,
+    val isPhoneNumberVerified: Boolean? = false,
+    val favCountries: Map<String, String>? = null,
 )
 
-fun FirebaseUser.toUser(authProvider: AuthProvider?, createdAt: String? = null): User {
+fun FirebaseUser.toUser(authProvider: AuthProvider?, createdAt: String? = null, isPhoneNumberVerified: Boolean?, favCountries:Map<String, String>?): User {
     return User(
         displayName = displayName,
         email = email,
@@ -21,7 +23,9 @@ fun FirebaseUser.toUser(authProvider: AuthProvider?, createdAt: String? = null):
         phoneNumber = phoneNumber,
         createdAt = createdAt,
         emailVerified = isEmailVerified,
-        authProvider = authProvider
+        authProvider = authProvider,
+        isPhoneNumberVerified = isPhoneNumberVerified,
+        favCountries = favCountries
     )
 }
 
