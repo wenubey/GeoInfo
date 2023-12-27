@@ -9,8 +9,8 @@ import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
-import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.TAG
+import com.wenubey.countryapp.utils.Constants.USERS
 import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.DataResponse
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
@@ -24,7 +24,6 @@ class CountryRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
 ) : CountryRepository {
-
 
     override suspend fun getAllCountries(
         fetchFromRemote: Boolean,
@@ -240,7 +239,7 @@ class CountryRepositoryImpl(
     override suspend fun updateFavCountry(country: Country, isFavorite: Boolean) {
         val userId = auth.currentUser?.uid
         if (userId != null) {
-            val currentDocument = firestore.collection(Constants.USERS).document(userId)
+            val currentDocument = firestore.collection(USERS).document(userId)
 
             // Retrieve existing data and favCountries set
             val existingData = currentDocument.get().await().data
@@ -249,9 +248,10 @@ class CountryRepositoryImpl(
 
             // Update favCountries set based on isFavorite status
             if (isFavorite) {
-                existingFavCountries[country.flagEmoji!!] = "${country.countryCodeCCA2} ${country.countryCommonName}"
+                existingFavCountries[country.flagEmoji!!] =
+                    "${country.countryCodeCCA2} ${country.countryCommonName}"
             } else {
-               existingFavCountries.remove(country.flagEmoji!!)
+                existingFavCountries.remove(country.flagEmoji!!)
             }
 
             // Build the update map
@@ -272,9 +272,35 @@ class CountryRepositoryImpl(
     }
 
     override suspend fun getLatLngFavCountries(): List<LatLng> {
-        //TODO add fetch from firebase and sync with local and than exposed to the UI
+
+        val userId = auth.currentUser!!.uid
+
+        //Retrieve from remote
+        val favCountriesFirestore = fetchFavCountriesFromFirestore(userId)
+        //Update the local
+        updateLocalDatabase(favCountriesFirestore)
+
         return countryCacheDao.getLatLngFavCountries()
     }
+
+    private suspend fun updateLocalDatabase(favCountriesFirestore: List<String>) {
+        countryCacheDao.clearFavCountries()
+        val localCountriesToBeFavorite = countryCacheDao.getCountriesByCodes(favCountriesFirestore)
+
+        val newLocalFavorites = localCountriesToBeFavorite.map { it.copy(isFavorite = true) }
+
+        countryCacheDao.upsertAll(newLocalFavorites)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    private suspend fun fetchFavCountriesFromFirestore(userId: String): List<String> {
+        val favCountries = firestore.collection(USERS).document(userId).get()
+            .await().data?.get("favCountries") as? MutableMap<String, String> ?: mutableMapOf()
+        return favCountries.values.toList().map {
+            it.split(" ").first()
+        }
+    }
+
 }
 
 

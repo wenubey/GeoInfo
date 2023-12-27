@@ -18,8 +18,8 @@ interface CountryCacheDao {
     @Query("SELECT * FROM countriesCache ORDER BY countryCommonName")
     suspend fun getAllCountriesFromCache(): List<CountryCacheEntity>
 
-    @Query("SELECT * FROM countriesCache WHERE countryCodeCCA2 LIKE '%' || :query || '%'")
-    suspend fun getCountry(query: String): CountryCacheEntity?
+    @Query("SELECT * FROM countriesCache WHERE countryCodeCCA2 LIKE '%' || :code || '%'")
+    suspend fun getCountry(code: String): CountryCacheEntity?
 
     @Query("DELETE FROM countriesCache")
     suspend fun clearALl()
@@ -65,4 +65,10 @@ interface CountryCacheDao {
 
     @Query("SELECT latlng FROM countriesCache WHERE isFavorite = 1")
     suspend fun getLatLngFavCountries(): List<LatLng>
+
+    @Query("UPDATE countriesCache SET isFavorite = 0")
+    suspend fun clearFavCountries()
+
+    @Query("SELECT * FROM countriesCache WHERE countryCodeCCA2 IN (:countryCodes)")
+    suspend fun getCountriesByCodes(countryCodes: List<String>): List<CountryCacheEntity>
 }
