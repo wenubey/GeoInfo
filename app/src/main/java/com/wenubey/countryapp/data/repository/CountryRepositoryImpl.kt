@@ -34,6 +34,8 @@ class CountryRepositoryImpl(
         val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
         DataResponse.Loading(isLoading = true)
         if (shouldJustLoadFromCache) {
+            val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
+            updateLocalDatabase(favCountries)
             // Return data from cache
             return DataResponse.Success(
                 localCountryData
@@ -47,11 +49,12 @@ class CountryRepositoryImpl(
             Log.e(TAG, "getAllCountries: error: $e")
             return DataResponse.Error(e)
         }
-
         // Update the cache
         countryCacheDao.clearALl()
         countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) }.distinct())
 
+        val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
+        updateLocalDatabase(favCountries)
         // Return data from the remote source
         return DataResponse.Success(
             getSortedFilteredCountries(options)
@@ -264,23 +267,12 @@ class CountryRepositoryImpl(
                 .await()
             // Update the local database
             val existingValue = countryCacheDao.getCountry(country.countryCodeCCA2!!)
-            val updatedValue = existingValue!!.copy(isFavorite = isFavorite)
+            countryCacheDao.clearCountry(existingValue?.countryCodeCCA2!!)
+            val updatedValue = existingValue.copy(isFavorite = isFavorite)
             countryCacheDao.upsertCountry(updatedValue)
         } else {
             Log.e(TAG, "updateFavCountry Error Can't retrieve userId!!!")
         }
-    }
-
-    override suspend fun getLatLngFavCountries(): List<LatLng> {
-
-        val userId = auth.currentUser!!.uid
-
-        //Retrieve from remote
-        val favCountriesFirestore = fetchFavCountriesFromFirestore(userId)
-        //Update the local
-        updateLocalDatabase(favCountriesFirestore)
-
-        return countryCacheDao.getLatLngFavCountries()
     }
 
     private suspend fun updateLocalDatabase(favCountriesFirestore: List<String>) {
@@ -301,6 +293,17 @@ class CountryRepositoryImpl(
         }
     }
 
+    override suspend fun getLatLngFavCountries(): List<LatLng> {
+
+        val userId = auth.currentUser!!.uid
+
+        //Retrieve from remote
+        val favCountriesFirestore = fetchFavCountriesFromFirestore(userId)
+        //Update the local
+        updateLocalDatabase(favCountriesFirestore)
+
+        return countryCacheDao.getLatLngFavCountries()
+    }
 }
 
 
