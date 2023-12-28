@@ -19,7 +19,7 @@ data class CountryDto(
     @field:Json(name = "tld")
     val topLevelDomain: List<String>?,
     @field:Json(name = "cca2")
-    val countryCodeCCA2: String?,
+    val countryCodeCCA2: String,
     @field:Json(name = "currencies")
     val currencyDto: Map<String, CurrencyDto>?,
     val region: String?,

@@ -13,8 +13,9 @@ import com.wenubey.countryapp.utils.Constants.CACHE_TABLE_NAME
 
 @Entity(tableName = CACHE_TABLE_NAME)
 data class CountryCacheEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    @PrimaryKey
+    @ColumnInfo(name = "countryCodeCCA2")
+    val countryCodeCCA2: String,
     @ColumnInfo(name = "countryCommonName")
     val countryCommonName: String?,
     @ColumnInfo(name = "countryOfficialName")
@@ -27,8 +28,6 @@ data class CountryCacheEntity(
     val population: Int?,
     @ColumnInfo(name = "topLevelDomain")
     val topLevelDomain: List<String>?,
-    @ColumnInfo(name = "countryCodeCCA2")
-    val countryCodeCCA2: String?,
     @ColumnInfo(name = "currencyEntity")
     val currencyEntity: Map<String,CurrencyEntity>?,
     @ColumnInfo(name = "region")
