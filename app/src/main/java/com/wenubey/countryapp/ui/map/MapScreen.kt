@@ -25,10 +25,11 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.CountryEvent
+import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -91,30 +92,56 @@ private fun GoogleMaps(
             .fillMaxSize(),
         cameraPositionState = cameraPositionState,
         onMapClick = { latLng ->
-            scope.launch {
-                val pickedCountry = getCountryNameFromLatLng(
-                    context = context,
-                    latitude = latLng.latitude,
-                    longitude = latLng.longitude
-                )
-                val countryCode = pickedCountry?.first
-                val countryName = pickedCountry?.second
-                onMapClick(countryName, countryCode)
-            }
+            goToMapScreen(
+                context = context,
+                latLng = latLng,
+                onMapClick = onMapClick,
+                scope = scope
+            )
         },
         uiSettings = MapUiSettings(
             zoomControlsEnabled = false
         ),
     ) {
-        favCountriesLatLng.forEach {
-            MarkerComposable(state = MarkerState(it)) {
-                Icon(imageVector = Icons.Filled.Star, contentDescription = null, tint = Color.Yellow)
+        favCountriesLatLng.forEach { latLng ->
+            MarkerComposable(state = MarkerState(latLng), onClick = {
+                goToMapScreen(
+                    context = context,
+                    latLng = latLng,
+                    onMapClick = onMapClick,
+                    scope = scope
+                )
+                true
+            }) {
+                Icon(
+                    imageVector = Icons.Filled.Star,
+                    contentDescription = null,
+                    tint = Color.Yellow
+                )
             }
         }
 
     }
 }
 
+private fun goToMapScreen(
+    context: Context,
+    latLng: LatLng,
+    onMapClick: (countryName: String?, countryCode: String?) -> Unit,
+    scope: CoroutineScope
+) {
+    scope.launch {
+        val pickedCountry = getCountryNameFromLatLng(
+            context = context,
+            latitude = latLng.latitude,
+            longitude = latLng.longitude
+        )
+        val countryCode = pickedCountry?.first
+        val countryName = pickedCountry?.second
+        onMapClick(countryName, countryCode)
+    }
+
+}
 
 
 @Suppress("DEPRECATION")
