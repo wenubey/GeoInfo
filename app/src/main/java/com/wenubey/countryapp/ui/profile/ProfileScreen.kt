@@ -1,6 +1,7 @@
 package com.wenubey.countryapp.ui.profile
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,6 +25,7 @@ import com.wenubey.countryapp.ui.profile.components.User
 import com.wenubey.countryapp.ui.profile.components.UserInfoUpdateDialog
 import com.wenubey.countryapp.ui.profile.components.UserUpdateFAB
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.components.ProgressBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -70,6 +72,8 @@ private fun ProfileScreenContent(
     var countryPhoneCode by remember(user) {
         mutableStateOf(extractPhoneCode(phoneNumber = phoneNumber))
     }
+    Log.i(TAG, "CountryPhoneCode: $countryPhoneCode")
+    Log.i(TAG, "phoneNumberBody: $phoneNumberBody")
     val coroutineScope = rememberCoroutineScope()
     if (user == null) {
         ProgressBar()
@@ -84,7 +88,9 @@ private fun ProfileScreenContent(
             )
         }
     ) { paddingValue ->
-        Column(modifier = Modifier.padding(paddingValue).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(modifier = Modifier
+            .padding(paddingValue)
+            .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             User(
                 user = profileViewModel.currentUserDataResponse,
                 navigateToForgotPasswordScreen = { navigateToForgotPasswordScreen(email.text) },
@@ -101,7 +107,7 @@ private fun ProfileScreenContent(
                 profileViewModel.updateUser(
                     newDisplayName = displayName.text,
                     email = email.text,
-                    phoneNumber = "$countryPhoneCode $phoneNumberBody"
+                    phoneNumber = "$countryPhoneCode ${phoneNumberBody.text}"
                 )
                 showDialog.value = false
             },

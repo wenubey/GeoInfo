@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.ui.profile.components
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -27,7 +26,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.components.EmailTextField
 
 
@@ -87,8 +85,6 @@ private fun AlertDialogContent(
                 modifier = Modifier.padding(4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Log.i(TAG, "email: ${email.text}")
-                Log.i(TAG, "displayName: ${displayName.text}")
                 EmailTextField(
                     email = email,
                     onEmailValueChange = { email, isError ->

@@ -152,7 +152,7 @@ class CountryRepositoryImpl(
         }.sortedBy { it.year?.toInt() }
         Log.i(TAG, "sorted histories: $remoteHistoryData")
         // Data mapped to cache entity
-        val localCountryData = remoteCountryData.mapToCountryEntity(
+        val localCountryData = remoteCountryData.first().mapToCountryEntity(
             historyDto = remoteHistoryData
         )
         // Cache Updated

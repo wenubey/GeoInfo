@@ -87,7 +87,7 @@ fun NavGraph(
             )
         }
         composable(
-            route = Screen.ForgotPasswordScreen.route + "/{email}",
+            route = Screen.ForgotPasswordScreen.route,
             arguments = listOf(
                 navArgument("email") {
                     type = NavType.StringType
@@ -102,6 +102,22 @@ fun NavGraph(
                 email = it.arguments?.getString("email")
             )
         }
+        composable(
+                route = Screen.ForgotPasswordScreen.route + "/{email}",
+        arguments = listOf(
+            navArgument("email") {
+                type = NavType.StringType
+                defaultValue = ""
+            }
+        ),
+        ) {
+        ForgotPasswordScreen(
+            navigateBack = {
+                navHostController.popBackStack()
+            },
+            email = it.arguments?.getString("email")
+        )
+    }
         composable(
             route = Screen.CountryDetailScreen.route + "/{countryCode}/{countryName}",
             arguments = listOf(

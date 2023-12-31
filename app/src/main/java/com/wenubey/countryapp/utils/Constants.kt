@@ -22,12 +22,7 @@ object Constants {
     //DB REF
     const val USERS = "users"
 
-
-
-
     //CONTENT DESCRIPTIONS
-
-    const val OPEN_MENU_DESCRIPTION = "This buttons opens the menu"
     const val PROFILE_PHOTO_DESCRIPTION = "Your profile photo"
     const val PROFILE_UPDATE_FAB_DESCRIPTION = "Update your profile"
     const val ASC_DESC_DESCRIPTION = "Sort order country list"
@@ -56,20 +51,15 @@ object Constants {
     const val COUNTRY_SELECTED_ICON_DESCRIPTION = "You change flag to coat of arms image with this button."
     const val COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION = "You can expand for translations from other countries."
     const val TABS_CONTENT_DESCRIPTION = "You can go to these tab pressing this buttons."
-
     const val ADD_FAV_CONTENT_DESCRIPTION = "You can log out or request a revoke or go to forgot password screen."
     const val SHARE_CONTENT_DESCRIPTION = "You can share country info when you clicked this button."
     const val ADD_REMOVE_FAV_CONTENT_DESCRIPTION = "You can add/remove favorite when you clicked this button."
 
     //TEXTS
-
     const val REVOKE_ACCESS_MESSAGE = "You need to re-authenticate before revoking the access."
-
     const val ALREADY_VERIFIED = "Already verified?"
     const val SPAM_EMAIL = "If not, please also check the spam folder."
     const val CANCEL_OPERATION = "You canceled the operation"
-    const val CANT_CHANGE_PASSWORD =
-        "Sorry, you log in different provider than email, you can not change or forgot your password."
     const val MAP_SEARCH_BAR_PLACEHOLDER = "Search countries, regions..."
     const val UNDEFINED = "Undefined"
     const val BASIC_INFORMATION = "Basic Information"
@@ -100,15 +90,13 @@ object Constants {
     const val FAVORITE = "Add/Remove favorite"
 
     //MESSAGES
-    const val RESET_PASSWORD_MESSAGE = "We've sent you an email with a link to reset the password."
     const val ACCESS_REVOKED_MESSAGE = "Your access has been revoked."
-    const val EMAIL_NOT_VERIFIED_MESSAGE = "Your email is not verified."
+
     const val SENSITIVE_OPERATION_MESSAGE =
         "This operation is sensitive and requires recent authentication. Log in again before retrying this request."
     const val VERIFY_EMAIL_MESSAGE = "We've sent you an email with a link to verify the email."
     const val USER_SUCCESSFULLY_UPDATE_MESSAGE = "User successfully updated."
     const val USER_UPDATE_ERROR_MESSAGE = "Something went wrong"
-
 
     //SCREEN TITLES
     const val FORGOT_PASSWORD_SCREEN_TITLE = "Forgot Password"
@@ -117,5 +105,4 @@ object Constants {
     const val SIGN_UP_SCREEN_TITLE = "Sign Up"
     const val MAP_SCREEN_TITLE = "Map"
     const val COUNTRY_LIST_SCREEN_TITLE = "Countries"
-    const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"
 }

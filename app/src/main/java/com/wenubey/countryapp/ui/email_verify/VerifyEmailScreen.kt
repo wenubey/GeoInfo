@@ -36,9 +36,6 @@ import com.wenubey.countryapp.ui.email_verify.components.RevokeAccess
 import com.wenubey.countryapp.ui.email_verify.components.VerifyEmail
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants
-import com.wenubey.countryapp.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
-import com.wenubey.countryapp.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
 import org.koin.androidx.compose.koinViewModel
 
@@ -129,7 +126,7 @@ private fun VerifyEmailTopBar(
                     IconButton(onClick = { openMenu = !openMenu }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
-                            contentDescription = Constants.OPEN_MENU_DESCRIPTION
+                            contentDescription = OPEN_MENU_DESCRIPTION
                         )
                     }
                 }
@@ -187,3 +184,6 @@ private const val FORGOT_PASSWORD = "Forgot password?"
 private const val REVOKE_ACCESS = "Revoke Access"
 private const val SIGN_OUT = "Sign out"
 private const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"
+private const val EMAIL_NOT_VERIFIED_MESSAGE = "Your email is not verified."
+private const val OPEN_MENU_DESCRIPTION = "This buttons opens the menu"
+private const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"

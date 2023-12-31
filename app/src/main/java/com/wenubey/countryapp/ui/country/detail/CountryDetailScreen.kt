@@ -15,10 +15,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
+import com.wenubey.countryapp.ui.country.CountryEvent
 import com.wenubey.countryapp.ui.country.CountryViewModel
 import com.wenubey.countryapp.ui.country.detail.components.BasicInformation
 import com.wenubey.countryapp.ui.country.detail.components.CountryDetailTopBar
@@ -28,9 +28,8 @@ import com.wenubey.countryapp.ui.country.detail.components.FlagWithCountryCommon
 import com.wenubey.countryapp.ui.country.detail.components.GeographicalInformation
 import com.wenubey.countryapp.ui.country.detail.components.HistoricalInformation
 import com.wenubey.countryapp.ui.country.detail.components.TranslationsInformation
-import com.wenubey.countryapp.ui.country.CountryEvent
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Utils.Companion.makeToast
+import com.wenubey.countryapp.utils.components.ErrorScreen
 import com.wenubey.countryapp.utils.components.ProgressBar
 import com.wenubey.countryapp.utils.fakeCountry
 import org.koin.androidx.compose.koinViewModel
@@ -50,9 +49,6 @@ fun CountryDetailScreen(
             countryCode = countryCode!!
         )
     )
-
-    val context = LocalContext.current
-
     val lazyListState = rememberLazyListState()
     val animationTopBar by remember {
         derivedStateOf {
@@ -84,8 +80,7 @@ fun CountryDetailScreen(
         } else if (state.isLoading) {
             ProgressBar()
         } else if (!state.error.isNullOrBlank()) {
-            //TODO Make error screen
-            context.makeToast(state.error)
+            ErrorScreen(error = state.error)
         }
     }
 }

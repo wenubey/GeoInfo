@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.domain.model.Country
@@ -40,7 +39,7 @@ import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.SortOption
 import com.wenubey.countryapp.utils.SortOrder
-import com.wenubey.countryapp.utils.Utils.Companion.makeToast
+import com.wenubey.countryapp.utils.components.ErrorScreen
 import com.wenubey.countryapp.utils.components.ProgressBar
 import com.wenubey.countryapp.utils.fakeCountry
 import com.wenubey.countryapp.utils.toIcon
@@ -52,7 +51,6 @@ fun CountryListScreen(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
     countryViewModel: CountryViewModel = koinViewModel(),
 ) {
-    val context = LocalContext.current
     val uiState = countryViewModel.countryListDataState
     LaunchedEffect(uiState) {
         countryViewModel.onEvent(CountryEvent.Refresh)
@@ -66,8 +64,7 @@ fun CountryListScreen(
             navigateToCountryDetailScreen = navigateToCountryDetailScreen
         )
     } else if (uiState.error != null) {
-        //TODO Make error screen
-        context.makeToast("Error: ${uiState.error}")
+        ErrorScreen(error = uiState.error)
     }
 }
 

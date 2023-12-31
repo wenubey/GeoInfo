@@ -20,6 +20,8 @@ class ForgotPasswordViewModel(
 
     var currentUserAuthProvider by mutableStateOf<AuthProvider?>(null)
 
+    val isUserSignedIn = profileRepo.currentUser != null
+
     init {
         getUserData()
     }

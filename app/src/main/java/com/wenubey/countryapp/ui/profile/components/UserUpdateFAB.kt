@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.Constants.PROFILE_UPDATE_FAB_DESCRIPTION
 
-// TODO align for screen
 @Composable
 fun UserUpdateFAB(
     modifier: Modifier = Modifier,

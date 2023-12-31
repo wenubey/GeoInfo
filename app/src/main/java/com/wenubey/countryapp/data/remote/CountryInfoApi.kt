@@ -12,7 +12,7 @@ interface CountryInfoApi {
     suspend fun getAllCountries(): List<CountryDto>
 
     @GET("alpha/{countryCode}")
-    suspend fun getCountry(@Path("countryCode") countryCode: String): CountryDto
+    suspend fun getCountry(@Path("countryCode") countryCode: String): List<CountryDto>
 }
 
 interface CountryHistoryApi {

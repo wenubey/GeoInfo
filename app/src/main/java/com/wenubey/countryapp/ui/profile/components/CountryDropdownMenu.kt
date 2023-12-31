@@ -123,7 +123,7 @@ private fun CountryDropdownMenuContent(
                             .fillMaxWidth()
                             .padding(4.dp),
                         onClick = {
-                            onSelectCountryCode(countryFlag)
+                            onSelectCountryCode(countryCode)
                             currentValue = countryCode
                             expanded = false
                         },

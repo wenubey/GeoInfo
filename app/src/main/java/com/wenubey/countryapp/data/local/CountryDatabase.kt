@@ -8,7 +8,6 @@ import com.wenubey.countryapp.data.local.entities.CountryCacheEntity
 @Database(
     entities = [CountryCacheEntity::class],
     version = 1,
-    exportSchema = false,
 )
 @TypeConverters(CountryAppTypeConverter::class)
 abstract class CountryDatabase : RoomDatabase() {
