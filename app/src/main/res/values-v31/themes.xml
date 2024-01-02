@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CountryApp" parent="android:Theme.Material.Light.NoActionBar" />
-
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="postSplashScreenTheme">@style/Theme.CountryApp</item>
+        <item name="android:windowSplashScreenAnimatedIcon" type="drawable">@drawable/animated_logo</item>
     </style>
 </resources>

@@ -44,12 +44,14 @@ import com.wenubey.countryapp.utils.Constants
 fun TabLayoutScreen(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
     navigateToForgotPasswordScreen: (email: String) -> Unit,
+    navigateToSignInScreen: () -> Unit,
     countryName: String,
     tabViewModel: TabViewModel
 ) {
     TabLayoutContent(
         navigateToCountryDetailScreen = navigateToCountryDetailScreen,
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
+        navigateToSignInScreen = navigateToSignInScreen,
         countryName = countryName,
         tabViewModel = tabViewModel
     )
@@ -60,6 +62,7 @@ fun TabLayoutScreen(
 private fun TabLayoutContent(
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     navigateToForgotPasswordScreen: (email: String) -> Unit = {},
+    navigateToSignInScreen: () -> Unit = {},
     countryName: String = "",
     tabViewModel: TabViewModel,
 ) {
@@ -140,7 +143,8 @@ private fun TabLayoutContent(
                         ProfileScreen(
                             navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
                             snackBarHostState =snackBarHostState,
-                            navigateToCountryDetailScreen = navigateToCountryDetailScreen
+                            navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+                            navigateToSignInScreen = navigateToSignInScreen
                         )
                     }
                     else -> {}

@@ -53,8 +53,12 @@ class CountryRepositoryImpl(
         countryCacheDao.clearALl()
         countryCacheDao.upsertAll(remoteCountryData.map { it.mapToCountryEntity(null) }.distinct())
 
-        val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
-        updateLocalDatabase(favCountries)
+
+        auth.currentUser?.uid?.let {
+            val favCountries = fetchFavCountriesFromFirestore(it)
+            updateLocalDatabase(favCountries)
+
+        }
         // Return data from the remote source
         return DataResponse.Success(
             getSortedFilteredCountries(options)
@@ -295,12 +299,12 @@ class CountryRepositoryImpl(
 
     override suspend fun getLatLngFavCountries(): List<LatLng> {
 
-        val userId = auth.currentUser!!.uid
-
-        //Retrieve from remote
-        val favCountriesFirestore = fetchFavCountriesFromFirestore(userId)
-        //Update the local
-        updateLocalDatabase(favCountriesFirestore)
+        auth.currentUser?.uid?.let {
+            //Retrieve from remote
+            val favCountriesFirestore = fetchFavCountriesFromFirestore(it)
+            //Update the local
+            updateLocalDatabase(favCountriesFirestore)
+        }
 
         return countryCacheDao.getLatLngFavCountries()
     }

@@ -34,11 +34,13 @@ fun ProfileScreen(
     navigateToForgotPasswordScreen: (email: String) -> Unit,
     snackBarHostState: SnackbarHostState,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit,
+    navigateToSignInScreen: () -> Unit,
 ) {
     ProfileScreenContent(
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
         snackBarHostState = snackBarHostState,
-        navigateToCountryDetailScreen = navigateToCountryDetailScreen
+        navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+        navigateToSignInScreen = navigateToSignInScreen
     )
 }
 
@@ -50,6 +52,7 @@ private fun ProfileScreenContent(
     profileViewModel: ProfileViewModel = koinViewModel(),
     countryViewModel: CountryViewModel = koinViewModel(),
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit = { _, _ ->},
+    navigateToSignInScreen: () -> Unit = {}
 ) {
     val user = profileViewModel.currentUserDataResponse
     val showDialog = remember { mutableStateOf(false) }
@@ -72,8 +75,6 @@ private fun ProfileScreenContent(
     var countryPhoneCode by remember(user) {
         mutableStateOf(extractPhoneCode(phoneNumber = phoneNumber))
     }
-    Log.i(TAG, "CountryPhoneCode: $countryPhoneCode")
-    Log.i(TAG, "phoneNumberBody: $phoneNumberBody")
     val coroutineScope = rememberCoroutineScope()
     if (user == null) {
         ProgressBar()
@@ -94,8 +95,8 @@ private fun ProfileScreenContent(
             User(
                 user = profileViewModel.currentUserDataResponse,
                 navigateToForgotPasswordScreen = { navigateToForgotPasswordScreen(email.text) },
-                profileViewModel = profileViewModel,
-                navigateToCountryDetailScreen = navigateToCountryDetailScreen
+                navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+                navigateToSignInScreen = navigateToSignInScreen
             )
         }
 

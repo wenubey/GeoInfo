@@ -55,15 +55,15 @@ import org.koin.compose.KoinContext
 @Composable
 fun User(
     user: User?,
-    profileViewModel: ProfileViewModel,
     navigateToForgotPasswordScreen: (() -> Unit)? = null,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit,
+    navigateToSignInScreen: () -> Unit,
 ) {
     UserContent(
         user,
-        profileViewModel = profileViewModel,
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
-        navigateToCountryDetailScreen = navigateToCountryDetailScreen
+        navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+        navigateToSignInScreen = navigateToSignInScreen
     )
 }
 
@@ -73,6 +73,7 @@ fun User(
 private fun UserContent(
     user: User? = null,
     profileViewModel: ProfileViewModel = koinViewModel(),
+    navigateToSignInScreen: () -> Unit = {},
     navigateToForgotPasswordScreen: (() -> Unit)? = null,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit = { _, _ -> },
 ) {
@@ -110,8 +111,14 @@ private fun UserContent(
                 )
                 AccountSettingsMenu(
                     modifier = Modifier.align(Alignment.TopEnd),
-                    signOut = { profileViewModel.signOut() },
-                    revokeAccess = { profileViewModel.revokeAccess() },
+                    signOut = {
+                        navigateToSignInScreen()
+                        profileViewModel.signOut()
+                    },
+                    revokeAccess = {
+                        navigateToSignInScreen()
+                        profileViewModel.revokeAccess()
+                    },
                     navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
                 )
             }

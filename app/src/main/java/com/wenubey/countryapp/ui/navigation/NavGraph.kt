@@ -20,29 +20,31 @@ import java.util.Locale
 
 @Composable
 fun NavGraph(
-    navHostController: NavHostController,
+    navController: NavHostController,
     tabViewModel: TabViewModel,
+    startDestination: String
 ) {
     val context = LocalContext.current
     val localeCountry = context.resources.configuration.locales[0].displayCountry
+
     NavHost(
-        navController = navHostController,
-        startDestination = Screen.SignInScreen.route,
+        navController = navController,
+        startDestination = startDestination,
     ) {
 
         composable(route = Screen.SignUpScreen.route) {
             SignUpScreen(
                 navigateBack = {
-                    navHostController.popBackStack()
+                    navController.popBackStack()
                 },
             )
         }
         composable(route = Screen.SignInScreen.route) {
             SignInScreen(
-                navigateToForgotPasswordScreen = { navHostController.navigate(Screen.ForgotPasswordScreen.route) },
-                navigateToSignUpScreen = { navHostController.navigate(Screen.SignUpScreen.route) },
+                navigateToForgotPasswordScreen = { navController.navigate(Screen.ForgotPasswordScreen.route) },
+                navigateToSignUpScreen = { navController.navigate(Screen.SignUpScreen.route) },
                 navigateToMapScreen = {
-                    navHostController.navigate(
+                    navController.navigate(
                         Screen.TabLayoutScreen.route + "/$localeCountry"
                     )
                 },
@@ -59,30 +61,33 @@ fun NavGraph(
             TabLayoutScreen(
                 navigateToCountryDetailScreen = { countryCode, countryName ->
                     if (countryCode != null && countryName != null) {
-                        navHostController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
+                        navController.navigate(Screen.CountryDetailScreen.route + "/${countryCode}/${countryName}")
                     }
                 },
                 navigateToForgotPasswordScreen = { email ->
-                    navHostController.navigate(Screen.ForgotPasswordScreen.route + "/${email}")
+                    navController.navigate(Screen.ForgotPasswordScreen.route + "/${email}")
                 },
                 countryName = it.arguments?.getString("countryName")
                     ?: localeCountry,
-                tabViewModel = tabViewModel
+                tabViewModel = tabViewModel,
+                navigateToSignInScreen = {
+                    navController.navigate(Screen.SignInScreen.route)
+                }
             )
         }
         composable(route = Screen.VerifyEmailScreen.route) {
             VerifyEmailScreen(
                 navigateToMapScreen = {
-                    navHostController.navigate(
+                    navController.navigate(
                         Screen.TabLayoutScreen.route + "/$localeCountry"
                     ) {
-                        popUpTo(navHostController.graph.id) {
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     }
                 },
                 navigateBack = {
-                    navHostController.popBackStack()
+                    navController.popBackStack()
                 }
             )
         }
@@ -97,7 +102,7 @@ fun NavGraph(
         ) {
             ForgotPasswordScreen(
                 navigateBack = {
-                    navHostController.popBackStack()
+                    navController.popBackStack()
                 },
                 email = it.arguments?.getString("email")
             )
@@ -113,7 +118,7 @@ fun NavGraph(
         ) {
         ForgotPasswordScreen(
             navigateBack = {
-                navHostController.popBackStack()
+                navController.popBackStack()
             },
             email = it.arguments?.getString("email")
         )
@@ -140,9 +145,9 @@ fun NavGraph(
             CountryDetailScreen(
                 countryCode = code ?: "",
                 countryName = name ?: "",
-                navigateBack = { navHostController.popBackStack() },
+                navigateBack = { navController.popBackStack() },
                 navigateToMapScreen = { countryName ->
-                    navHostController.navigate(
+                    navController.navigate(
                         Screen.TabLayoutScreen.route + "/${countryName}"
                     )
                 }

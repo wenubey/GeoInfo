@@ -1,17 +1,31 @@
 package com.wenubey.countryapp.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.wenubey.countryapp.domain.repository.auth.EmailAuthRepository
+import com.wenubey.countryapp.ui.navigation.Screen
+import java.util.Locale
 
 class AuthViewModel(
     private val repo: EmailAuthRepository
 ): ViewModel() {
-
+    private var authState by mutableStateOf(false)
     init {
-        getAuthState()
+        authState = repo.getAuthState()
     }
-    fun getAuthState() = repo.getAuthState(viewModelScope)
+    fun getAuthState(): String {
+        return if (authState) {
+            Screen.SignInScreen.route
+        } else{
+            if (isEmailVerified) {
+                Screen.TabLayoutScreen.route +"/${Locale.getDefault().displayCountry}"
+            }else {
+                Screen.VerifyEmailScreen.route
+            }
+        }
+    }
 
     val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.wenubey.countryapp.ui.deep_link.DeepLinkViewModel
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        installSplashScreen()
         setContent {
             KoinContext {
                 CountryAppTheme {
@@ -33,12 +34,14 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
+                        val startDestination = authViewModel.getAuthState()
                         navController = rememberNavController()
                         NavGraph(
-                            navHostController = navController,
                             tabViewModel = tabViewModel,
+                            startDestination = startDestination,
+                            navController = navController
                         )
-                        AuthState(navController = navController, authViewModel = authViewModel)
+                        navController = rememberNavController()
                         deepLinkViewModel.handleDeepLink(intent, navController)
                     }
                 }
