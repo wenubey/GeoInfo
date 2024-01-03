@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -150,7 +151,12 @@ private fun CountryListSortButtons(
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String) -> Unit,
 ) {
 
-    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
         SortButton(
             sortOption = SortOption.NAME,
             onSortButtonClicked = { sortOption, sortOrder ->
@@ -176,18 +182,22 @@ private fun CountryListSortButtons(
 @Composable
 private fun SortButton(
     sortOption: SortOption = SortOption.FAV,
-    onSortButtonClicked: (SortOption, SortOrder) -> Unit = { _, _ ->}
+    onSortButtonClicked: (SortOption, SortOrder) -> Unit = { _, _ -> }
 ) {
     var sortOrder by remember {
         mutableStateOf(SortOrder.ASC)
     }
     OutlinedButton(
-        onClick = {
+        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+        onClick ={
             sortOrder = if (sortOrder == SortOrder.ASC) SortOrder.DESC else SortOrder.ASC
             onSortButtonClicked(sortOption, sortOrder)
         }
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
             Icon(
                 imageVector = sortOption.toIcon(),
                 contentDescription = stringResource(id = R.string.SORT_OPTION_ICON_DESCRIPTION)
