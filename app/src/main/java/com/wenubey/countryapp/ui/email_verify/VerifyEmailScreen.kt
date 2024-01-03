@@ -120,7 +120,7 @@ private fun VerifyEmailTopBar(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = VERIFY_EMAIL_SCREEN_TITLE)
+                Text(text = VERIFY_EMAIL_SCREEN_TITLE, style = MaterialTheme.typography.bodyMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
