@@ -70,7 +70,6 @@ private fun VerifyEmailContent(
             .background(MaterialTheme.colorScheme.surface),
         topBar = {
             VerifyEmailTopBar(
-                title = VERIFY_EMAIL_SCREEN_TITLE,
                 signOut = { viewModel.signOut() },
                 revokeAccess = { viewModel.revokeAccess() },
                 navigateBack = navigateBack,
@@ -108,7 +107,6 @@ private fun VerifyEmailContent(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun VerifyEmailTopBar(
-    title: String,
     signOut: () -> Unit,
     revokeAccess: () -> Unit,
     navigateBack: () -> Unit,
@@ -122,7 +120,7 @@ private fun VerifyEmailTopBar(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = title)
+                Text(text = VERIFY_EMAIL_SCREEN_TITLE)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
