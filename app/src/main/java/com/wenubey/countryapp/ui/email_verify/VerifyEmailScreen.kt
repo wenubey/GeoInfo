@@ -30,12 +30,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.email_verify.components.ReloadUser
 import com.wenubey.countryapp.ui.email_verify.components.RevokeAccess
 import com.wenubey.countryapp.ui.email_verify.components.VerifyEmail
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
+import com.wenubey.countryapp.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
+import com.wenubey.countryapp.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
 import org.koin.androidx.compose.koinViewModel
 
@@ -126,7 +130,7 @@ private fun VerifyEmailTopBar(
                     IconButton(onClick = { openMenu = !openMenu }) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
-                            contentDescription = OPEN_MENU_DESCRIPTION
+                            contentDescription = stringResource(id= R.string.OPEN_MENU_DESCRIPTION)
                         )
                     }
                 }
@@ -135,14 +139,14 @@ private fun VerifyEmailTopBar(
         actions = {
             DropdownMenu(expanded = openMenu, onDismissRequest = { openMenu = !openMenu }) {
                 DropdownMenuItem(
-                    text = { Text(text = SIGN_OUT) },
+                    text = { Text(text = stringResource(id= R.string.SIGN_OUT)) },
                     onClick = {
                         signOut()
                         openMenu = !openMenu
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text(text = REVOKE_ACCESS) },
+                    text = { Text(text = stringResource(id= R.string.REVOKE_ACCESS)) },
                     onClick = {
                         revokeAccess()
                         openMenu = !openMenu
@@ -150,7 +154,7 @@ private fun VerifyEmailTopBar(
                 )
                 if (navigateToForgotPasswordScreen != null) {
                     DropdownMenuItem(
-                        text = { Text(text = FORGOT_PASSWORD) },
+                        text = { Text(text = stringResource(id= R.string.FORGOT_PASSWORD)) },
                         onClick = {
                             navigateToForgotPasswordScreen()
                         },
@@ -163,7 +167,7 @@ private fun VerifyEmailTopBar(
             IconButton(onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = BACK_BUTTON_DESCRIPTION
+                    contentDescription = stringResource(id= R.string.BACK_BUTTON_DESCRIPTION)
                 )
             }
         }
@@ -179,11 +183,3 @@ private fun VerifyEmailContentPreview() {
         }
     }
 }
-
-private const val FORGOT_PASSWORD = "Forgot password?"
-private const val REVOKE_ACCESS = "Revoke Access"
-private const val SIGN_OUT = "Sign out"
-private const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"
-private const val EMAIL_NOT_VERIFIED_MESSAGE = "Your email is not verified."
-private const val OPEN_MENU_DESCRIPTION = "This buttons opens the menu"
-private const val VERIFY_EMAIL_SCREEN_TITLE = "Verify Screen"

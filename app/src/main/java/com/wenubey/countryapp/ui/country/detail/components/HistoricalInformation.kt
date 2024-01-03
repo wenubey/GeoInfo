@@ -19,11 +19,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.History
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import com.wenubey.countryapp.utils.fakeCountry
 
 
@@ -40,7 +42,7 @@ private fun HistoryContent(
     histories: List<History> = fakeCountry.history!!,
 ) {
     Column {
-        InfoHeader(header = Constants.HISTORICAL_INFORMATION)
+        InfoHeader(header = stringResource(id= R.string.HISTORICAL_INFORMATION))
         HistorySlider(histories = histories)
     }
 }
@@ -80,7 +82,7 @@ private fun HistorySlider(
                             ),
                         ) {
                             Text(
-                                text = selectedHistory.date ?: Constants.UNDEFINED,
+                                text = selectedHistory.date ?: UNDEFINED,
                                 modifier = Modifier.padding(4.dp),
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -91,7 +93,7 @@ private fun HistorySlider(
             }
         )
         Text(
-            text = selectedHistory.event ?: Constants.UNDEFINED,
+            text = selectedHistory.event ?: UNDEFINED,
             style = MaterialTheme.typography.bodyMedium
         )
     }

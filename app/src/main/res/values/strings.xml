@@ -1,3 +1,108 @@
 <resources>
     <string name="app_name">CountryApp</string>
+
+    <!--    CONTENT DESCRIPTIONS   -->
+
+    <string name="ASC_DESC_DESCRIPTION">Sort order country list</string>
+    <string name="SORT_OPTION_ICON_DESCRIPTION">Sort options icon</string>
+    <string name="PROFILE_PHOTO_DESCRIPTION">Your profile photo</string>
+    <string name="PROFILE_UPDATE_FAB_DESCRIPTION">Update your profile</string>
+    <string name="COUNTRY_FLAG_CONTENT_DESCRIPTION">This is a country flag.</string>
+    <string name="POPULATION_CONTENT_DESCRIPTION">Selected country\'s population</string>
+    <string name="AREA_CONTENT_DESCRIPTION">Selected country\'s area</string>
+    <string name="NAVIGATION_BACK_CONTENT_DESCRIPTION">Navigate to the previous screen.</string>
+    <string name="COUNTRY_KNOWN_AS_CONTENT_DESCRIPTION">Selected country known as.</string>
+    <string name="COUNTRY_CAPITAL_CONTENT_DESCRIPTION">Selected country\'s capital.</string>
+    <string name="COUNTRY_TLD_CONTENT_DESCRIPTION">Selected country\'s top level domains.</string>
+    <string name="COUNTRY_CODE_CONTENT_DESCRIPTION">Selected country\'s code (CCA2).</string>
+    <string name="COUNTRY_PHONE_CODE_CONTENT_DESCRIPTION">Selected country\'s phone code.</string>
+    <string name="COUNTRY_CONTINENTS_CONTENT_DESCRIPTION">Selected country\'s continents.</string>
+    <string name="COUNTRY_REGION_CONTENT_DESCRIPTION">Selected country\'s region.</string>
+    <string name="COUNTRY_SUBREGION_CONTENT_DESCRIPTION">Selected country\'s subregion.</string>
+    <string name="COUNTRY_LANGUAGES_CONTENT_DESCRIPTION">Selected country\'s languages spoken.</string>
+    <string name="COUNTRY_TIMEZONES_CONTENT_DESCRIPTION">Selected country\'s timezone where live in.</string>
+    <string name="COUNTRY_DEMONYMS_CONTENT_DESCRIPTION">Selected country\'s demonyms.</string>
+    <string name="COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION">Selected country\'s genders for demonyms.</string>
+    <string name="COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION">Selected country\'s translations from other countries.</string>
+    <string name="COUNTRY_MAP_CONTENT_DESCRIPTION">Selected country\'s map location.</string>
+    <string name="WIKIPEDIA_CONTENT_DESCRIPTION">This button will go to wikipedia for selected country\'s information.</string>
+    <string name="COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION">This button will open a dropdown menu.</string>
+    <string name="COUNTRY_SELECTED_ICON_DESCRIPTION">You change flag to coat of arms image with this button.</string>
+    <string name="COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION">You can expand for translations from other countries.</string>
+    <string name="TABS_CONTENT_DESCRIPTION">You can go to these tab pressing this buttons.</string>
+    <string name="ADD_FAV_CONTENT_DESCRIPTION">You can log out or request a revoke or go to forgot password screen.</string>
+    <string name="SHARE_CONTENT_DESCRIPTION">You can share country info when you clicked this button.</string>
+    <string name="ADD_REMOVE_FAV_CONTENT_DESCRIPTION">You can add/remove favorite when you clicked this button.</string>
+    <string name="BACK_BUTTON_DESCRIPTION">Back to previous screen</string>
+    <string name="OPEN_MENU_DESCRIPTION">This buttons opens the menu</string>
+    <string name="PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION">You can log out or request a revoke or go to forgot password screen.</string>
+    <string name="DISPLAY_NAME_CONTENT_DESCRIPTION">This is your display name</string>
+    <string name="EMAIL_CONTENT_DESCRIPTION">This is your email</string>
+    <string name="PHONE_NUMBER_CONTENT_DESCRIPTION">This is your phone number</string>
+    <string name="CREATED_AT_CONTENT_DESCRIPTION">Your account created this time</string>
+    <!--    TEXTS   -->
+
+    <string name="REVOKE_ACCESS_MESSAGE">You need to re-authenticate before revoking the access.</string>
+    <string name="MAP_SEARCH_BAR_PLACEHOLDER">Search countries, regions…</string>
+    <string name="UNDEFINED">Undefined</string>
+    <string name="BASIC_INFORMATION">Basic Information</string>
+    <string name="GEOGRAPHICAL_INFORMATION">Geographical Information</string>
+    <string name="CULTURAL_INFORMATION">Cultural Information</string>
+    <string name="ECONOMICAL_INFORMATION">Economical Information</string>
+    <string name="HISTORICAL_INFORMATION">Historical Information</string>
+    <string name="KNOWN_AS">Known as:</string>
+    <string name="CAPITAL">Capital:</string>
+    <string name="POPULATION">Population:</string>
+    <string name="TOP_LEVEL_DOMAINS">Top level domains:</string>
+    <string name="COUNTRY_CODE">Country code:</string>
+    <string name="PHONE_CODE">Phone code:</string>
+    <string name="AREA">Area:</string>
+    <string name="CONTINENTS">Continents:</string>
+    <string name="REGION">Region:</string>
+    <string name="SUBREGION">Subregion:</string>
+    <string name="LANGUAGES">Languages:</string>
+    <string name="TIMEZONES">Timezones:</string>
+    <string name="DEMONYMS">Demonyms:</string>
+    <string name="CURRENCIES">Currencies:</string>
+    <string name="TRANSLATIONS">Translations</string>
+    <string name="MORE_INFO_WIKIPEDIA">More info on Wikipedia</string>
+    <string name="GO_TO_COUNTRY_LOCATION">Go to country\'s location on Map</string>
+    <string name="SHARE">Share!</string>
+    <string name="FAVORITE">Add/Remove favorite</string>
+    <!--    MESSAGES    -->
+
+    <string name="SENSITIVE_OPERATION_MESSAGE">This operation is sensitive and requires recent authentication. Log in again before retrying this request.</string>
+    <string name="VERIFY_EMAIL_MESSAGE">We\'ve sent you an email with a link to verify the email.</string>
+    <string name="USER_SUCCESSFULLY_UPDATE_MESSAGE">User successfully updated.</string>
+    <string name="USER_UPDATE_ERROR_MESSAGE">Something went wrong</string>
+    <string name="FORGOT_PASSWORD">Forgot password?</string>
+    <string name="REVOKE_ACCESS">Revoke Access</string>
+    <string name="SIGN_OUT">Sign out</string>
+    <string name="RESET_PASSWORD">Reset</string>
+    <string name="CANT_CHANGE_PASSWORD">Sorry, you log in different provider than email, you can not change or forgot your password.</string>
+    <string name="SEARCH_COUNTRIES_PLACEHOLDER">Search countries</string>
+    <string name="FAV_COUNTRIES">Fav Countries</string>
+    <string name="PREVIEW_EMAIL">helloworld@helloworld.com</string>
+    <string name="PREVIEW_NAME">Hello World</string>
+    <string name="PREVIEW_PHONE">12345678</string>
+    <string name="DISPLAY_NAME_LABEL">Display Name</string>
+    <string name="PROFILE_INFO">Profile Info</string>
+    <string name="SAVE">Save</string>
+    <string name="FACEBOOK_SIGN_UP">Sign up with Facebook</string>
+    <string name="GOOGLE_SIGN_UP">Sign up with Google</string>
+    <string name="SIGN_IN">Sign in</string>
+    <string name="NO_ACCOUNT">Don\'t you have an account? Sign Up!</string>
+    <string name="SIGN_UP_WITH_TWITTER">Sign up with X</string>
+    <string name="SIGN_UP">Sign up</string>
+    <string name="ALREADY_USER">Already a user? Sign in.</string>
+    <string name="EMAIL_ERROR">Email account must contain \'@\' and \'.com\'</string>
+    <string name="EMAIL_LABEL">Email</string>
+    <string name="PREVIEW_ERROR">There is no internet connection!</string>
+    <string name="ERROR_SCREEN_CONTENT_DESCRIPTION">We got an error pls try again</string>
+    <string name="PASSWORD_ERROR">Password\n1.Must be longer than 6 characters \n2. Contain at least one special character\n3. Contain one capitalized character \n4. Contain one digit</string>
+    <string name="PASSWORD_VISIBILITY_DESCRIPTION">Password visibility on/off</string>
+    <string name="PASSWORD_LABEL">Password</string>
+    <string name="PREVIEW_PASSWORD">helloWorld</string>
+
+
 </resources>

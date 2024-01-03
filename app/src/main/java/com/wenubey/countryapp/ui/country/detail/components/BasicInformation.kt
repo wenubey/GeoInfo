@@ -11,38 +11,40 @@ import androidx.compose.material.icons.filled.TravelExplore
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
-import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import com.wenubey.countryapp.utils.formatWithCommasForPopulation
 
 @Composable
 fun BasicInformation(country: Country) {
-    InfoHeader(header = Constants.BASIC_INFORMATION)
+    InfoHeader(header = stringResource(id = R.string.BASIC_INFORMATION))
     CountryInfoRow(
-        header = Constants.KNOWN_AS,
+        header = stringResource(id = R.string.KNOWN_AS),
         imageVector = Icons.Default.TravelExplore,
-        contentDescription = Constants.COUNTRY_KNOWN_AS_CONTENT_DESCRIPTION,
-        content = "${country.countryCommonName}\n${country.countryNativeName?.values?.first()?.common}",
+        contentDescription = stringResource(id = R.string.COUNTRY_KNOWN_AS_CONTENT_DESCRIPTION),
+        content = "${country.countryCommonName}\n${country.countryNativeName?.values?.first()?.common ?: UNDEFINED}",
     )
     Divider(
         thickness = 1.dp,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     CountryInfoRow(
-        header = Constants.CAPITAL,
+        header = stringResource(id = R.string.CAPITAL),
         imageVector = Icons.Filled.Castle,
-        contentDescription = Constants.COUNTRY_CAPITAL_CONTENT_DESCRIPTION,
-        content = "${country.capital?.joinToString(", ")}",
+        contentDescription = stringResource(id = R.string.COUNTRY_CAPITAL_CONTENT_DESCRIPTION),
+        content = country.capital?.joinToString(", ") ?: UNDEFINED,
     )
     Divider(
         thickness = 1.dp,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     CountryInfoRow(
-        header = Constants.POPULATION,
+        header = stringResource(id = R.string.POPULATION),
         imageVector = Icons.Default.People,
-        contentDescription = Constants.POPULATION_CONTENT_DESCRIPTION,
+        contentDescription = stringResource(id = R.string.POPULATION_CONTENT_DESCRIPTION),
         content = country.population.formatWithCommasForPopulation()
     )
     Divider(
@@ -50,30 +52,29 @@ fun BasicInformation(country: Country) {
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     CountryInfoRow(
-        header = Constants.TOP_LEVEL_DOMAINS,
+        header = stringResource(id = R.string.TOP_LEVEL_DOMAINS),
         imageVector = Icons.Default.Domain,
-        contentDescription = Constants.COUNTRY_TOP_LEVEL_DOMAINS_CONTENT_DESCRIPTION,
-        content = country.topLevelDomain?.joinToString("\n") ?: Constants.UNDEFINED,
+        contentDescription = stringResource(id = R.string.COUNTRY_TLD_CONTENT_DESCRIPTION),
+        content = country.topLevelDomain?.joinToString("\n") ?: UNDEFINED,
     )
     Divider(
         thickness = 1.dp,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     CountryInfoRow(
-        header = Constants.COUNTRY_CODE,
+        header = stringResource(id = R.string.COUNTRY_CODE),
         imageVector = Icons.Default.Tag,
-        contentDescription = Constants.COUNTRY_CODE_CONTENT_DESCRIPTION,
-        content = country.countryCodeCCA2 ?: Constants.UNDEFINED,
+        contentDescription = stringResource(id = R.string.COUNTRY_CODE_CONTENT_DESCRIPTION),
+        content = country.countryCodeCCA2 ?: UNDEFINED,
     )
     Divider(
         thickness = 1.dp,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
     CountryInfoRow(
-        header = Constants.PHONE_CODE,
+        header = stringResource(id = R.string.PHONE_CODE),
         imageVector = Icons.Default.Call,
-        contentDescription = Constants.COUNTRY_PHONE_CODE_CONTENT_DESCRIPTION,
-        content = country.flagEmojiWithPhoneCode.values.first()
-            ?: Constants.UNDEFINED,
+        contentDescription = stringResource(id = R.string.COUNTRY_PHONE_CODE_CONTENT_DESCRIPTION),
+        content = country.flagEmojiWithPhoneCode.values.first() ?: UNDEFINED,
     )
 }

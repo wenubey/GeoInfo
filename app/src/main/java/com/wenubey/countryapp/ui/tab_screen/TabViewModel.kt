@@ -3,6 +3,7 @@ package com.wenubey.countryapp.ui.tab_screen
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.wenubey.countryapp.utils.Constants.SELECTED_TAB_INDEX_KEY
 
 class TabViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -18,5 +19,3 @@ class TabViewModel(
     }
 
 }
-
-private const val SELECTED_TAB_INDEX_KEY = "selected_tab_index_key"

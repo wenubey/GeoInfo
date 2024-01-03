@@ -26,12 +26,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.fakeCountry
 
 @Composable
@@ -135,7 +136,7 @@ private fun TranslationHeader(
                 .clickable { onClick() }
                 .align(Alignment.CenterEnd),
             imageVector = isExpandedIcon,
-            contentDescription = Constants.COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION
+            contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -145,10 +146,10 @@ private fun TranslationHeader(
         ) {
             Icon(
                 imageVector = Icons.Default.Translate,
-                contentDescription = Constants.COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION
+                contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION)
             )
             Text(
-                text = Constants.TRANSLATIONS,
+                text = stringResource(id= R.string.TRANSLATIONS),
                 style = MaterialTheme.typography.titleSmall
             )
         }

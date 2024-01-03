@@ -8,6 +8,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.utils.Constants.SIGN_UP_SCREEN_TITLE
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,11 +26,9 @@ fun SignUpTopBar(
             IconButton(onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = BACK_BUTTON_DESCRIPTION
+                    contentDescription = stringResource(id= R.string.BACK_BUTTON_DESCRIPTION)
                 )
             }
         }
     )
 }
-
-private const val BACK_BUTTON_DESCRIPTION = "Back to previous screen"

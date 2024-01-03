@@ -31,9 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.fakeCountryCodeData
 import java.util.Locale
@@ -93,7 +95,7 @@ private fun CountryDropdownMenuContent(
                         },
                         placeholder = {
                             Text(
-                                SEARCH_COUNTRIES_PLACEHOLDER,
+                                stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         },
@@ -107,7 +109,7 @@ private fun CountryDropdownMenuContent(
                                     searchText = if (it) "" else currentValue.orEmpty()
                                 }
                             ) {
-                                Icon(Icons.Default.Search, contentDescription = null)
+                                Icon(Icons.Default.Search, contentDescription = stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER))
                             }
                         },
                         keyboardOptions = KeyboardOptions.Default.copy(
@@ -152,7 +154,6 @@ private fun CountryDropDownMenuPreview() {
     }
 }
 
-private const val SEARCH_COUNTRIES_PLACEHOLDER = "Search countries"
 
 @Composable
 private fun getFilteredItems(

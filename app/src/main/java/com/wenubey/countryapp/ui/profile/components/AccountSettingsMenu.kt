@@ -16,9 +16,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 
 @Composable
@@ -52,7 +54,7 @@ private fun MenuContent(
         Icon(
             modifier = Modifier.size(50.dp),
             imageVector = Icons.Default.MoreVert,
-            contentDescription = PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION),
         )
         DropdownMenu(
             expanded = openMenu,
@@ -60,14 +62,14 @@ private fun MenuContent(
             onDismissRequest = { openMenu = !openMenu },
         ) {
             DropdownMenuItem(
-                text = { Text(text = SIGN_OUT) },
+                text = { Text(text = stringResource(id= R.string.SIGN_OUT)) },
                 onClick = {
                     signOut()
                     openMenu = !openMenu
                 },
             )
             DropdownMenuItem(
-                text = { Text(text = REVOKE_ACCESS) },
+                text = { Text(text = stringResource(id= R.string.REVOKE_ACCESS)) },
                 onClick = {
                     revokeAccess()
                     openMenu = !openMenu
@@ -75,7 +77,7 @@ private fun MenuContent(
             )
             if (navigateToForgotPasswordScreen != null) {
                 DropdownMenuItem(
-                    text = { Text(text = FORGOT_PASSWORD) },
+                    text = { Text(text = stringResource(id= R.string.FORGOT_PASSWORD)) },
                     onClick = {
                         navigateToForgotPasswordScreen()
                     },
@@ -99,9 +101,3 @@ fun MenuContentPreview() {
         }
     }
 }
-
-private const val SIGN_OUT = "Sign out"
-private const val FORGOT_PASSWORD = "Forgot password?"
-private const val REVOKE_ACCESS = "Revoke Access"
-private const val PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION =
-    "You can log out or request a revoke or go to forgot password screen."

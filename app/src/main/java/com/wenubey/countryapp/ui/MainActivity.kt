@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
                             startDestination = startDestination,
                             navController = navController
                         )
-                        navController = rememberNavController()
                         deepLinkViewModel.handleDeepLink(intent, navController)
                     }
                 }

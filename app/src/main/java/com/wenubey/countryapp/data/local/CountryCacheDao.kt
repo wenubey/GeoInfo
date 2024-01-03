@@ -32,9 +32,14 @@ interface CountryCacheDao {
         """
     SELECT * FROM countriesCache 
     WHERE
-        (:query IS NULL OR countryCommonName LIKE '%' || :query || '%' OR region LIKE '%' || :query || '%') 
-        AND
-        (:isFavorite IS NULL OR isFavorite = :isFavorite)
+        (:query IS NULL OR countryCommonName LIKE '%' || :query || '%' OR region LIKE '%' || :query || '%')
+       AND
+       (:sortOption IS NULL OR
+        (:sortOption != 'FAV' OR 
+            (:sortOption = 'FAV' AND :sortOrder = 'ASC' AND isFavorite = 1) OR
+            (:sortOption = 'FAV' AND :sortOrder = 'DESC' AND isFavorite = 0)
+            )
+        )
     ORDER BY 
         CASE
             WHEN :sortOption = 'NAME' AND :sortOrder = 'ASC' THEN countryCommonName
@@ -57,7 +62,7 @@ interface CountryCacheDao {
         countryCommonName ASC;
     """
     )
-    suspend fun getSortedFilteredCountries(query: String?, sortOption: String?, sortOrder: String?, isFavorite: Int?): List<CountryCacheEntity>
+    suspend fun getSortedFilteredCountries(query: String?, sortOption: String?, sortOrder: String?): List<CountryCacheEntity>
 
 
     @Query("SELECT DISTINCT languageEntity FROM countriesCache")

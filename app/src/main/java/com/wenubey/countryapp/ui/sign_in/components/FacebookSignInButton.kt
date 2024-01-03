@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.countryapp.R
@@ -24,8 +25,8 @@ fun FacebookSignInButton(
         modifier = modifier,
         onClick = facebookSignInClicked
     ) {
-        Image(painter = painterResource(id = R.drawable.ic_facebook_logo), contentDescription = FACEBOOK_SIGN_UP)
-        Text(text = FACEBOOK_SIGN_UP, modifier = Modifier.padding(6.dp), style = MaterialTheme.typography.bodyMedium)
+        Image(painter = painterResource(id = R.drawable.ic_facebook_logo), contentDescription = stringResource(id= R.string.FACEBOOK_SIGN_UP))
+        Text(text = stringResource(id= R.string.FACEBOOK_SIGN_UP), modifier = Modifier.padding(6.dp), style = MaterialTheme.typography.bodyMedium)
     }
 }
 
@@ -39,5 +40,3 @@ private fun FacebookSignInButtonPreview() {
         }
     }
 }
-
-private const val FACEBOOK_SIGN_UP = "Sign up with Facebook"

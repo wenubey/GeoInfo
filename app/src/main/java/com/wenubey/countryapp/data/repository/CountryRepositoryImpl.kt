@@ -72,7 +72,6 @@ class CountryRepositoryImpl(
                     query = options.query,
                     sortOption = null,
                     sortOrder = null,
-                    isFavorite = null,
                 ).map { it.mapToCountry() }
             }
 
@@ -81,7 +80,6 @@ class CountryRepositoryImpl(
                     query = null,
                     sortOption = options.sortOption.name,
                     sortOrder = options.sortOrder.name,
-                    isFavorite = null,
                 ).map { it.mapToCountry() }
             }
 
@@ -90,19 +88,8 @@ class CountryRepositoryImpl(
                     query = options.query,
                     sortOption = options.sortOption.name,
                     sortOrder = options.sortOrder.name,
-                    isFavorite = options.isFavorite
                 ).map { it.mapToCountry() }
             }
-
-            is CountryListOptions.Favorite -> {
-                countryCacheDao.getSortedFilteredCountries(
-                    query = null,
-                    sortOption = null,
-                    sortOrder = null,
-                    isFavorite = options.isFavorite
-                ).map { it.mapToCountry() }
-            }
-
             is CountryListOptions.Default -> countryCacheDao.getAllCountriesFromCache()
                 .map { it.mapToCountry() }
         }

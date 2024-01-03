@@ -1,7 +1,6 @@
 package com.wenubey.countryapp.ui.profile
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,7 +24,6 @@ import com.wenubey.countryapp.ui.profile.components.User
 import com.wenubey.countryapp.ui.profile.components.UserInfoUpdateDialog
 import com.wenubey.countryapp.ui.profile.components.UserUpdateFAB
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants.TAG
 import com.wenubey.countryapp.utils.components.ProgressBar
 import org.koin.androidx.compose.koinViewModel
 

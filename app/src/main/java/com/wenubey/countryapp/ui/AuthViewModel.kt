@@ -27,6 +27,6 @@ class AuthViewModel(
         }
     }
 
-    val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
+    private val isEmailVerified get() = repo.currentUser?.isEmailVerified ?: false
 
 }

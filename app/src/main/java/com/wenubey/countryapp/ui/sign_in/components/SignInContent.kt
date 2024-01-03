@@ -23,9 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 import com.wenubey.countryapp.utils.components.EmailTextField
 import com.wenubey.countryapp.utils.components.PasswordTextField
@@ -78,7 +80,10 @@ fun SignInContent(
                 signIn(email.text, password.text)
             },
         ) {
-            Text(text = SIGN_IN, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = stringResource(id = R.string.SIGN_IN),
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
         GoogleSignInButton(
@@ -101,12 +106,12 @@ fun SignInContent(
                 modifier = Modifier.clickable {
                     navigateToForgotPasswordScreen()
                 },
-                text = FORGOT_PASSWORD,
+                text = stringResource(id= R.string.FORGOT_PASSWORD),
                 style = MaterialTheme.typography.bodyMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = NO_ACCOUNT,
+                text = stringResource(id= R.string.NO_ACCOUNT),
                 modifier = Modifier.clickable { navigateToSignUpScreen() },
                 style = MaterialTheme.typography.bodyMedium,
             )
@@ -132,7 +137,3 @@ private fun SignInContentPreview() {
         }
     }
 }
-
-private const val NO_ACCOUNT = "Don't you have an account? Sign Up!"
-private const val FORGOT_PASSWORD = "Forgot password?"
-private const val SIGN_IN = "Sign in"

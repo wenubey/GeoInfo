@@ -16,10 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 
 @Composable
@@ -28,7 +30,7 @@ fun ErrorScreen(modifier: Modifier = Modifier, error: String) {
 }
 
 @Composable
-private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = PREVIEW_ERROR) {
+private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = stringResource(id= R.string.PREVIEW_ERROR)) {
     val config = LocalConfiguration.current
     val screenWidth = config.screenWidthDp
     val screenHeight = config.screenHeightDp
@@ -41,7 +43,7 @@ private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = PR
                 .fillMaxSize()
                 .alpha(0.3f),
             imageVector = Icons.Default.Error,
-            contentDescription = ERROR_SCREEN_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.ERROR_SCREEN_CONTENT_DESCRIPTION),
             tint = Color.Red.copy(alpha = 0.3f)
         )
         Text(error, style = errorTypography(), textAlign = TextAlign.Center)
@@ -62,6 +64,3 @@ private fun ErrorScreenContentPreview() {
         }
     }
 }
-
-private const val PREVIEW_ERROR = "There is no internet connection!"
-private const val ERROR_SCREEN_CONTENT_DESCRIPTION = "We got an error pls try again"

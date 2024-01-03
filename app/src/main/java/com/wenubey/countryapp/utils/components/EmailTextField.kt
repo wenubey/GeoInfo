@@ -12,14 +12,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
 
 @Composable
 fun EmailTextField(
-    email: TextFieldValue = previewEmail,
+    email: TextFieldValue = TextFieldValue(stringResource(id= R.string.PREVIEW_EMAIL)),
     onEmailValueChange: (email: TextFieldValue, isError: Boolean) -> Unit = { _, _ ->},
     keyboardActions: KeyboardActions = KeyboardActions(),
 ) {
@@ -33,11 +35,11 @@ fun EmailTextField(
             onEmailValueChange(it, !emailVerifier(it))
         },
         textStyle = MaterialTheme.typography.bodyMedium,
-        label = { Text(text = EMAIL_LABEL, style = MaterialTheme.typography.bodySmall) },
+        label = { Text(text = stringResource(id= R.string.EMAIL_LABEL), style = MaterialTheme.typography.bodySmall) },
         isError = isError,
         supportingText = {
             if (isError) {
-                Text(text = EMAIL_ERROR, style = MaterialTheme.typography.bodySmall)
+                Text(text = stringResource(id= R.string.EMAIL_ERROR), style = MaterialTheme.typography.bodySmall)
             }
         },
         singleLine = true,
@@ -58,7 +60,3 @@ private fun EmailTextFieldPreview() {
 }
 
 private fun emailVerifier(email: TextFieldValue): Boolean = !(email.text.contains("@") && email.text.contains(".com")) && email.text.isNotBlank()
-
-private val previewEmail = TextFieldValue("helloworld@helloword.com")
-private const val EMAIL_ERROR = "Email account must contain '@' and '.com'"
-private const val EMAIL_LABEL = "Email"

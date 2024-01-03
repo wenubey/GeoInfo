@@ -21,17 +21,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import com.wenubey.countryapp.utils.fakeCountry
 
 @Composable
 fun EconomicInformation(country: Country) {
-    InfoHeader(header = Constants.ECONOMICAL_INFORMATION)
+    InfoHeader(header = stringResource(id = R.string.ECONOMICAL_INFORMATION))
     CurrencyRow(country = country)
     DemonymsRow(country = country)
 }
@@ -47,7 +49,10 @@ private fun CurrencyRow(country: Country? = fakeCountry) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = Constants.CURRENCIES, style = MaterialTheme.typography.bodyMedium)
+            Text(
+                text = stringResource(id = R.string.CURRENCIES),
+                style = MaterialTheme.typography.bodyMedium
+            )
             Column {
                 country?.currency?.forEach {
                     Text(
@@ -81,9 +86,12 @@ private fun DemonymsRow(country: Country = fakeCountry) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Face,
-                    contentDescription = Constants.COUNTRY_DEMONYMS_CONTENT_DESCRIPTION
+                    contentDescription = stringResource(id = R.string.COUNTRY_DEMONYMS_CONTENT_DESCRIPTION)
                 )
-                Text(text = Constants.DEMONYMS, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = stringResource(id = R.string.DEMONYMS),
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
             Column {
                 country.demonyms?.forEach { demonym ->
@@ -99,10 +107,10 @@ private fun DemonymsRow(country: Country = fakeCountry) {
                             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Icon(
                                     imageVector = if (entry.key!!.contains("f")) Icons.Default.Female else Icons.Default.Male,
-                                    contentDescription = Constants.COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION
+                                    contentDescription = stringResource(id = R.string.COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION)
                                 )
                                 Text(
-                                    text = entry.value ?: Constants.UNDEFINED,
+                                    text = entry.value ?: UNDEFINED,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -131,9 +139,9 @@ private fun CurrencyRowPreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun DemonymsRowPreview() {
-     CountryAppTheme {
+    CountryAppTheme {
         Surface {
-             DemonymsRow()
+            DemonymsRow()
         }
     }
 }

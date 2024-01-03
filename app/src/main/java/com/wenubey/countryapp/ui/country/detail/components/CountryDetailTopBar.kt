@@ -26,12 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.Country
-import com.wenubey.countryapp.utils.Constants
+import com.wenubey.countryapp.utils.Constants.UNDEFINED
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,11 +72,11 @@ fun CountryDetailTopBar(
                     Image(
                         modifier = Modifier.size(50.dp),
                         painter = painter,
-                        contentDescription = Constants.COUNTRY_FLAG_CONTENT_DESCRIPTION
+                        contentDescription = stringResource(id= R.string.COUNTRY_FLAG_CONTENT_DESCRIPTION)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = country.countryCommonName ?: Constants.UNDEFINED,
+                        text = country.countryCommonName ?: UNDEFINED,
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center
                     )
@@ -89,7 +91,7 @@ fun CountryDetailTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = Constants.NAVIGATION_BACK_CONTENT_DESCRIPTION,
+                        contentDescription = stringResource(id= R.string.NAVIGATION_BACK_CONTENT_DESCRIPTION),
                     )
                 }
             },

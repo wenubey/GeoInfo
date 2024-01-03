@@ -5,9 +5,10 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.utils.Constants.ACCESS_REVOKED_MESSAGE
-import com.wenubey.countryapp.utils.Constants.REVOKE_ACCESS_MESSAGE
 import com.wenubey.countryapp.utils.Constants.SENSITIVE_OPERATION_MESSAGE
 import com.wenubey.countryapp.utils.Resource
 import com.wenubey.countryapp.utils.Utils.Companion.makeToast
@@ -23,11 +24,11 @@ fun RevokeAccess(
     coroutineScope: CoroutineScope,
 ) {
     val context = LocalContext.current
-
+    val signOut = stringResource(id= R.string.SIGN_OUT)
     fun showRevokeAccessMessage() = coroutineScope.launch {
         val result = snackBarHostState.showSnackbar(
-            message = REVOKE_ACCESS_MESSAGE,
-            actionLabel = SIGN_OUT,
+            message = ACCESS_REVOKED_MESSAGE,
+            actionLabel = signOut,
         )
         if (result == SnackbarResult.ActionPerformed) {
             viewModel.signOut()
@@ -55,5 +56,3 @@ fun RevokeAccess(
         }
     }
 }
-
-private const val SIGN_OUT = "Sign out"

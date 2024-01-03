@@ -40,14 +40,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.domain.model.User
 import com.wenubey.countryapp.ui.profile.ProfileViewModel
 import com.wenubey.countryapp.ui.theme.CountryAppTheme
-import com.wenubey.countryapp.utils.Constants
 import com.wenubey.countryapp.utils.Constants.TAG
+import com.wenubey.countryapp.utils.Constants.UNDEFINED
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
@@ -103,7 +105,7 @@ private fun UserContent(
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 Image(
                     painter = painter,
-                    contentDescription = Constants.PROFILE_PHOTO_DESCRIPTION,
+                    contentDescription = stringResource(id= R.string.PROFILE_PHOTO_DESCRIPTION),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .clip(MaterialTheme.shapes.extraLarge)
@@ -139,7 +141,7 @@ private fun FavCountriesRow(
     favCountries: Map<String, String>?,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit
 ) {
-    Text(text = FAV_COUNTRIES, style = MaterialTheme.typography.titleMedium)
+    Text(text = stringResource(id= R.string.FAV_COUNTRIES), style = MaterialTheme.typography.titleMedium)
     Divider(thickness = 2.dp, color = Color.Gray)
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -169,22 +171,22 @@ private fun UserFields(user: User?) {
         UserFieldRow(
             content = user?.displayName,
             imageVector = Icons.Outlined.Person,
-            contentDescription = DISPLAY_NAME_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.DISPLAY_NAME_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.email,
             imageVector = Icons.Outlined.Email,
-            contentDescription = EMAIL_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.EMAIL_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.phoneNumber,
             imageVector = Icons.Outlined.Call,
-            contentDescription = PHONE_NUMBER_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.EMAIL_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.createdAt,
             imageVector = Icons.Outlined.AccessTime,
-            contentDescription = CREATED_AT_CONTENT_DESCRIPTION,
+            contentDescription = stringResource(id= R.string.CREATED_AT_CONTENT_DESCRIPTION),
         )
     }
 }
@@ -200,7 +202,7 @@ private fun UserFieldRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(imageVector = imageVector, contentDescription = contentDescription)
-        Text(text = content ?: Constants.UNDEFINED, style = MaterialTheme.typography.bodyLarge)
+        Text(text = content ?: UNDEFINED, style = MaterialTheme.typography.bodyLarge)
     }
 }
 
@@ -217,8 +219,3 @@ fun UserContentPreview() {
     }
 }
 
-private const val DISPLAY_NAME_CONTENT_DESCRIPTION = "This is your display name"
-private const val EMAIL_CONTENT_DESCRIPTION = "This is your email"
-private const val PHONE_NUMBER_CONTENT_DESCRIPTION = "This is your phone number"
-private const val CREATED_AT_CONTENT_DESCRIPTION = "Your account created this time"
-private const val FAV_COUNTRIES = "Fav Countries"

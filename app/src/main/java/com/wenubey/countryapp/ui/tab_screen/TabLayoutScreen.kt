@@ -31,8 +31,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.countryapp.R
 import com.wenubey.countryapp.ui.country.list.CountryListScreen
 import com.wenubey.countryapp.ui.map.MapScreen
 import com.wenubey.countryapp.ui.profile.ProfileScreen
@@ -114,7 +116,7 @@ private fun TabLayoutContent(
                                 } else {
                                     item.unselectedIcon
                                 },
-                                contentDescription = Constants.TABS_CONTENT_DESCRIPTION
+                                contentDescription = stringResource(id = R.string.TABS_CONTENT_DESCRIPTION)
                             )
                         }
                     )

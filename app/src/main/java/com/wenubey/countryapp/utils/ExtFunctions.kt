@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.SortByAlpha
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.google.android.gms.maps.model.LatLng
 import com.wenubey.countryapp.utils.Constants.UNDEFINED
@@ -33,6 +34,7 @@ fun SortOption.toIcon(): ImageVector {
         SortOption.NAME -> Icons.Filled.SortByAlpha
         SortOption.AREA -> Icons.Filled.Fullscreen
         SortOption.POPULATION -> Icons.Filled.People
+        SortOption.FAV -> Icons.Filled.Star
     }
 }
 

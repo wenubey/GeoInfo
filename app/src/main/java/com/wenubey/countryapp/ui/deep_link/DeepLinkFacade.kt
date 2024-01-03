@@ -17,8 +17,7 @@ interface DeepLinkFacade {
     fun goToWikipedia(countryName: String?, context: Context)
 }
 
-class DeepLinkFacadeImpl(
-) : DeepLinkFacade {
+class DeepLinkFacadeImpl: DeepLinkFacade {
     override fun handleDeepLink(intent: Intent?, navHostController: NavHostController) {
         if (intent?.action == Intent.ACTION_VIEW) {
             intent.data?.let { uri ->
