@@ -15,7 +15,7 @@ class AuthViewModel(
     init {
         authState = repo.getAuthState()
     }
-    fun getAuthState(): String {
+    fun getStartDestination(): String {
         return if (authState) {
             Screen.SignInScreen.route
         } else{

@@ -6,7 +6,7 @@ import com.wenubey.countryapp.utils.AuthProvider
 data class User(
     val displayName: String? = null,
     val email: String? = null,
-    val photoUrl: String? = null,
+    val photoUri: String? = null,
     val phoneNumber: String? = null,
     val createdAt: String? = null,
     val emailVerified: Boolean? = null,
@@ -19,7 +19,7 @@ fun FirebaseUser.toUser(authProvider: AuthProvider?, createdAt: String? = null, 
     return User(
         displayName = displayName,
         email = email,
-        photoUrl = photoUrl.toString(),
+        photoUri = photoUrl.toString(),
         phoneNumber = phoneNumber,
         createdAt = createdAt,
         emailVerified = isEmailVerified,

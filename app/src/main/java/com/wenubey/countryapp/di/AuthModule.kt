@@ -6,16 +6,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.wenubey.countryapp.BuildConfig
 import com.wenubey.countryapp.utils.Constants
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val authModule = module {
+val firebaseModules = module {
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
     single { Identity.getSignInClient(androidApplication()) }
+    single { FirebaseStorage.getInstance() }
 
     single(named(Constants.SIGN_IN_REQUEST)) {
         BeginSignInRequest.builder()

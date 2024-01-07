@@ -103,6 +103,7 @@
     <string name="PASSWORD_VISIBILITY_DESCRIPTION">Password visibility on/off</string>
     <string name="PASSWORD_LABEL">Password</string>
     <string name="PREVIEW_PASSWORD">helloWorld</string>
+    <string name="UPLOAD_PROFILE_PHOTO_CONTENT_DESC">You can upload a new profile photo.</string>
 
 
 </resources>

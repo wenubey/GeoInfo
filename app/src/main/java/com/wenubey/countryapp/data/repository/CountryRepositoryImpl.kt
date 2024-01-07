@@ -9,8 +9,6 @@ import com.wenubey.countryapp.data.remote.CountryHistoryApi
 import com.wenubey.countryapp.data.remote.CountryInfoApi
 import com.wenubey.countryapp.domain.model.Country
 import com.wenubey.countryapp.domain.repository.CountryRepository
-import com.wenubey.countryapp.utils.Constants.TAG
-import com.wenubey.countryapp.utils.Constants.USERS
 import com.wenubey.countryapp.utils.CountryListOptions
 import com.wenubey.countryapp.utils.DataResponse
 import com.wenubey.countryapp.utils.Utils.Companion.printLog
@@ -37,16 +35,18 @@ class CountryRepositoryImpl(
             val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
             updateLocalDatabase(favCountries)
             // Return data from cache
+            Log.w(TAG, "getAllCountriesFromLocal:Success")
             return DataResponse.Success(
                 localCountryData
             )
         }
         DataResponse.Loading(isLoading = true)
         val remoteCountryData = try {
+            Log.w(TAG, "getAllCountriesFromRemote:Success")
             countryInfoApi.getAllCountries()
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG, "getAllCountries: error: $e")
+            Log.e(TAG, "getAllCountries: error:", e)
             return DataResponse.Error(e)
         }
         // Update the cache
@@ -57,17 +57,16 @@ class CountryRepositoryImpl(
         auth.currentUser?.uid?.let {
             val favCountries = fetchFavCountriesFromFirestore(it)
             updateLocalDatabase(favCountries)
-
         }
         // Return data from the remote source
-        return DataResponse.Success(
-            getSortedFilteredCountries(options)
-        )
+        Log.w(TAG, "getSortedFilteredCountries:Success")
+        return DataResponse.Success(getSortedFilteredCountries(options))
     }
 
     private suspend fun getSortedFilteredCountries(options: CountryListOptions = CountryListOptions.Default): List<Country> {
         return when (options) {
             is CountryListOptions.Filter -> {
+                Log.w(TAG, "CountryListOptions.Filter:Success")
                 countryCacheDao.getSortedFilteredCountries(
                     query = options.query,
                     sortOption = null,
@@ -76,6 +75,7 @@ class CountryRepositoryImpl(
             }
 
             is CountryListOptions.Sort -> {
+                Log.w(TAG, "CountryListOptions.Sort:Success")
                 countryCacheDao.getSortedFilteredCountries(
                     query = null,
                     sortOption = options.sortOption.name,
@@ -84,14 +84,18 @@ class CountryRepositoryImpl(
             }
 
             is CountryListOptions.Combined -> {
+                Log.w(TAG, "CountryListOptions.Combined:Success")
                 countryCacheDao.getSortedFilteredCountries(
                     query = options.query,
                     sortOption = options.sortOption.name,
                     sortOrder = options.sortOrder.name,
                 ).map { it.mapToCountry() }
             }
-            is CountryListOptions.Default -> countryCacheDao.getAllCountriesFromCache()
-                .map { it.mapToCountry() }
+            is CountryListOptions.Default -> {
+                Log.w(TAG, "CountryListOptions.Default:Success")
+                countryCacheDao.getAllCountriesFromCache()
+                    .map { it.mapToCountry() }
+            }
         }
     }
 
@@ -120,6 +124,7 @@ class CountryRepositoryImpl(
                 )
             } else {
                 // return data from cache
+                Log.w(TAG, "localCountryData:Success")
                 DataResponse.Success(localCountryData!!.mapToCountry())
             }
         }
@@ -130,18 +135,19 @@ class CountryRepositoryImpl(
         countryName: String
     ): DataResponse<Country> {
         val remoteCountryData = try {
+            Log.w(TAG, "remoteCountryData:Success")
             countryInfoApi.getCountry(countryCode)
         } catch (e: Exception) {
-            Log.e(TAG, "remoteCountryData error: $e")
+            Log.e(TAG, "remoteCountryData:Error:", e)
             return DataResponse.Error(e)
         }
         val remoteHistoryData = try {
+            Log.w(TAG, "remoteHistoryData:Success")
             countryHistoryApi.getHistoricalEvents(countryName)
         } catch (e: Exception) {
-            Log.e(TAG, "getHistoricalEvents error: $e")
+            Log.e(TAG, "remoteHistoryData:Error:", e)
             return DataResponse.Error(e)
         }.sortedBy { it.year?.toInt() }
-        Log.i(TAG, "sorted histories: $remoteHistoryData")
         // Data mapped to cache entity
         val localCountryData = remoteCountryData.first().mapToCountryEntity(
             historyDto = remoteHistoryData
@@ -160,9 +166,10 @@ class CountryRepositoryImpl(
     ): DataResponse<Country> {
         val historyData = try {
             DataResponse.Loading(true)
+            Log.w(TAG, "getHistoryFromRemote:Success")
             countryHistoryApi.getHistoricalEvents(normalizeCountryName(countryName)!!)
         } catch (e: Exception) {
-            Log.e(TAG, "getHistoryFromRemote error: $e")
+            Log.e(TAG, "getHistoryFromRemote:Error", e)
             return DataResponse.Error(e)
         }
             .sortedBy { it.year?.toInt() }
@@ -178,9 +185,9 @@ class CountryRepositoryImpl(
             countryCacheDao.upsertCountry(countryCacheEntity)
         }
 
-
         val countryData = countryCacheDao.getCountry(countryCode)?.mapToCountry()
         return if (countryData != null) {
+            Log.w(TAG, "getHistoryFromRemoteUpdateCountry:Success")
             DataResponse.Success(countryData)
         } else {
             DataResponse.Loading(true)
@@ -198,6 +205,7 @@ class CountryRepositoryImpl(
                     .flatMap { it.entries }
                     .sortedBy { it.key }
                     .associate { it.toPair() }
+            Log.w(TAG, "getCountryCodeFromCache:Success")
             return Result.success(countryCodesFromCache)
         }
         val remoteCountryData = try {
@@ -207,6 +215,7 @@ class CountryRepositoryImpl(
             return Result.failure(e)
         }
         val newCountryCacheData = remoteCountryData.map { it.mapToCountryEntity(null) }
+        // Cache update from remote
         countryCacheDao.clearALl()
         countryCacheDao.upsertAll(newCountryCacheData)
 
@@ -214,6 +223,7 @@ class CountryRepositoryImpl(
             .flatMap { it.entries }
             .sortedBy { it.key }
             .associate { it.toPair() }
+        Log.w(TAG, "getCountryCodeFromRemote:Success")
         return Result.success(countryCodeFromRemote)
     }
 
@@ -273,11 +283,14 @@ class CountryRepositoryImpl(
         val newLocalFavorites = localCountriesToBeFavorite.map { it.copy(isFavorite = true) }
 
         countryCacheDao.upsertAll(newLocalFavorites)
+        Log.w(TAG, "updateLocalDatabase:Success")
     }
 
     @Suppress("UNCHECKED_CAST")
     private suspend fun fetchFavCountriesFromFirestore(userId: String): List<String> {
         val favCountries = firestore.collection(USERS).document(userId).get()
+            .addOnCompleteListener { Log.w(TAG, "fetchFavCountriesFromFirestore:Success") }
+            .addOnFailureListener { Log.e(TAG, "fetchFavCountriesFromFirestore:Error", it) }
             .await().data?.get("favCountries") as? MutableMap<String, String> ?: mutableMapOf()
         return favCountries.values.toList().map {
             it.split(" ").first()
@@ -292,8 +305,13 @@ class CountryRepositoryImpl(
             //Update the local
             updateLocalDatabase(favCountriesFirestore)
         }
-
+        Log.w(TAG, "getLatLngFavCountries:Success")
         return countryCacheDao.getLatLngFavCountries()
+    }
+
+    companion object {
+        const val TAG = "countryRepo"
+        const val USERS = "users"
     }
 }
 

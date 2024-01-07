@@ -85,11 +85,10 @@ private fun TabLayoutContent(
             selectedTabIndex = pagerState.currentPage
         }
     }
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        snackbarHost = { SnackbarHost(hostState = snackBarHostState)}
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -102,7 +101,7 @@ private fun TabLayoutContent(
                         selected = index == selectedTabIndex,
                         onClick = {
                             tabViewModel.setIndex(index)
-                                  },
+                        },
                         text = {
                             Text(
                                 text = item.title,
@@ -142,12 +141,12 @@ private fun TabLayoutContent(
                         )
                     }
                     2 -> {
-                        ProfileScreen(
-                            navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
-                            snackBarHostState =snackBarHostState,
-                            navigateToCountryDetailScreen = navigateToCountryDetailScreen,
-                            navigateToSignInScreen = navigateToSignInScreen
-                        )
+                            ProfileScreen(
+                                navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
+                                snackBarHostState = snackBarHostState,
+                                navigateToCountryDetailScreen = navigateToCountryDetailScreen,
+                                navigateToSignInScreen = navigateToSignInScreen
+                            )
                     }
                     else -> {}
                 }

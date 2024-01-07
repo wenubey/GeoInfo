@@ -65,7 +65,7 @@ fun User(
         user,
         navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
         navigateToCountryDetailScreen = navigateToCountryDetailScreen,
-        navigateToSignInScreen = navigateToSignInScreen
+        navigateToSignInScreen = navigateToSignInScreen,
     )
 }
 
@@ -79,8 +79,9 @@ private fun UserContent(
     navigateToForgotPasswordScreen: (() -> Unit)? = null,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit = { _, _ -> },
 ) {
+
     val painter = rememberAsyncImagePainter(
-        model = user?.photoUrl, error = rememberVectorPainter(
+        model = user?.photoUri, error = rememberVectorPainter(
             image = Icons.Default.AccountCircle
         ),
         onError = { error ->
@@ -90,6 +91,7 @@ private fun UserContent(
     var favCountries: Map<String, String>? by remember(user?.favCountries) {
         mutableStateOf(user?.favCountries)
     }
+
 
     Card(
         modifier = Modifier
@@ -103,14 +105,24 @@ private fun UserContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
-                Image(
-                    painter = painter,
-                    contentDescription = stringResource(id= R.string.PROFILE_PHOTO_DESCRIPTION),
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .clip(MaterialTheme.shapes.extraLarge)
-                        .size(100.dp)
-                )
+                Box {
+                    Image(
+                        painter = painter,
+                        contentDescription = stringResource(id = R.string.PROFILE_PHOTO_DESCRIPTION),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.extraLarge)
+                            .size(100.dp)
+                    )
+                    ImagePicker(
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        onImageSelected = {
+                            profileViewModel.updateProfilePhoto(it)
+                        },
+                    )
+                }
+
+
                 AccountSettingsMenu(
                     modifier = Modifier.align(Alignment.TopEnd),
                     signOut = {
@@ -141,7 +153,10 @@ private fun FavCountriesRow(
     favCountries: Map<String, String>?,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit
 ) {
-    Text(text = stringResource(id= R.string.FAV_COUNTRIES), style = MaterialTheme.typography.titleMedium)
+    Text(
+        text = stringResource(id = R.string.FAV_COUNTRIES),
+        style = MaterialTheme.typography.titleMedium
+    )
     Divider(thickness = 2.dp, color = Color.Gray)
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -160,6 +175,7 @@ private fun FavCountriesRow(
     }
 }
 
+
 @Composable
 private fun UserFields(user: User?) {
     Column(
@@ -171,22 +187,22 @@ private fun UserFields(user: User?) {
         UserFieldRow(
             content = user?.displayName,
             imageVector = Icons.Outlined.Person,
-            contentDescription = stringResource(id= R.string.DISPLAY_NAME_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.DISPLAY_NAME_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.email,
             imageVector = Icons.Outlined.Email,
-            contentDescription = stringResource(id= R.string.EMAIL_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.EMAIL_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.phoneNumber,
             imageVector = Icons.Outlined.Call,
-            contentDescription = stringResource(id= R.string.EMAIL_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.EMAIL_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.createdAt,
             imageVector = Icons.Outlined.AccessTime,
-            contentDescription = stringResource(id= R.string.CREATED_AT_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.CREATED_AT_CONTENT_DESCRIPTION),
         )
     }
 }

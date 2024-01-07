@@ -12,7 +12,6 @@ import com.wenubey.countryapp.domain.model.History
 import com.wenubey.countryapp.domain.model.NativeName
 import com.wenubey.countryapp.domain.model.Translation
 import com.wenubey.countryapp.domain.model.toUser
-import com.wenubey.countryapp.utils.Constants.TAG
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -44,17 +43,20 @@ fun addUserToFirestore(
 ) {
     auth.currentUser?.apply {
         val user = toUser(authProvider, createdAt = createdAt, isPhoneNumberVerified = isPhoneNumberVerified, favCountries = favCountries)
-        db.collection(Constants.USERS).document(uid).set(user)
+        db.collection(Utils.USERS).document(uid).set(user)
     }
 }
 
+
 class Utils {
     companion object {
+
+        const val USERS = "users"
+        const val TAG = "utilsTAG"
         fun printLog(e: Exception) = Log.e(TAG, e.stackTraceToString())
 
         fun Context.makeToast(message: String?) =
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-
 
     }
 }

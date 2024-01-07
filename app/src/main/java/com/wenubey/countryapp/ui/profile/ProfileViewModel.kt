@@ -1,5 +1,6 @@
 package com.wenubey.countryapp.ui.profile
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,6 +24,7 @@ class ProfileViewModel(
     var currentUserDataResponse by mutableStateOf<User?>(null)
 
     val currentUser get() = repo.currentUser
+
 
     init {
         getUserData()
@@ -50,6 +52,12 @@ class ProfileViewModel(
         updateUserResponse = Resource.Loading
 
         updateUserResponse = repo.updateUser(newDisplayName, email, phoneNumber)
+    }
+
+    fun updateProfilePhoto(newPhotoUri: Uri) = viewModelScope.launch {
+        updateUserResponse = Resource.Loading
+
+        updateUserResponse = repo.updateProfilePhoto(newPhotoUri)
     }
 
 }

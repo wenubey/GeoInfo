@@ -19,8 +19,8 @@ object Constants {
     const val SIGN_IN_REQUEST = "signInRequest"
     const val SIGN_UP_REQUEST = "signUpRequest"
 
-    //DB REF
-    const val USERS = "users"
+
+
 
     //STATE HANDLE
     const val SELECTED_TAB_INDEX_KEY = "selected_tab_index_key"

@@ -69,7 +69,7 @@ val repositoryModule = module {
         )
     }
     factory<TwitterAuthRepository> { TwitterAuthRepositoryImpl(get(), get()) }
-    factory<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
+    factory<ProfileRepository> { ProfileRepositoryImpl(get(), get(), get()) }
 }
 
 val viewModelModules = module {
@@ -99,6 +99,7 @@ val retrofitModules = module {
             .create()
     }
 }
+
 
 
 

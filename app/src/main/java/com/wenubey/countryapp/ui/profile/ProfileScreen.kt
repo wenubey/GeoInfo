@@ -77,6 +77,7 @@ private fun ProfileScreenContent(
     if (user == null) {
         ProgressBar()
     }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -91,10 +92,10 @@ private fun ProfileScreenContent(
             .padding(paddingValue)
             .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             User(
-                user = profileViewModel.currentUserDataResponse,
+                user = user,
                 navigateToForgotPasswordScreen = { navigateToForgotPasswordScreen(email.text) },
                 navigateToCountryDetailScreen = navigateToCountryDetailScreen,
-                navigateToSignInScreen = navigateToSignInScreen
+                navigateToSignInScreen = navigateToSignInScreen,
             )
         }
 
@@ -148,6 +149,8 @@ fun ProfileScreenContentPreview() {
         }
     }
 }
+
+
 
 private fun extractPhoneBody(phoneNumber: String): String = phoneNumber.substringAfterLast(" ")
 private fun extractPhoneCode(phoneNumber: String): String = phoneNumber.substringBefore(" ")

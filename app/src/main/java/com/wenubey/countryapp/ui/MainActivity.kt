@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        val startDestination = authViewModel.getAuthState()
+                        val startDestination = authViewModel.getStartDestination()
                         navController = rememberNavController()
                         NavGraph(
                             tabViewModel = tabViewModel,
@@ -47,6 +47,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
 
 
