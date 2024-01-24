@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "486266905900",
-    "project_id": "countryapp-9c5dc",
-    "storage_bucket": "countryapp-9c5dc.appspot.com"
+    "project_number": "906296778274",
+    "project_id": "geoinfo-412213",
+    "storage_bucket": "geoinfo-412213.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:486266905900:android:9240ab5882891946e2f889",
+        "mobilesdk_app_id": "1:906296778274:android:59bbdf320803ea67b2747b",
         "android_client_info": {
-          "package_name": "com.wenubey.countryapp"
+          "package_name": "com.wenubey.geoinfo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "486266905900-v1qvg9aja0tlkfrg5rtn0nr8hr16hosg.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wenubey.countryapp",
-            "certificate_hash": "f0dab036fba1cfaac8e1837d8d4d4e0d5d8e659e"
-          }
-        },
-        {
-          "client_id": "486266905900-k06iv9cpqjb0ekjjngmrtmc68gpqvr8j.apps.googleusercontent.com",
+          "client_id": "906296778274-prtn3mgfuggarionen4e4a8i4q38vjd6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAyUsVyoxzf2mVQa292M1SHD56NL8eKjRI"
+          "current_key": "AIzaSyDHrGnNy6dREkSML1yLJm2y7DjuMQH23GU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "486266905900-k06iv9cpqjb0ekjjngmrtmc68gpqvr8j.apps.googleusercontent.com",
+              "client_id": "906296778274-prtn3mgfuggarionen4e4a8i4q38vjd6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

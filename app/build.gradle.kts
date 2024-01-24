@@ -9,11 +9,11 @@ plugins {
 
 
 android {
-    namespace = "com.wenubey.countryapp"
+    namespace = "com.wenubey.geoinfo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.wenubey.countryapp"
+        applicationId = "com.wenubey.geoinfo"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
