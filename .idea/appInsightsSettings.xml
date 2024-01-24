@@ -28,10 +28,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.wenubey.geoinfo" />
+                  <option name="mobileSdkAppId" value="1:906296778274:android:59bbdf320803ea67b2747b" />
+                  <option name="projectId" value="geoinfo-412213" />
+                  <option name="projectNumber" value="906296778274" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

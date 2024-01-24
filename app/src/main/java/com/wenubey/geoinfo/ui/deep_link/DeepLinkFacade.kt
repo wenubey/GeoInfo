@@ -39,7 +39,7 @@ class DeepLinkFacadeImpl: DeepLinkFacade {
             action = Intent.ACTION_SEND
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Check out information about $countryName on Country App!\n${deepLink}"
+                "Check out information about $countryName on Geoinfo App!\n${deepLink}"
             )
             type = "text/plain"
         }

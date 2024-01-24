@@ -56,7 +56,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,7 +65,7 @@
             <intent-filter>
                 <data
                     android:scheme="https"
-                    android:host="countryapp.com"
+                    android:host="geoinfo.com"
                     android:pathPattern="/detail/.*"
                     android:pathAdvancedPattern=""
                     />

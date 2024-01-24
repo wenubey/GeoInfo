@@ -9,7 +9,7 @@ object Constants {
     //URL CONSTANTS
     const val BASE_URL_COUNTRIES = "https://restcountries.com/v3.1/"
     const val BASE_URL_HISTORIES = "https://api.api-ninjas.com/v1/"
-    const val BASE_URL_DEEP_LINK = "https://countryapp.com/detail"
+    const val BASE_URL_DEEP_LINK = "https://geoinfo.com/detail"
     const val BASE_URL_WIKIPEDIA = "https://en.wikipedia.org/wiki/"
 
     // LOG CONSTANTS
