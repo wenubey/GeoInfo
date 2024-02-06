@@ -1,6 +1,6 @@
-# Country App
+# GeoInfo
 
-Country App is an Android application that allows users to explore and manage their favorite countries. Users can pick countries from a map, add them to their favorites list, view country details, and manage their profile.
+GeoInfo is an Android application that allows users to explore and manage their favorite countries. Users can pick countries from a map, add them to their favorites list, view country details, and manage their profile.
 
 ## Features
 
@@ -49,9 +49,3 @@ Country App is an Android application that allows users to explore and manage th
 2. Open the project in Android Studio.
 3. Configure Firebase and Google Maps API keys.
 4. Build and run the app.
-
-## Contributions
-
-Contributions are welcome! If you find any issues or want to contribute to the project, please follow the [Contribution Guidelines](CONTRIBUTING.md).
-
-## License
