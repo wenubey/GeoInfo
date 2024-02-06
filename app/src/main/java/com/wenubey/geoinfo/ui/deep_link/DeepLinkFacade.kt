@@ -17,7 +17,7 @@ interface DeepLinkFacade {
     fun goToWikipedia(countryName: String?, context: Context)
 }
 
-class DeepLinkFacadeImpl: DeepLinkFacade {
+class DeepLinkFacadeImpl : DeepLinkFacade {
     override fun handleDeepLink(intent: Intent?, navHostController: NavHostController) {
         if (intent?.action == Intent.ACTION_VIEW) {
             intent.data?.let { uri ->
@@ -32,8 +32,7 @@ class DeepLinkFacadeImpl: DeepLinkFacade {
     }
 
     override fun sendDeepLink(countryCode: String, countryName: String, context: Context) {
-
-
+        // example deepLink -> https://geoinfo.com/detail/PL/Poland
         val deepLink = Constants.BASE_URL_DEEP_LINK + "/${countryCode}/${countryName.formatToUri()}"
         val intent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -46,8 +45,10 @@ class DeepLinkFacadeImpl: DeepLinkFacade {
         context.startActivity(Intent.createChooser(intent, "Share via"))
     }
 
+
     override fun goToWikipedia(countryName: String?, context: Context) {
         if (countryName != null) {
+            // example wikipediaUrl -> https://en.wikipedia.org/wiki/Poland
             val wikipediaUrl = Constants.BASE_URL_WIKIPEDIA + countryName
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(wikipediaUrl))
             context.startActivity(intent)

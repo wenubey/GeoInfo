@@ -32,8 +32,8 @@ class CountryRepositoryImpl(
         val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
         DataResponse.Loading(isLoading = true)
         if (shouldJustLoadFromCache) {
-//            val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
-//            updateLocalDatabase(favCountries)
+            val favCountries = fetchFavCountriesFromFirestore(auth.currentUser!!.uid)
+            updateLocalDatabase(favCountries)
             // Return data from cache
             Log.w(TAG, "getAllCountriesFromLocal:Success")
             return DataResponse.Success(

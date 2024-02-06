@@ -1,5 +1,6 @@
 package com.wenubey.geoinfo.data.repository.auth
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -45,12 +46,11 @@ class EmailAuthRepositoryImpl(
         }
     }
 
-    override suspend fun signInWithEmailAndPassword(
-        email: String,
-        password: String
-    ): Resource<Boolean> {
+    override suspend fun signInWithEmailAndPassword(email: String, password: String): Resource<Boolean> {
         return try {
-            auth.signInWithEmailAndPassword(email, password).await()
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener { Log.w(TAG, "signInWithEmailAndPassword:Success") }
+                .addOnFailureListener { Log.e(TAG, "signInWithEmailAndPassword:Error", it) }.await()
             Resource.Success(true)
         } catch (e: Exception) {
             Resource.Error(e)
@@ -67,5 +67,7 @@ class EmailAuthRepositoryImpl(
     }
 
     override fun getAuthState(): Boolean =  auth.currentUser == null
-
+    companion object {
+        private const val TAG = "emailAuthRepositoryImpl"
+    }
 }

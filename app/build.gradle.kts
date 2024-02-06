@@ -119,7 +119,6 @@ dependencies {
     //Google Maps
     implementation ("com.google.maps.android:maps-compose:4.1.1")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
-    implementation ("com.google.android.gms:play-services-location:21.0.1")
 
     // Dependency Injection
     val koinVersion = "3.5.0"

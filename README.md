@@ -11,9 +11,21 @@ Country App is an Android application that allows users to explore and manage th
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
-![Screenshot 3](screenshots/screenshot3.png)
+<div style="display:flex">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-1.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-2.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-3.png" alt="not found" width="240" height="600">
+</div>
+<div style="display:flex">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-4.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-5.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-6.png" alt="not found" width="240" height="600">
+</div>
+<div style="display:flex">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-7.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-8.png" alt="not found" width="240" height="600">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-9.png" alt="not found" width="240" height="600">
+</div>
 
 ## Dependencies
 
