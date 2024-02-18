@@ -38,7 +38,7 @@ import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.country.list.CountryListScreen
 import com.wenubey.geoinfo.ui.map.MapScreen
 import com.wenubey.geoinfo.ui.profile.ProfileScreen
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants
 
 
@@ -184,7 +184,7 @@ data class TabItem(
 @Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 private fun TabLayoutContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             //TabLayoutContent()
         }

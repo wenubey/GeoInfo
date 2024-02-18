@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants
 
 
@@ -71,7 +71,7 @@ fun InfoHeader(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryInfoRowPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              CountryInfoRow()
         }
@@ -82,7 +82,7 @@ private fun CountryInfoRowPreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun InfoHeaderPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              InfoHeader()
         }

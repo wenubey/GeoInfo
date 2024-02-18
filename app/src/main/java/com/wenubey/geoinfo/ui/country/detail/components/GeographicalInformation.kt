@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.formatWithCommasForArea
@@ -76,7 +76,7 @@ private fun InfoContent(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun InfoContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              InfoContent()
         }

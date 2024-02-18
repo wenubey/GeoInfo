@@ -55,7 +55,7 @@ import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.country.CountryEvent
 import com.wenubey.geoinfo.ui.country.CountryViewModel
 import com.wenubey.geoinfo.ui.deep_link.DeepLinkViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 import org.koin.androidx.compose.koinViewModel
@@ -312,7 +312,7 @@ private fun DetailDropDownMenu(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryNamePreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             CountryName()
         }
@@ -323,7 +323,7 @@ private fun CountryNamePreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun DetailDropDownMenuPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             DetailDropDownMenu()
         }

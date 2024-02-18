@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
 @Composable
 fun ImagePicker(onImageSelected: (Uri) -> Unit, modifier: Modifier = Modifier) {
@@ -107,7 +107,7 @@ fun checkAndRequestPermissions(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun ImagePickerContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             ImagePickerContent()
         }

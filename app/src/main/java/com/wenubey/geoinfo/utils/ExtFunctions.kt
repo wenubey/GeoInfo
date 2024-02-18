@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.TextFieldValue
 import com.google.android.gms.maps.model.LatLng
 import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 
@@ -45,3 +46,6 @@ fun String.formatFromUri(): String = if (this.contains("_")) this.replace("_", "
 fun List<Double>?.getLatLngFromRemote(): LatLng {
     return LatLng(this?.get(0) ?: 0.0, this?.get(1) ?: 0.0)
 }
+
+fun TextFieldValue.emailVerifier() : Boolean = !(this.text.contains("@") && this.text.contains(".com")) && this.text.isNotBlank()
+

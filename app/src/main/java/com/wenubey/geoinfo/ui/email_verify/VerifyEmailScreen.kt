@@ -37,7 +37,7 @@ import com.wenubey.geoinfo.ui.email_verify.components.ReloadUser
 import com.wenubey.geoinfo.ui.email_verify.components.RevokeAccess
 import com.wenubey.geoinfo.ui.email_verify.components.VerifyEmail
 import com.wenubey.geoinfo.ui.profile.ProfileViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
 import com.wenubey.geoinfo.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import com.wenubey.geoinfo.utils.Utils.Companion.makeToast
@@ -175,7 +175,7 @@ private fun VerifyEmailTopBar(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun VerifyEmailContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              VerifyEmailContent()
         }

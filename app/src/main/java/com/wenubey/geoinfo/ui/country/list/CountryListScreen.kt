@@ -35,7 +35,7 @@ import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.country.CountryEvent
 import com.wenubey.geoinfo.ui.country.CountryViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.SortOption
 import com.wenubey.geoinfo.utils.SortOrder
 import com.wenubey.geoinfo.utils.components.ErrorScreen
@@ -239,7 +239,7 @@ private fun onSortButtonClicked(
 @Preview(name = "Light mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun SortButtonPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             SortButton()
         }
@@ -251,7 +251,7 @@ private fun SortButtonPreview() {
 @Preview(name = "Light mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountrySearchBarPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             CountrySearchBar()
         }

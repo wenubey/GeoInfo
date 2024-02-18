@@ -23,7 +23,7 @@ import com.wenubey.geoinfo.ui.profile.components.UpdateUser
 import com.wenubey.geoinfo.ui.profile.components.User
 import com.wenubey.geoinfo.ui.profile.components.UserInfoUpdateDialog
 import com.wenubey.geoinfo.ui.profile.components.UserUpdateFAB
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.components.ProgressBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -141,7 +141,7 @@ private fun ProfileScreenContent(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun ProfileScreenContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             ProfileScreenContent(
                 navigateToForgotPasswordScreen = {},

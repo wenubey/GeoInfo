@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
 @Composable
 fun AccountSettingsMenu(
@@ -92,7 +92,7 @@ private fun MenuContent(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun MenuContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             MenuContent(
                 signOut = {},

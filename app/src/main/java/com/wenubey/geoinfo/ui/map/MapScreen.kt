@@ -27,7 +27,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.wenubey.geoinfo.ui.country.CountryEvent
 import com.wenubey.geoinfo.ui.country.CountryViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -196,7 +196,7 @@ private suspend fun getLatLngFromCountryNameSuspend(context: Context, countryNam
 @Preview(name = "Light mode", uiMode = UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun MapScreenContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             MapScreenContent()
         }

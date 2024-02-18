@@ -10,7 +10,7 @@ import com.wenubey.geoinfo.data.local.entities.LanguageEntity
 import com.wenubey.geoinfo.data.local.entities.NativeNameEntity
 import com.wenubey.geoinfo.data.local.entities.TranslationEntity
 
-class CountryAppTypeConverter {
+class GeoInfoAppTypeConverter {
 
     private inline fun <reified T> fromJson(json: String?, typeToken: TypeToken<out T>): T? {
         return if (json == null) null else Gson().fromJson(json, typeToken.type)

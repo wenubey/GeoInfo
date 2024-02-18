@@ -9,7 +9,7 @@ import com.wenubey.geoinfo.data.local.entities.CountryCacheEntity
     entities = [CountryCacheEntity::class],
     version = 1,
 )
-@TypeConverters(CountryAppTypeConverter::class)
+@TypeConverters(GeoInfoAppTypeConverter::class)
 abstract class CountryDatabase : RoomDatabase() {
     abstract val countryCacheDao: CountryCacheDao
 }

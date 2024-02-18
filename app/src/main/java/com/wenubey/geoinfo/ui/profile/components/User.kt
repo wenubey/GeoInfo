@@ -47,7 +47,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.User
 import com.wenubey.geoinfo.ui.profile.ProfileViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.Constants.TAG
 import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import org.koin.androidx.compose.koinViewModel
@@ -226,7 +226,7 @@ private fun UserFieldRow(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun UserContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         KoinContext {
             Surface {
                 UserContent()
