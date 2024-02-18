@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,6 +52,7 @@ fun SignInContent(
     }
     val keyboard = LocalSoftwareKeyboardController.current
     var isButtonEnabled by remember { mutableStateOf(true) }
+    val isPasswordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -71,6 +73,7 @@ fun SignInContent(
                 password = newPassword
                 isButtonEnabled = isError
             },
+            isPasswordVisible = isPasswordVisible
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(

@@ -49,3 +49,7 @@ fun List<Double>?.getLatLngFromRemote(): LatLng {
 
 fun TextFieldValue.emailVerifier() : Boolean = !(this.text.contains("@") && this.text.contains(".com")) && this.text.isNotBlank()
 
+fun TextFieldValue.passwordVerifier(): Boolean = !(this.text.length > 6 &&
+        Regex("[!@#\$%^&*(),.?\":{}|<>\\[\\]\\\\/_-]").containsMatchIn(this.text) &&
+        Regex("[A-Z]").containsMatchIn(this.text) &&
+        Regex("\\d").containsMatchIn(this.text)) && this.text.isNotBlank()
