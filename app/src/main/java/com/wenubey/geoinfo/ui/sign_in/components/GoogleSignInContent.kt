@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +24,7 @@ fun GoogleSignInButton(
     oneTapSignIn: () -> Unit
 ) {
     Button(
-        modifier = modifier, onClick = oneTapSignIn,
+        modifier = modifier.testTag(GOOGLE_SIGN_IN_BUTTON), onClick = oneTapSignIn,
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_google_logo),

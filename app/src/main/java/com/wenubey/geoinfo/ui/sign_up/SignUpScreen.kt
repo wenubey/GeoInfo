@@ -14,13 +14,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    navigateBack: () -> Unit,
+    navigateToSignInScreen: () -> Unit,
     signUpViewModel: SignUpViewModel = koinViewModel()
 ) {
     val context = LocalContext.current
     Scaffold(
         topBar = {
-            SignUpTopBar(navigateBack = navigateBack)
+            SignUpTopBar(navigateToSignInScreen = navigateToSignInScreen)
         },
         content = { paddingValues ->
             SignUpContent(
@@ -28,7 +28,7 @@ fun SignUpScreen(
                 signUp = { email, password ->
                     signUpViewModel.signUpWithEmailAndPassword(email, password)
                 },
-                navigateBack = navigateBack
+                navigateToSignInScreen = navigateToSignInScreen
             )
         }
     )

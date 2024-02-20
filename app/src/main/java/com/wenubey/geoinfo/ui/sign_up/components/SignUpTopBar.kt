@@ -16,7 +16,7 @@ import com.wenubey.geoinfo.utils.Constants.SIGN_UP_SCREEN_TITLE
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpTopBar(
-    navigateBack: () -> Unit
+    navigateToSignInScreen: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -24,7 +24,7 @@ fun SignUpTopBar(
         },
 
         navigationIcon = {
-            IconButton(onClick = navigateBack) {
+            IconButton(onClick = navigateToSignInScreen) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
                     contentDescription = stringResource(id= R.string.BACK_BUTTON_DESCRIPTION)

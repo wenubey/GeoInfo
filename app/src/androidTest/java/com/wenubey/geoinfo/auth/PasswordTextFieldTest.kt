@@ -1,4 +1,4 @@
-package com.wenubey.geoinfo
+package com.wenubey.geoinfo.auth
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed

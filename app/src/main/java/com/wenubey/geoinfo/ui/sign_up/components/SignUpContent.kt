@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +39,7 @@ import com.wenubey.geoinfo.utils.components.PasswordTextField
 fun SignUpContent(
     paddingValues: PaddingValues = PaddingValues(),
     signUp: (email: String, password: String) -> Unit = { _, _ -> },
-    navigateBack: () -> Unit = {}
+    navigateToSignInScreen: () -> Unit = {}
 ) {
     var email by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
@@ -51,6 +52,7 @@ fun SignUpContent(
     val isPasswordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
+            .testTag(SIGN_UP_COLUMN)
             .fillMaxSize()
             .padding(paddingValues),
         verticalArrangement = Arrangement.Center,
@@ -73,21 +75,34 @@ fun SignUpContent(
             isPasswordVisible = isPasswordVisible
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Button(onClick = {
-            keyboard?.hide()
-            signUp(email.text, password.text)
-        }) {
-            Text(text = stringResource(id= R.string.SIGN_UP), style = MaterialTheme.typography.bodyMedium)
+        Button(
+            modifier = Modifier.testTag(SIGN_UP_BUTTON),
+            onClick = {
+                keyboard?.hide()
+                signUp(email.text, password.text)
+            },
+        ) {
+            Text(
+                text = stringResource(id = R.string.SIGN_UP),
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
         Text(
-            modifier = Modifier.clickable {
-                navigateBack()
-            },
-            text = stringResource(id= R.string.ALREADY_USER),
+            modifier = Modifier
+                .clickable {
+                    navigateToSignInScreen()
+                }
+                .testTag(NAVIGATE_TO_SIGN_IN_BUTTON),
+            text = stringResource(id = R.string.ALREADY_USER),
             style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
+
+const val SIGN_UP_COLUMN = "signUpColumn"
+const val SIGN_UP_BUTTON = "signUpButton"
+const val NAVIGATE_TO_SIGN_IN_BUTTON = "navigateToSignInButton"
+
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
