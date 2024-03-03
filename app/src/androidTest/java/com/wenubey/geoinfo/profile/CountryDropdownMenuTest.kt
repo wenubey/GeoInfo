@@ -12,6 +12,7 @@ import com.wenubey.geoinfo.ui.profile.components.COUNTRY_DROPDOWN_MENU_SEARCH_BA
 import com.wenubey.geoinfo.ui.profile.components.COUNTRY_DROPDOWN_MENU_TEST_TAG
 import com.wenubey.geoinfo.ui.profile.components.CountryDropdownMenu
 import com.wenubey.geoinfo.ui.profile.components.ROW_DROPDOWN_TEST_TAG
+import com.wenubey.geoinfo.utils.fakeCountryCodeData
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -70,20 +71,15 @@ class CountryDropdownMenuTest {
 
     @Test
     fun dropdown_menu_behavior() {
-        // Given: Fake country data and variables to track selected country
-        val fakeCountryData = mapOf<String?, String?>(
-            "Poland" to "+48",
-            "Turkey" to "+90",
-            "Holland" to "+31"
-        )
+        // Given: Variables to track selected country
         var selectedCountry: String? = ""
         var selectCountryCodeInvoked = false
 
         // Given: Composable is set up with the CountryDropdownMenu
         rule.setContent {
             CountryDropdownMenu(
-                countryData = fakeCountryData,
-                currentCountryCode = fakeCountryData.values.first()!!,
+                countryData = fakeCountryCodeData,
+                currentCountryCode = fakeCountryCodeData.values.first()!!,
                 onSelectCountryCode = {
                     selectCountryCodeInvoked = true
                     selectedCountry = it
@@ -95,7 +91,7 @@ class CountryDropdownMenuTest {
         rule.onNodeWithTag(ROW_DROPDOWN_TEST_TAG)
             .performClick()
 
-        rule.onNodeWithText("Turkey")
+        rule.onNodeWithText("🇦🇱 Albania")
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -103,6 +99,6 @@ class CountryDropdownMenuTest {
 
         // Then: onSelectCountryCode callback should be invoked with the selected country code
         assert(selectCountryCodeInvoked)
-        assert(selectedCountry!!.contains(fakeCountryData["Turkey"]!!))
+        assert(selectedCountry!!.contains(fakeCountryCodeData["🇦🇱 Albania"]!!))
     }
 }

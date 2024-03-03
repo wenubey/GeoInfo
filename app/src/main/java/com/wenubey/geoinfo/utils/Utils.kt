@@ -86,11 +86,11 @@ fun normalizeCountryName(countryName: String?): String? {
 
 val fakeCountryCodeData = mapOf<String?, String?>(
     "🇦🇩 Andorra" to "+376",
+    "🇦🇱 Albania" to "+355",
     "🇦🇪 United Arab Emirates" to "+971",
     "🇦🇫 Afghanistan" to "+93",
     "🇦🇬 Antigua and Barbuda" to "+1268",
     "🇦🇮 Anguilla" to "+1264",
-    "🇦🇱 Albania" to "+355",
     "🇦🇲 Armenia" to "+374",
     "🇦🇴 Angola" to "+244",
     "🇦🇷 Argentina" to "+54",
