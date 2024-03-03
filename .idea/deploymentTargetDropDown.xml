@@ -2,14 +2,37 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PasswordTextFieldTest">
-        <State />
+      <entry key="AccountSettingsMenuTest">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\fatih\.android\avd\Pixel_7_Pro_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-03T19:01:33.408544100Z" />
+        </State>
       </entry>
-      <entry key="SignInContentTest">
-        <State />
-      </entry>
-      <entry key="SignUpContentTest">
-        <State />
+      <entry key="CountryDropdownMenuTest">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\fatih\.android\avd\Pixel_7_Pro_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-03T19:05:44.939622800Z" />
+        </State>
       </entry>
       <entry key="app">
         <State>
@@ -27,10 +50,13 @@
           <timeTargetWasSelectedWithDropDown value="2024-01-26T16:07:05.481309100Z" />
         </State>
       </entry>
-      <entry key="topBarMenu_displayed_clicked()">
+      <entry key="dropdown_menu_behavior()">
         <State />
       </entry>
-      <entry key="topBar_displayed()">
+      <entry key="dropdown_menu_search_bar_behavior()">
+        <State />
+      </entry>
+      <entry key="is_dropdown_menu_visible_menu_items_invoke()">
         <State />
       </entry>
     </value>
