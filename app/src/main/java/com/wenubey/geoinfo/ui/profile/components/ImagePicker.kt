@@ -18,20 +18,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
-@Composable
-fun ImagePicker(onImageSelected: (Uri) -> Unit, modifier: Modifier = Modifier) {
-    ImagePickerContent(modifier = modifier, onImageSelected = onImageSelected)
-
-}
 
 @Composable
-private fun ImagePickerContent(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = {}) {
+fun ImagePicker(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = {}) {
     val context = LocalContext.current
 
     val launcherImage = rememberLauncherForActivityResult(
@@ -60,7 +56,8 @@ private fun ImagePickerContent(modifier: Modifier = Modifier, onImageSelected: (
     )
 
     IconButton(
-        modifier = modifier,
+        modifier = modifier
+            .testTag(IMAGE_PICKER_BUTTON_TEST_TAG),
         onClick = {
             checkAndRequestPermissions(
                 launcher = launcherPermission,
@@ -103,13 +100,15 @@ fun checkAndRequestPermissions(
     }
 }
 
+const val IMAGE_PICKER_BUTTON_TEST_TAG = "imagePickerButtonTestTag"
+
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun ImagePickerContentPreview() {
     GeoInfoAppTheme {
         Surface {
-            ImagePickerContent()
+            ImagePicker()
         }
     }
 }

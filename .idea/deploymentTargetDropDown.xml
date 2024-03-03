@@ -2,37 +2,8 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AccountSettingsMenuTest">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\fatih\.android\avd\Pixel_7_Pro_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-03T19:01:33.408544100Z" />
-        </State>
-      </entry>
-      <entry key="CountryDropdownMenuTest">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\fatih\.android\avd\Pixel_7_Pro_API_33.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-03T19:05:44.939622800Z" />
-        </State>
+      <entry key="ImagePickerTest">
+        <State />
       </entry>
       <entry key="app">
         <State>
@@ -53,10 +24,13 @@
       <entry key="dropdown_menu_behavior()">
         <State />
       </entry>
-      <entry key="dropdown_menu_search_bar_behavior()">
+      <entry key="fav_countries_row_is_displayed_and_row_item_behavior()">
         <State />
       </entry>
-      <entry key="is_dropdown_menu_visible_menu_items_invoke()">
+      <entry key="user_fields_is_displayed()">
+        <State />
+      </entry>
+      <entry key="user_photo_displayed()">
         <State />
       </entry>
     </value>

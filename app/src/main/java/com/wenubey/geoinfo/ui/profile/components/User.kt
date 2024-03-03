@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,25 +55,9 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
 
+@Suppress("CanBeVal")
 @Composable
 fun User(
-    user: User?,
-    navigateToForgotPasswordScreen: (() -> Unit)? = null,
-    navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit,
-    navigateToSignInScreen: () -> Unit,
-) {
-    UserContent(
-        user,
-        navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
-        navigateToCountryDetailScreen = navigateToCountryDetailScreen,
-        navigateToSignInScreen = navigateToSignInScreen,
-    )
-}
-
-@Suppress("CanBeVal")
-
-@Composable
-private fun UserContent(
     user: User? = null,
     profileViewModel: ProfileViewModel = koinViewModel(),
     navigateToSignInScreen: () -> Unit = {},
@@ -149,7 +134,7 @@ private fun UserContent(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun FavCountriesRow(
+fun FavCountriesRow(
     favCountries: Map<String, String>?,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit
 ) {
@@ -159,6 +144,7 @@ private fun FavCountriesRow(
     )
     Divider(thickness = 2.dp, color = Color.Gray)
     LazyRow(
+        modifier = Modifier.testTag(FAV_COUNTRIES_ROW_TEST_TAG),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(favCountries?.toList() ?: emptyList()) { (countryFlag, countryFullName) ->
@@ -174,6 +160,8 @@ private fun FavCountriesRow(
         }
     }
 }
+
+const val FAV_COUNTRIES_ROW_TEST_TAG = "favCountriesTestTag"
 
 
 @Composable
@@ -197,7 +185,7 @@ private fun UserFields(user: User?) {
         UserFieldRow(
             content = user?.phoneNumber,
             imageVector = Icons.Outlined.Call,
-            contentDescription = stringResource(id = R.string.EMAIL_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.PHONE_NUMBER_CONTENT_DESCRIPTION),
         )
         UserFieldRow(
             content = user?.createdAt,
@@ -229,7 +217,7 @@ fun UserContentPreview() {
     GeoInfoAppTheme {
         KoinContext {
             Surface {
-                UserContent()
+                User()
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.wenubey.geoinfo.auth.verify_email
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +12,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.wenubey.geoinfo.ui.email_verify.VERIFY_EMAIL_TOP_BAR_MENU_TAG
 import com.wenubey.geoinfo.ui.email_verify.VERIFY_EMAIL_TOP_BAR_TAG
 import com.wenubey.geoinfo.ui.email_verify.VerifyEmailTopBar
@@ -18,12 +20,15 @@ import com.wenubey.geoinfo.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.wenubey.geoinfo.R
 
 @RunWith(AndroidJUnit4::class)
 class VerifyEmailTopBarTest {
 
     @get:Rule
     val rule = createComposeRule()
+
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun topBar_displayed() {
@@ -54,16 +59,14 @@ class VerifyEmailTopBarTest {
 
         // Verify the navigation icon
         // Simulate clicking on the navigation icon
-        // R.string.BACK_BUTTON_DESCRIPTION -> Back to previous screen
-        rule.onNodeWithContentDescription("Back to previous screen").assertExists()
+        rule.onNodeWithContentDescription(context.getString(R.string.BACK_BUTTON_DESCRIPTION)).assertExists()
             .performClick()
 
         // Verify that navigateBack func is invoked
         assert(navigateBackInvoked)
 
         // Verify the actions icon
-        // R.string.OPEN_MENU_DESCRIPTION -> This buttons opens the menu
-        rule.onNodeWithContentDescription("This buttons opens the menu")
+        rule.onNodeWithContentDescription(context.getString(R.string.OPEN_MENU_DESCRIPTION))
             .assertExists()
             .performClick()
 

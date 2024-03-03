@@ -1,22 +1,27 @@
 package com.wenubey.geoinfo.profile
 
+import android.content.Context
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.test.platform.app.InstrumentationRegistry
 import com.wenubey.geoinfo.ui.profile.components.AccountSettingsMenu
 import com.wenubey.geoinfo.ui.profile.components.SETTINGS_MENU_ICON_BUTTON_TEST_TAG
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import com.wenubey.geoinfo.R
 
 @RunWith(JUnit4::class)
 class AccountSettingsMenuTest {
 
     @get:Rule
     val rule = createComposeRule()
+
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun is_dropdown_menu_visible() {
@@ -46,7 +51,7 @@ class AccountSettingsMenuTest {
         rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
             .performClick()
 
-        rule.onNodeWithTag("Sign out")
+        rule.onNodeWithTag(context.getString(R.string.SIGN_OUT))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -69,7 +74,7 @@ class AccountSettingsMenuTest {
         rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
             .performClick()
 
-        rule.onNodeWithTag("Revoke Access")
+        rule.onNodeWithTag(context.getString(R.string.REVOKE_ACCESS))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -92,7 +97,7 @@ class AccountSettingsMenuTest {
         rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
             .performClick()
 
-        rule.onNodeWithTag("Forgot password?")
+        rule.onNodeWithTag(context.getString(R.string.FORGOT_PASSWORD))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
