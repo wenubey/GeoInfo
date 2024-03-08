@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.History
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 
 
@@ -42,7 +41,7 @@ private fun HistoryContent(
     histories: List<History> = fakeCountry.history!!,
 ) {
     Column {
-        InfoHeader(header = stringResource(id= R.string.HISTORICAL_INFORMATION))
+        InfoHeader(header = stringResource(id= R.string.historical_information))
         HistorySlider(histories = histories)
     }
 }
@@ -82,7 +81,7 @@ private fun HistorySlider(
                             ),
                         ) {
                             Text(
-                                text = selectedHistory.date ?: UNDEFINED,
+                                text = selectedHistory.date ?: stringResource(id = R.string.undefined),
                                 modifier = Modifier.padding(4.dp),
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -93,7 +92,7 @@ private fun HistorySlider(
             }
         )
         Text(
-            text = selectedHistory.event ?: UNDEFINED,
+            text = selectedHistory.event ?: stringResource(id = R.string.undefined),
             style = MaterialTheme.typography.bodyMedium
         )
     }

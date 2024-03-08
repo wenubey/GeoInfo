@@ -10,15 +10,12 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.test.platform.app.InstrumentationRegistry
-import com.wenubey.geoinfo.ui.profile.components.USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG
-import com.wenubey.geoinfo.ui.profile.components.USER_INFO_UPDATE_DIALOG_TEST_TAG
 import com.wenubey.geoinfo.ui.profile.components.UserInfoUpdateDialog
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.profile.components.USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG
 
 @RunWith(JUnit4::class)
 class UserInfoUpdateDialogTest {
@@ -34,11 +31,11 @@ class UserInfoUpdateDialogTest {
             UserInfoUpdateDialog()
         }
 
-        rule.onNodeWithTag(USER_INFO_UPDATE_DIALOG_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.user_info_update_dialog_test_tag))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithText(context.getString(R.string.PROFILE_INFO))
+        rule.onNodeWithText(context.getString(R.string.profile_info))
             .assertExists()
             .assertIsDisplayed()
     }
@@ -53,7 +50,7 @@ class UserInfoUpdateDialogTest {
             )
         }
 
-        rule.onNodeWithTag(USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.user_info_update_dialog_display_name_field_test_tag))
             .assertExists()
             .assertIsDisplayed()
             .assertTextContains(testDisplayName)
@@ -70,7 +67,7 @@ class UserInfoUpdateDialogTest {
             )
         }
 
-        rule.onNodeWithTag(USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.user_info_update_dialog_save_button_test_tag))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()

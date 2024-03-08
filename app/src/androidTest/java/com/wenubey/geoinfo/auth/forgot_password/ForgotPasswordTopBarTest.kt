@@ -1,12 +1,13 @@
 package com.wenubey.geoinfo.auth.forgot_password
 
+import android.content.Context
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import com.wenubey.geoinfo.ui.forgot_password.compoents.FORGOT_PASSWORD_TOP_BAR_BUTTON_TEST_TAG
-import com.wenubey.geoinfo.ui.forgot_password.compoents.FORGOT_PASSWORD_TOP_BAR_TEST_TAG
+import androidx.test.platform.app.InstrumentationRegistry
+import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.forgot_password.compoents.ForgotPasswordTopBar
 import org.junit.Rule
 import org.junit.Test
@@ -19,6 +20,8 @@ class ForgotPasswordTopBarTest {
     @get:Rule
     val rule = createComposeRule()
 
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
+
     @Test
     fun is_top_bar_visible_and_navigate_back_invoked() {
         var navigateBackInvoked = false
@@ -29,11 +32,11 @@ class ForgotPasswordTopBarTest {
             }
         }
 
-        rule.onNodeWithTag(FORGOT_PASSWORD_TOP_BAR_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.forgot_password_top_bar_test_tag))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithTag(FORGOT_PASSWORD_TOP_BAR_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.forgot_password_top_bar_button_test_tag))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()

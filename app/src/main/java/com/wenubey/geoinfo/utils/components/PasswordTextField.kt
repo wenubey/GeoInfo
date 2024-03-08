@@ -32,21 +32,21 @@ import com.wenubey.geoinfo.utils.passwordVerifier
 
 @Composable
 fun PasswordTextField(
-    password: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_PASSWORD)),
+    password: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_password)),
     onPasswordValueChange: (password: TextFieldValue, isError: Boolean) -> Unit = { _, _ -> },
     isPasswordVisible: MutableState<Boolean> = mutableStateOf(false),
 ) {
     var isError by remember { mutableStateOf(false) }
     isError = password.passwordVerifier()
     OutlinedTextField(
-        modifier = Modifier.testTag(PASSWORD_TEXT_FIELD_TEST_TAG),
+        modifier = Modifier.testTag(stringResource(id = R.string.password_text_field_test_tag)),
         value = password,
         onValueChange = {
             onPasswordValueChange(it, !password.passwordVerifier())
         },
         label = {
             Text(
-                text = stringResource(id = R.string.PASSWORD_LABEL),
+                text = stringResource(id = R.string.password_label),
                 style = MaterialTheme.typography.bodySmall
             )
         },
@@ -61,7 +61,7 @@ fun PasswordTextField(
         supportingText = {
             if (isError) {
                 Text(
-                    text = stringResource(id = R.string.PASSWORD_ERROR),
+                    text = stringResource(id = R.string.password_error),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -78,7 +78,7 @@ fun PasswordTextField(
             IconButton(onClick = { isPasswordVisible.value = !isPasswordVisible.value }) {
                 Icon(
                     imageVector = icon,
-                    contentDescription = stringResource(id = R.string.PASSWORD_VISIBILITY_DESCRIPTION)
+                    contentDescription = stringResource(id = R.string.password_visibility_description)
                 )
             }
         }
@@ -95,5 +95,3 @@ private fun PasswordTextFieldPreview() {
         }
     }
 }
-
-const val PASSWORD_TEXT_FIELD_TEST_TAG = "password_text_field_tag"

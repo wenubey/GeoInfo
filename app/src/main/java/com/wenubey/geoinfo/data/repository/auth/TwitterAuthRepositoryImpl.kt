@@ -8,17 +8,20 @@ import com.google.firebase.auth.OAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.geoinfo.domain.repository.auth.TwitterAuthRepository
 import com.wenubey.geoinfo.utils.AuthProvider
-import com.wenubey.geoinfo.utils.Constants.TAG
 import com.wenubey.geoinfo.utils.Resource
 import com.wenubey.geoinfo.utils.addUserToFirestore
 import com.wenubey.geoinfo.utils.getCurrentTime
 import kotlinx.coroutines.tasks.await
 
+
+
 class TwitterAuthRepositoryImpl(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore,
 ):TwitterAuthRepository  {
-    override val currentUser: FirebaseUser?
+
+
+        override val currentUser: FirebaseUser?
         get() = auth.currentUser
 
     override suspend fun signUpWithTwitter(activity: Activity): Resource<Boolean> {
@@ -35,5 +38,9 @@ class TwitterAuthRepositoryImpl(
         } catch (e: Exception) {
             Resource.Error(e)
         }
+    }
+
+    companion object {
+        private const val TAG = "TwitterAuthRepositoryImpl"
     }
 }

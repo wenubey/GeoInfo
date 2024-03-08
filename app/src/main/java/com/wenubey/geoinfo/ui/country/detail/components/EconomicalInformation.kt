@@ -28,12 +28,11 @@ import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 
 @Composable
 fun EconomicInformation(country: Country) {
-    InfoHeader(header = stringResource(id = R.string.ECONOMICAL_INFORMATION))
+    InfoHeader(header = stringResource(id = R.string.economical_information))
     CurrencyRow(country = country)
     DemonymsRow(country = country)
 }
@@ -50,7 +49,7 @@ private fun CurrencyRow(country: Country? = fakeCountry) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(id = R.string.CURRENCIES),
+                text = stringResource(id = R.string.currencies),
                 style = MaterialTheme.typography.bodyMedium
             )
             Column {
@@ -86,10 +85,10 @@ private fun DemonymsRow(country: Country = fakeCountry) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Face,
-                    contentDescription = stringResource(id = R.string.COUNTRY_DEMONYMS_CONTENT_DESCRIPTION)
+                    contentDescription = stringResource(id = R.string.country_demonyms_content_description)
                 )
                 Text(
-                    text = stringResource(id = R.string.DEMONYMS),
+                    text = stringResource(id = R.string.demonyms),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -107,10 +106,10 @@ private fun DemonymsRow(country: Country = fakeCountry) {
                             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                                 Icon(
                                     imageVector = if (entry.key!!.contains("f")) Icons.Default.Female else Icons.Default.Male,
-                                    contentDescription = stringResource(id = R.string.COUNTRY_DEMONYMS_GENDER_CONTENT_DESCRIPTION)
+                                    contentDescription = stringResource(id = R.string.country_demonyms_gender_content_description)
                                 )
                                 Text(
-                                    text = entry.value ?: UNDEFINED,
+                                    text = entry.value ?: stringResource(id = R.string.undefined),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }

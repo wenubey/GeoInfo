@@ -45,7 +45,7 @@ fun ForgotPasswordContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .testTag(FORGOT_PASSWORD_TEST_TAG),
+            .testTag(stringResource(id = R.string.forgot_password_content_test_tag)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -61,12 +61,11 @@ fun ForgotPasswordContent(
             enabled = isButtonEnabled,
             onClick = { sendPasswordResetMail(email.text) },
         ) {
-            Text(text = stringResource(id= R.string.RESET_PASSWORD), style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(id= R.string.reset_password), style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
 
-const val FORGOT_PASSWORD_TEST_TAG = "forgotPasswordContentTag"
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)

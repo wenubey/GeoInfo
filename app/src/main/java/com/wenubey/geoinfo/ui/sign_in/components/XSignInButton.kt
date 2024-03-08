@@ -23,15 +23,15 @@ fun XSignInButton(
     twitterSignInClicked: () -> Unit,
 ) {
     Button(
-        modifier = modifier.testTag(X_SIGN_IN_BUTTON),
+        modifier = modifier.testTag(stringResource(id = R.string.x_sign_in_button_test_tag)),
         onClick = twitterSignInClicked
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_twitter_logo),
-            contentDescription = stringResource(id = R.string.SIGN_UP_WITH_TWITTER)
+            painter = painterResource(id = R.drawable.ic_x_logo),
+            contentDescription = stringResource(id = R.string.x_sign_up)
         )
         Text(
-            text = stringResource(id = R.string.SIGN_UP_WITH_TWITTER),
+            text = stringResource(id = R.string.x_sign_up),
             modifier = Modifier.padding(6.dp),
             style = MaterialTheme.typography.bodyMedium
         )

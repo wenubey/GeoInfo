@@ -13,10 +13,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.wenubey.geoinfo.ui.email_verify.VERIFY_EMAIL_TOP_BAR_MENU_TAG
-import com.wenubey.geoinfo.ui.email_verify.VERIFY_EMAIL_TOP_BAR_TAG
 import com.wenubey.geoinfo.ui.email_verify.VerifyEmailTopBar
-import com.wenubey.geoinfo.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,7 +34,7 @@ class VerifyEmailTopBarTest {
             VerifyEmailTopBar()
         }
 
-        rule.onNodeWithTag(VERIFY_EMAIL_TOP_BAR_TAG)
+        rule.onNodeWithTag(context.getString(R.string.verify_email_top_bar_test_tag))
             .assertIsDisplayed()
     }
 
@@ -55,23 +52,23 @@ class VerifyEmailTopBarTest {
         }
 
         // Verify the title text
-        rule.onNodeWithText(VERIFY_EMAIL_SCREEN_TITLE).assertExists()
+        rule.onNodeWithText(context.getString(R.string.verify_screen_title)).assertExists()
 
         // Verify the navigation icon
         // Simulate clicking on the navigation icon
-        rule.onNodeWithContentDescription(context.getString(R.string.BACK_BUTTON_DESCRIPTION)).assertExists()
+        rule.onNodeWithContentDescription(context.getString(R.string.back_button_description)).assertExists()
             .performClick()
 
         // Verify that navigateBack func is invoked
         assert(navigateBackInvoked)
 
         // Verify the actions icon
-        rule.onNodeWithContentDescription(context.getString(R.string.OPEN_MENU_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.open_menu_description))
             .assertExists()
             .performClick()
 
         // Verify that the menu is displayed
-        rule.onNodeWithTag(VERIFY_EMAIL_TOP_BAR_MENU_TAG).assertExists()
+        rule.onNodeWithTag(context.getString(R.string.verify_email_top_bar_menu_test_tag)).assertExists()
 
 
     }
@@ -87,7 +84,7 @@ class VerifyEmailTopBarTest {
             )
         }
 
-        rule.onNodeWithContentDescription("Sign Out")
+        rule.onNodeWithContentDescription(context.getString(R.string.sign_out))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -107,7 +104,7 @@ class VerifyEmailTopBarTest {
             )
         }
 
-        rule.onNodeWithContentDescription("Revoke Access")
+        rule.onNodeWithContentDescription(context.getString(R.string.revoke_access))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -127,7 +124,7 @@ class VerifyEmailTopBarTest {
             )
         }
 
-        rule.onNodeWithContentDescription("Forgot Password?")
+        rule.onNodeWithContentDescription(context.getString(R.string.forgot_password))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()

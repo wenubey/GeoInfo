@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 
 @Composable
@@ -27,11 +26,11 @@ fun CulturalInformation(country: Country) {
 @Composable
 private fun InfoContent(country: Country = fakeCountry) {
     Column {
-        InfoHeader(header =stringResource(id= R.string.CULTURAL_INFORMATION))
+        InfoHeader(header =stringResource(id= R.string.cultural_information))
         CountryInfoRow(
-            header = stringResource(id= R.string.LANGUAGES),
+            header = stringResource(id= R.string.languages),
             imageVector = Icons.Default.Translate,
-            contentDescription = stringResource(id= R.string.COUNTRY_LANGUAGES_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.country_languages_content_description),
             content = country.language.values.joinToString("\n")
         )
         Divider(
@@ -39,10 +38,10 @@ private fun InfoContent(country: Country = fakeCountry) {
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         CountryInfoRow(
-            header = stringResource(id= R.string.TIMEZONES),
+            header = stringResource(id= R.string.timezones),
             imageVector = Icons.Default.Alarm,
-            contentDescription = stringResource(id= R.string.COUNTRY_TIMEZONES_CONTENT_DESCRIPTION),
-            content = country.timezones?.joinToString("\n") ?: UNDEFINED,
+            contentDescription = stringResource(id= R.string.country_timezones_content_description),
+            content = country.timezones?.joinToString("\n") ?: stringResource(id = R.string.undefined),
         )
     }
 }

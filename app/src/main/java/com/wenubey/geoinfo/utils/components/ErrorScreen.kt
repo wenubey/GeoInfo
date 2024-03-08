@@ -30,7 +30,7 @@ fun ErrorScreen(modifier: Modifier = Modifier, error: String) {
 }
 
 @Composable
-private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = stringResource(id= R.string.PREVIEW_ERROR)) {
+private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = stringResource(id= R.string.preview_error)) {
     val config = LocalConfiguration.current
     val screenWidth = config.screenWidthDp
     val screenHeight = config.screenHeightDp
@@ -43,7 +43,7 @@ private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = st
                 .fillMaxSize()
                 .alpha(0.3f),
             imageVector = Icons.Default.Error,
-            contentDescription = stringResource(id= R.string.ERROR_SCREEN_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.error_screen_content_description),
             tint = Color.Red.copy(alpha = 0.3f)
         )
         Text(error, style = errorTypography(), textAlign = TextAlign.Center)

@@ -12,7 +12,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.wenubey.geoinfo.domain.model.User
 import com.wenubey.geoinfo.ui.profile.components.User
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.profile.components.FAV_COUNTRIES_ROW_TEST_TAG
 import com.wenubey.geoinfo.ui.profile.components.FavCountriesRow
 import org.junit.Rule
 import org.junit.Test
@@ -49,7 +48,7 @@ class UserTest {
             )
         }
 
-        rule.onNodeWithContentDescription(context.getString(R.string.PROFILE_PHOTO_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.profile_photo_description))
             .assertExists()
             .assertIsDisplayed()
     }
@@ -62,19 +61,19 @@ class UserTest {
             )
         }
 
-        rule.onNodeWithContentDescription(context.getString(R.string.DISPLAY_NAME_CONTENT_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.display_name_content_description))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithContentDescription(context.getString(R.string.EMAIL_CONTENT_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.email_content_description))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithContentDescription(context.getString(R.string.PHONE_NUMBER_CONTENT_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.phone_number_content_description))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithContentDescription(context.getString(R.string.CREATED_AT_CONTENT_DESCRIPTION))
+        rule.onNodeWithContentDescription(context.getString(R.string.created_at_content_description))
             .assertExists()
             .assertIsDisplayed()
     }
@@ -92,7 +91,7 @@ class UserTest {
             )
         }
 
-        rule.onNodeWithTag(FAV_COUNTRIES_ROW_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.fav_countries_row_test_tag))
             .assertExists()
             .assertIsDisplayed()
 

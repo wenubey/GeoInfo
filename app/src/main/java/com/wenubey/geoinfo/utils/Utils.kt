@@ -155,4 +155,4 @@ val fakeCountry = Country(
     isFavorite = false,
     flagEmoji = "\uD83C\uDDF5\uD83C\uDDF1"
 )
-
+val fakeCountryCode = mapOf<String?, String?>("\uD83C\uDDF5\uD83C\uDDF1" to "+48")

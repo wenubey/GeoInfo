@@ -136,7 +136,7 @@ private fun TranslationHeader(
                 .clickable { onClick() }
                 .align(Alignment.CenterEnd),
             imageVector = isExpandedIcon,
-            contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION)
+            contentDescription = stringResource(id= R.string.country_translations_expanded_content_description)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -146,10 +146,10 @@ private fun TranslationHeader(
         ) {
             Icon(
                 imageVector = Icons.Default.Translate,
-                contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.country_translations_content_description)
             )
             Text(
-                text = stringResource(id= R.string.TRANSLATIONS),
+                text = stringResource(id= R.string.translations),
                 style = MaterialTheme.typography.titleSmall
             )
         }

@@ -57,7 +57,7 @@ fun ImagePicker(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = 
 
     IconButton(
         modifier = modifier
-            .testTag(IMAGE_PICKER_BUTTON_TEST_TAG),
+            .testTag(stringResource(id = R.string.image_picker_button_test_tag)),
         onClick = {
             checkAndRequestPermissions(
                 launcher = launcherPermission,
@@ -72,7 +72,7 @@ fun ImagePicker(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = 
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.UPLOAD_PROFILE_PHOTO_CONTENT_DESC)
+            contentDescription = stringResource(R.string.upload_profile_photo_content_desc)
         )
     }
 }
@@ -99,8 +99,6 @@ fun checkAndRequestPermissions(
         }
     }
 }
-
-const val IMAGE_PICKER_BUTTON_TEST_TAG = "imagePickerButtonTestTag"
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)

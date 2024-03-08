@@ -23,11 +23,18 @@ fun FacebookSignInButton(
     facebookSignInClicked: () -> Unit,
 ) {
     Button(
-        modifier = modifier.testTag(FACEBOOK_SIGN_IN_BUTTON),
+        modifier = modifier.testTag(stringResource(id = R.string.facebook_sign_in_button_test_tag)),
         onClick = facebookSignInClicked
     ) {
-        Image(painter = painterResource(id = R.drawable.ic_facebook_logo), contentDescription = stringResource(id= R.string.FACEBOOK_SIGN_UP))
-        Text(text = stringResource(id= R.string.FACEBOOK_SIGN_UP), modifier = Modifier.padding(6.dp), style = MaterialTheme.typography.bodyMedium)
+        Image(
+            painter = painterResource(id = R.drawable.ic_facebook_logo),
+            contentDescription = stringResource(id = R.string.facebook_sign_up),
+        )
+        Text(
+            text = stringResource(id = R.string.facebook_sign_up),
+            modifier = Modifier.padding(6.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 
@@ -35,9 +42,9 @@ fun FacebookSignInButton(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun FacebookSignInButtonPreview() {
-     GeoInfoAppTheme {
+    GeoInfoAppTheme {
         Surface {
-             FacebookSignInButton(facebookSignInClicked = {})
+            FacebookSignInButton(facebookSignInClicked = {})
         }
     }
 }

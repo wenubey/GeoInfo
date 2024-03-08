@@ -42,7 +42,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.formatWithCommasForArea
 import com.wenubey.geoinfo.utils.formatWithCommasForPopulation
@@ -108,7 +107,7 @@ private fun CountryFlag(
                 width = (screenWidth * 0.30).dp,
             ),
         painter = painter,
-        contentDescription = stringResource(id= R.string.COUNTRY_FLAG_CONTENT_DESCRIPTION)
+        contentDescription = stringResource(id= R.string.country_flag_content_description)
     )
 }
 
@@ -132,7 +131,7 @@ private fun CountryInfoColumn(
             Text(
                 modifier = Modifier
                     .weight(0.8f),
-                text = country.countryCommonName ?: UNDEFINED,
+                text = country.countryCommonName ?: stringResource(id = R.string.undefined),
                 fontSize = 24.sp,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
@@ -151,12 +150,12 @@ private fun CountryInfoColumn(
                         },
                     ),
                 imageVector = if (isFav) Icons.Filled.Star else Icons.Outlined.StarBorder,
-                contentDescription = stringResource(id= R.string.ADD_FAV_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.add_fav_content_description)
             )
         }
 
         Text(
-            text = country.capital?.first() ?: UNDEFINED,
+            text = country.capital?.first() ?: stringResource(id = R.string.undefined),
             style = MaterialTheme.typography.bodySmall
         )
         AreaPopulationRow(country = country)
@@ -174,7 +173,7 @@ private fun AreaPopulationRow(
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             Icon(
                 imageVector = Icons.Filled.People,
-                contentDescription = stringResource(id= R.string.POPULATION_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.population_content_description)
             )
             Text(
                 text = country.population.formatWithCommasForPopulation(),
@@ -187,7 +186,7 @@ private fun AreaPopulationRow(
         ) {
             Icon(
                 imageVector = Icons.Filled.Fullscreen,
-                contentDescription = stringResource(id= R.string.AREA_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.area_content_description)
             )
             Text(
                 text = country.area.formatWithCommasForArea(),

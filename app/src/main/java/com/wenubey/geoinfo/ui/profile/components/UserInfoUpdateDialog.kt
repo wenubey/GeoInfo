@@ -29,18 +29,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.fakeCountryCode
 import com.wenubey.geoinfo.utils.components.EmailTextField
+import com.wenubey.geoinfo.utils.fakeCountryCode
 
 
 @Composable
 fun UserInfoUpdateDialog(
     showDialog: MutableState<Boolean> = mutableStateOf(false),
-    email: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_EMAIL)),
-    phoneNumberBody: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_PHONE)),
+    email: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_email)),
+    phoneNumberBody: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_phone)),
     countryCode: String = "",
     onEmailValueChange: (email: TextFieldValue) -> Unit = {},
-    displayName: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_NAME)),
+    displayName: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_name)),
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit = {},
     onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit = {},
     onCountryCodeValueChange: (phoneCode: String?) -> Unit = {},
@@ -53,11 +53,11 @@ fun UserInfoUpdateDialog(
     }
 
     AlertDialog(
-        modifier = Modifier.testTag(USER_INFO_UPDATE_DIALOG_TEST_TAG),
+        modifier = Modifier.testTag(stringResource(id = R.string.user_info_update_dialog_test_tag)),
         onDismissRequest = { showDialog.value = false },
         title = {
             Text(
-                text = stringResource(id = R.string.PROFILE_INFO),
+                text = stringResource(id = R.string.profile_info),
                 style = MaterialTheme.typography.titleMedium
             )
         },
@@ -78,12 +78,12 @@ fun UserInfoUpdateDialog(
                 )
                 OutlinedTextField(
                     modifier = Modifier
-                        .testTag(USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG),
+                        .testTag(stringResource(id = R.string.user_info_update_dialog_display_name_field_test_tag)),
                     value = displayName,
                     onValueChange = onDisplayNameValueChange,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.DISPLAY_NAME_LABEL),
+                            text = stringResource(id = R.string.display_name_label),
                             style = MaterialTheme.typography.bodySmall
                         )
                     },
@@ -101,12 +101,12 @@ fun UserInfoUpdateDialog(
         },
         confirmButton = {
             Button(
-                modifier = Modifier.testTag(USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG),
+                modifier = Modifier.testTag(stringResource(id = R.string.user_info_update_dialog_save_button_test_tag)),
                 onClick = onClickConfirm,
                 enabled = isButtonEnabled,
             ) {
                 Text(
-                    text = stringResource(id = R.string.SAVE),
+                    text = stringResource(id = R.string.save),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -114,9 +114,6 @@ fun UserInfoUpdateDialog(
     )
 }
 
-const val USER_INFO_UPDATE_DIALOG_TEST_TAG = "userInfoUpdateDialogTestTag"
-const val USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG = "userInfoUpdateDialogSaveButtonTestTag"
-const val USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG = "userInfoUpdateDialogDisplayNameFieldTestTag"
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)

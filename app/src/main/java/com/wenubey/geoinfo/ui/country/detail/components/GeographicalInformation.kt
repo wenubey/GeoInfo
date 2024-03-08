@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.formatWithCommasForArea
 
@@ -32,11 +31,11 @@ private fun InfoContent(
     country: Country = fakeCountry
 ) {
     Column {
-        InfoHeader(header = stringResource(id= R.string.GEOGRAPHICAL_INFORMATION))
+        InfoHeader(header = stringResource(id= R.string.geographical_information))
         CountryInfoRow(
-            header = stringResource(id= R.string.AREA),
+            header = stringResource(id= R.string.area),
             imageVector = Icons.Default.Fullscreen,
-            contentDescription = stringResource(id= R.string.AREA_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.area_content_description),
             content = country.area.formatWithCommasForArea(),
         )
         Divider(
@@ -44,9 +43,9 @@ private fun InfoContent(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         CountryInfoRow(
-            header = stringResource(id= R.string.CONTINENTS),
+            header = stringResource(id= R.string.continents),
             imageVector = Icons.Default.SouthAmerica,
-            contentDescription = stringResource(id= R.string.COUNTRY_CONTINENTS_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.country_continents_content_description),
             content = "${country.continents?.joinToString(", ")}"
         )
         Divider(
@@ -54,20 +53,20 @@ private fun InfoContent(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         CountryInfoRow(
-            header = stringResource(id= R.string.REGION),
+            header = stringResource(id= R.string.region),
             imageVector = Icons.Default.Explore,
-            contentDescription = stringResource(id= R.string.COUNTRY_REGION_CONTENT_DESCRIPTION),
-            content = country.region ?: UNDEFINED,
+            contentDescription = stringResource(id= R.string.country_region_content_description),
+            content = country.region ?: stringResource(id = R.string.undefined),
         )
         Divider(
             thickness = 1.dp,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         CountryInfoRow(
-            header = stringResource(id= R.string.SUBREGION),
+            header = stringResource(id= R.string.subregion),
             imageVector = Icons.Outlined.MyLocation,
-            contentDescription = stringResource(id= R.string.COUNTRY_SUBREGION_CONTENT_DESCRIPTION),
-            content = country.subRegion ?: UNDEFINED,
+            contentDescription = stringResource(id= R.string.country_subregion_content_description),
+            content = country.subRegion ?: stringResource(id = R.string.undefined),
         )
     }
 }

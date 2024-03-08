@@ -8,7 +8,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.platform.app.InstrumentationRegistry
 import com.wenubey.geoinfo.ui.profile.components.AccountSettingsMenu
-import com.wenubey.geoinfo.ui.profile.components.SETTINGS_MENU_ICON_BUTTON_TEST_TAG
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +29,7 @@ class AccountSettingsMenuTest {
             AccountSettingsMenu()
         }
 
-        rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.settings_menu_icon_button_test_tag))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -48,10 +47,10 @@ class AccountSettingsMenuTest {
             )
         }
 
-        rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.settings_menu_icon_button_test_tag))
             .performClick()
 
-        rule.onNodeWithTag(context.getString(R.string.SIGN_OUT))
+        rule.onNodeWithTag(context.getString(R.string.sign_out))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -71,10 +70,10 @@ class AccountSettingsMenuTest {
             )
         }
 
-        rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.settings_menu_icon_button_test_tag))
             .performClick()
 
-        rule.onNodeWithTag(context.getString(R.string.REVOKE_ACCESS))
+        rule.onNodeWithTag(context.getString(R.string.revoke_access))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -94,10 +93,10 @@ class AccountSettingsMenuTest {
             )
         }
 
-        rule.onNodeWithTag(SETTINGS_MENU_ICON_BUTTON_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.settings_menu_icon_button_test_tag))
             .performClick()
 
-        rule.onNodeWithTag(context.getString(R.string.FORGOT_PASSWORD))
+        rule.onNodeWithTag(context.getString(R.string.forgot_password))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()

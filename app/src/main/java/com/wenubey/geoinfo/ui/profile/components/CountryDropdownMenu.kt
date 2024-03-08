@@ -62,16 +62,16 @@ fun CountryDropdownMenu(
         Row(
             modifier = Modifier
                 .clickable {
-                expanded = !expanded
-            }
-                .testTag(ROW_DROPDOWN_TEST_TAG)
+                    expanded = !expanded
+                }
+                .testTag(stringResource(id = R.string.row_dropdown_test_tag))
         ) {
             Text(text = currentValue ?: "")
             Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
         }
         DropdownMenu(
             modifier = Modifier
-                .testTag(COUNTRY_DROPDOWN_MENU_TEST_TAG),
+                .testTag(stringResource(id = R.string.country_dropdown_menu_test_tag)),
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
@@ -83,7 +83,7 @@ fun CountryDropdownMenu(
                 item {
                     OutlinedTextField(
                         modifier = Modifier
-                            .testTag(COUNTRY_DROPDOWN_MENU_SEARCH_BAR_TEST_TAG)
+                            .testTag(stringResource(id = R.string.country_dropdown_menu_search_bar_test_tag))
                             .fillMaxWidth()
                             .padding(4.dp),
                         value = searchText,
@@ -92,7 +92,7 @@ fun CountryDropdownMenu(
                         },
                         placeholder = {
                             Text(
-                                stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER),
+                                stringResource(id= R.string.search_countries_placeholder),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         },
@@ -103,7 +103,7 @@ fun CountryDropdownMenu(
                                     searchText = if (it) "" else currentValue.orEmpty()
                                 }
                             ) {
-                                Icon(Icons.Default.Search, contentDescription = stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER))
+                                Icon(Icons.Default.Search, contentDescription = stringResource(id= R.string.search_countries_placeholder))
                             }
                         },
                         keyboardOptions = KeyboardOptions.Default.copy(
@@ -137,9 +137,8 @@ fun CountryDropdownMenu(
     }
 }
 
-const val ROW_DROPDOWN_TEST_TAG = "dropdownTestTag"
-const val COUNTRY_DROPDOWN_MENU_TEST_TAG = "countryDropdownMenuTag"
-const val COUNTRY_DROPDOWN_MENU_SEARCH_BAR_TEST_TAG = "countryDropdownMenuSearchBarTag"
+
+
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)

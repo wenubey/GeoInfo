@@ -56,7 +56,7 @@ fun SignInContent(
     val isPasswordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
-            .testTag(SIGN_IN_COLUMN)
+            .testTag(stringResource(id = R.string.sign_in_column_test_tag))
             .padding(paddingValues)
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -79,7 +79,7 @@ fun SignInContent(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(
-            modifier = Modifier.testTag(SIGN_IN_BUTTON),
+            modifier = Modifier.testTag(stringResource(id = R.string.sign_in_button_test_tag)),
             enabled = isButtonEnabled,
             onClick = {
                 keyboard?.hide()
@@ -87,7 +87,7 @@ fun SignInContent(
             },
         ) {
             Text(
-                text = stringResource(id = R.string.SIGN_IN),
+                text = stringResource(id = R.string.sign_in),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -109,29 +109,26 @@ fun SignInContent(
         Spacer(modifier = Modifier.height(8.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                modifier = Modifier.clickable {
-                    navigateToForgotPasswordScreen()
-                }.testTag(FORGOT_PASSWORD_BUTTON),
-                text = stringResource(id= R.string.FORGOT_PASSWORD),
+                modifier = Modifier
+                    .clickable {
+                        navigateToForgotPasswordScreen()
+                    }
+                    .testTag(stringResource(id = R.string.forgot_password_button_test_tag)),
+                text = stringResource(id= R.string.forgot_password),
                 style = MaterialTheme.typography.bodyMedium,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = stringResource(id= R.string.NO_ACCOUNT),
-                modifier = Modifier.clickable { navigateToSignUpScreen() }.testTag(NAVIGATE_TO_SIGN_UP_BUTTON),
+                text = stringResource(id= R.string.no_account),
+                modifier = Modifier
+                    .clickable { navigateToSignUpScreen() }
+                    .testTag(stringResource(id = R.string.navigate_to_sign_up_button_test_tag)),
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
     }
 }
 
-const val SIGN_IN_COLUMN = "signInColumn"
-const val SIGN_IN_BUTTON = "signInButton"
-const val GOOGLE_SIGN_IN_BUTTON = "googleSignInButton"
-const val FACEBOOK_SIGN_IN_BUTTON = "facebookSignInButton"
-const val X_SIGN_IN_BUTTON = "xSignInButton"
-const val FORGOT_PASSWORD_BUTTON = "forgotPasswordButton"
-const val NAVIGATE_TO_SIGN_UP_BUTTON = "navigateToSignUpButton"
 
 
 

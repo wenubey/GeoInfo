@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,8 +50,6 @@ import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.User
 import com.wenubey.geoinfo.ui.profile.ProfileViewModel
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants.TAG
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
@@ -64,13 +63,13 @@ fun User(
     navigateToForgotPasswordScreen: (() -> Unit)? = null,
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit = { _, _ -> },
 ) {
-
+    val context = LocalContext.current
     val painter = rememberAsyncImagePainter(
         model = user?.photoUri, error = rememberVectorPainter(
             image = Icons.Default.AccountCircle
         ),
         onError = { error ->
-            Log.e(TAG, "ProfileContent image load error: ${error.result.throwable}")
+            Log.e(context.getString(R.string.profile_screen_tag), "ProfileContent image load error: ${error.result.throwable}")
         }
     )
     var favCountries: Map<String, String>? by remember(user?.favCountries) {
@@ -93,7 +92,7 @@ fun User(
                 Box {
                     Image(
                         painter = painter,
-                        contentDescription = stringResource(id = R.string.PROFILE_PHOTO_DESCRIPTION),
+                        contentDescription = stringResource(id = R.string.profile_photo_description),
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .clip(MaterialTheme.shapes.extraLarge)
@@ -139,12 +138,12 @@ fun FavCountriesRow(
     navigateToCountryDetailScreen: (countryCode: String, countryName: String) -> Unit
 ) {
     Text(
-        text = stringResource(id = R.string.FAV_COUNTRIES),
+        text = stringResource(id = R.string.fav_countries),
         style = MaterialTheme.typography.titleMedium
     )
     Divider(thickness = 2.dp, color = Color.Gray)
     LazyRow(
-        modifier = Modifier.testTag(FAV_COUNTRIES_ROW_TEST_TAG),
+        modifier = Modifier.testTag(stringResource(id = R.string.fav_countries_row_test_tag)),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(favCountries?.toList() ?: emptyList()) { (countryFlag, countryFullName) ->
@@ -161,9 +160,6 @@ fun FavCountriesRow(
     }
 }
 
-const val FAV_COUNTRIES_ROW_TEST_TAG = "favCountriesTestTag"
-
-
 @Composable
 private fun UserFields(user: User?) {
     Column(
@@ -175,22 +171,22 @@ private fun UserFields(user: User?) {
         UserFieldRow(
             content = user?.displayName,
             imageVector = Icons.Outlined.Person,
-            contentDescription = stringResource(id = R.string.DISPLAY_NAME_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.display_name_content_description),
         )
         UserFieldRow(
             content = user?.email,
             imageVector = Icons.Outlined.Email,
-            contentDescription = stringResource(id = R.string.EMAIL_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.email_content_description),
         )
         UserFieldRow(
             content = user?.phoneNumber,
             imageVector = Icons.Outlined.Call,
-            contentDescription = stringResource(id = R.string.PHONE_NUMBER_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.phone_number_content_description),
         )
         UserFieldRow(
             content = user?.createdAt,
             imageVector = Icons.Outlined.AccessTime,
-            contentDescription = stringResource(id = R.string.CREATED_AT_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id = R.string.created_at_content_description),
         )
     }
 }
@@ -206,7 +202,7 @@ private fun UserFieldRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(imageVector = imageVector, contentDescription = contentDescription)
-        Text(text = content ?: UNDEFINED, style = MaterialTheme.typography.bodyLarge)
+        Text(text = content ?: stringResource(id = R.string.undefined), style = MaterialTheme.typography.bodyLarge)
     }
 }
 

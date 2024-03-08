@@ -11,7 +11,6 @@ import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.domain.repository.CountryRepository
 import com.wenubey.geoinfo.ui.country.detail.CountryDataState
 import com.wenubey.geoinfo.ui.country.list.CountryListDataState
-import com.wenubey.geoinfo.utils.Constants.TAG
 import com.wenubey.geoinfo.utils.CountryListOptions
 import com.wenubey.geoinfo.utils.DataResponse
 import com.wenubey.geoinfo.utils.SortOption
@@ -206,5 +205,9 @@ class CountryViewModel(
 
     private fun updateFavCountry(country: Country, isFavorite: Boolean) = viewModelScope.launch {
         repo.updateFavCountry(country, isFavorite)
+    }
+
+    companion object {
+        private const val TAG = "CountryViewModel"
     }
 }

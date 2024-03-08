@@ -1,5 +1,6 @@
 package com.wenubey.geoinfo.auth.forgot_password
 
+import android.content.Context
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -7,7 +8,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.wenubey.geoinfo.ui.forgot_password.compoents.FORGOT_PASSWORD_TEST_TAG
+import androidx.test.platform.app.InstrumentationRegistry
+import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.forgot_password.compoents.ForgotPasswordContent
 import org.junit.Rule
 import org.junit.Test
@@ -19,6 +21,8 @@ class ForgotPasswordScreenTest {
     @get:Rule
     val rule = createComposeRule()
 
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
+
     @Test
     fun screen_is_displayed() {
 
@@ -26,7 +30,7 @@ class ForgotPasswordScreenTest {
             ForgotPasswordContent()
         }
 
-        rule.onNodeWithTag(FORGOT_PASSWORD_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.forgot_password_content_test_tag))
             .assertExists()
             .assertIsDisplayed()
     }
@@ -46,11 +50,11 @@ class ForgotPasswordScreenTest {
             )
         }
 
-        rule.onNodeWithTag(FORGOT_PASSWORD_TEST_TAG)
+        rule.onNodeWithTag(context.getString(R.string.forgot_password_content_test_tag))
             .assertExists()
             .assertIsDisplayed()
 
-        rule.onNodeWithText("Reset")
+        rule.onNodeWithText(context.getString(R.string.reset_password))
             .assertExists()
             .assertIsDisplayed()
             .assertHasClickAction()

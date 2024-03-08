@@ -15,19 +15,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants
 
 
 @Composable
 fun CountryInfoRow(
     imageVector: ImageVector = Icons.Default.DeveloperMode,
     contentDescription: String = "",
-    content: String = Constants.PREVIEW_CONTENT,
-    header: String = Constants.PREVIEW_HEADER
+    content: String = stringResource(id = R.string.preview_content),
+    header: String = stringResource(id = R.string.preview_header)
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -53,7 +54,7 @@ fun CountryInfoRow(
 
 @Composable
 fun InfoHeader(
-    header: String = Constants.PREVIEW_HEADER
+    header: String = stringResource(id = R.string.preview_header)
 ) {
     Text(
         text = header,

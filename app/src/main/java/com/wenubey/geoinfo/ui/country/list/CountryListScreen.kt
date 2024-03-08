@@ -135,7 +135,7 @@ private fun CountrySearchBar(query: String = "", onQueryChange: (String) -> Unit
         onValueChange = onQueryChange,
         placeholder = {
             Text(
-                text = stringResource(id = R.string.MAP_SEARCH_BAR_PLACEHOLDER),
+                text = stringResource(id = R.string.map_search_bar_placeholder),
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
@@ -200,11 +200,11 @@ private fun SortButton(
         ) {
             Icon(
                 imageVector = sortOption.toIcon(),
-                contentDescription = stringResource(id = R.string.SORT_OPTION_ICON_DESCRIPTION)
+                contentDescription = stringResource(id = R.string.sort_option_icon_description)
             )
             Icon(
                 imageVector = if (sortOrder == SortOrder.ASC) Icons.Filled.ArrowDropDown else Icons.Filled.ArrowDropUp,
-                contentDescription = stringResource(id = R.string.ASC_DESC_DESCRIPTION)
+                contentDescription = stringResource(id = R.string.asc_desc_description)
             )
         }
 

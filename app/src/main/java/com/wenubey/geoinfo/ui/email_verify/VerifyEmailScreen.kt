@@ -49,9 +49,6 @@ import com.wenubey.geoinfo.ui.email_verify.components.ReloadUser
 import com.wenubey.geoinfo.ui.email_verify.components.RevokeAccess
 import com.wenubey.geoinfo.ui.profile.ProfileViewModel
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
-import com.wenubey.geoinfo.utils.Constants
-import com.wenubey.geoinfo.utils.Constants.EMAIL_NOT_VERIFIED_MESSAGE
-import com.wenubey.geoinfo.utils.Constants.VERIFY_EMAIL_SCREEN_TITLE
 import com.wenubey.geoinfo.utils.Utils.Companion.makeToast
 import org.koin.androidx.compose.koinViewModel
 
@@ -99,7 +96,7 @@ fun VerifyEmailScreen(
             if (viewModel.isEmailVerified) {
                 navigateToMapScreen()
             } else {
-                context.makeToast(EMAIL_NOT_VERIFIED_MESSAGE)
+                context.makeToast(context.getString(R.string.email_not_verified_message))
             }
         },
     )
@@ -116,9 +113,10 @@ fun VerifyEmailContent(
     paddingValues: PaddingValues = PaddingValues(4.dp),
     reloadUser: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
-            .testTag(VERIFY_EMAIL_CONTENT_TAG)
+            .testTag(stringResource(id = R.string.verify_email_content_test_tag))
             .fillMaxSize()
             .padding(paddingValues)
             .padding(horizontal = 32.dp),
@@ -127,16 +125,18 @@ fun VerifyEmailContent(
     ) {
         Text(
             modifier = Modifier
-                .semantics { contentDescription = "User reload request" }
+                .semantics {
+                    contentDescription = context.getString(R.string.user_reload_request_cd)
+                }
                 .clickable {
-                reloadUser()
-            },
-            text = Constants.ALREADY_VERIFIED,
+                    reloadUser()
+                },
+            text = stringResource(id = R.string.already_verified_message),
             fontSize = 16.sp,
             textDecoration = TextDecoration.Underline,
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = Constants.SPAM_EMAIL, fontSize = 16.sp)
+        Text(text = stringResource(id = R.string.spam_email_message), fontSize = 16.sp)
     }
 }
 
@@ -150,14 +150,15 @@ fun VerifyEmailTopBar(
     isMenuOpened: Boolean = false,
     onMenuOpenedClicked: () -> Unit = {},
 ) {
+    val context = LocalContext.current
     TopAppBar(
-        modifier = Modifier.testTag(VERIFY_EMAIL_TOP_BAR_TAG),
+        modifier = Modifier.testTag(stringResource(id = R.string.verify_email_top_bar_test_tag)),
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = VERIFY_EMAIL_SCREEN_TITLE, style = MaterialTheme.typography.bodyMedium)
+                Text(text = stringResource(id = R.string.verify_screen_title), style = MaterialTheme.typography.bodyMedium)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
@@ -165,7 +166,7 @@ fun VerifyEmailTopBar(
                     IconButton(onClick = onMenuOpenedClicked) {
                         Icon(
                             imageVector = Icons.Filled.MoreVert,
-                            contentDescription = stringResource(id = R.string.OPEN_MENU_DESCRIPTION)
+                            contentDescription = stringResource(id = R.string.open_menu_description)
                         )
                     }
                 }
@@ -173,19 +174,19 @@ fun VerifyEmailTopBar(
         },
         actions = {
             DropdownMenu(
-                modifier = Modifier.testTag(VERIFY_EMAIL_TOP_BAR_MENU_TAG),
+                modifier = Modifier.testTag(stringResource(id = R.string.verify_email_top_bar_menu_test_tag)),
                 expanded = isMenuOpened, onDismissRequest = { onMenuOpenedClicked() }) {
                 DropdownMenuItem(
-                    modifier = Modifier.semantics { contentDescription =  "Sign Out" },
-                    text = { Text(text = stringResource(id = R.string.SIGN_OUT)) },
+                    modifier = Modifier.semantics { contentDescription =  context.getString(R.string.sign_out) },
+                    text = { Text(text = stringResource(id = R.string.sign_out)) },
                     onClick = {
                         signOut()
                         onMenuOpenedClicked()
                     },
                 )
                 DropdownMenuItem(
-                    modifier = Modifier.semantics { contentDescription =  "Revoke Access"},
-                    text = { Text(text = stringResource(id = R.string.REVOKE_ACCESS)) },
+                    modifier = Modifier.semantics { contentDescription =  context.getString(R.string.revoke_access)},
+                    text = { Text(text = stringResource(id = R.string.revoke_access)) },
                     onClick = {
                         revokeAccess()
                         onMenuOpenedClicked()
@@ -193,8 +194,8 @@ fun VerifyEmailTopBar(
                 )
                 if (navigateToForgotPasswordScreen != null) {
                     DropdownMenuItem(
-                        modifier = Modifier.semantics { contentDescription =  "Forgot password?"},
-                        text = { Text(text = stringResource(id = R.string.FORGOT_PASSWORD)) },
+                        modifier = Modifier.semantics { contentDescription =  context.getString(R.string.forgot_password)},
+                        text = { Text(text = stringResource(id = R.string.forgot_password)) },
                         onClick = {
                             navigateToForgotPasswordScreen()
                         },
@@ -206,17 +207,13 @@ fun VerifyEmailTopBar(
             IconButton(onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = stringResource(id = R.string.BACK_BUTTON_DESCRIPTION)
+                    contentDescription = stringResource(id = R.string.back_button_description)
                 )
             }
         }
     )
 }
 
-
-const val VERIFY_EMAIL_TOP_BAR_TAG = "verifyEmailTopBar"
-const val VERIFY_EMAIL_CONTENT_TAG = "verifyEmailContent"
-const val VERIFY_EMAIL_TOP_BAR_MENU_TAG = "verifyEmailTopBarMenu"
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)

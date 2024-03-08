@@ -11,7 +11,6 @@ import com.wenubey.geoinfo.ui.forgot_password.compoents.ForgotPassword
 import com.wenubey.geoinfo.ui.forgot_password.compoents.ForgotPasswordContent
 import com.wenubey.geoinfo.ui.forgot_password.compoents.ForgotPasswordTopBar
 import com.wenubey.geoinfo.utils.AuthProvider
-import com.wenubey.geoinfo.utils.Constants.RESET_PASSWORD_MESSAGE
 import com.wenubey.geoinfo.utils.Utils.Companion.makeToast
 import com.wenubey.geoinfo.utils.components.ErrorScreen
 import org.koin.androidx.compose.koinViewModel
@@ -47,7 +46,10 @@ fun ForgotPasswordScreen(
                     }
 
                     else -> {
-                        ErrorScreen(modifier = Modifier.fillMaxSize(), error = stringResource(id= R.string.CANT_CHANGE_PASSWORD))
+                        ErrorScreen(
+                            modifier = Modifier.fillMaxSize(),
+                            error = stringResource(id = R.string.cant_change_password),
+                        )
                     }
                 }
             } else {
@@ -65,6 +67,6 @@ fun ForgotPasswordScreen(
     ForgotPassword(
         navigateBack = navigateBack,
         showErrorMessage = { error -> context.makeToast(error) },
-        showResetPasswordMessage = { context.makeToast(RESET_PASSWORD_MESSAGE) }
+        showResetPasswordMessage = { context.makeToast(context.getString(R.string.reset_password_message)) }
     )
 }

@@ -24,14 +24,14 @@ fun GoogleSignInButton(
     oneTapSignIn: () -> Unit
 ) {
     Button(
-        modifier = modifier.testTag(GOOGLE_SIGN_IN_BUTTON), onClick = oneTapSignIn,
+        modifier = modifier.testTag(stringResource(id = R.string.google_sign_in_button_test_tag)), onClick = oneTapSignIn,
     ) {
         Image(
             painter = painterResource(id = R.drawable.ic_google_logo),
-            contentDescription = stringResource(id= R.string.GOOGLE_SIGN_UP)
+            contentDescription = stringResource(id= R.string.google_sign_up)
         )
         Text(
-            text = stringResource(id= R.string.GOOGLE_SIGN_UP),
+            text = stringResource(id= R.string.google_sign_up),
             modifier = Modifier.padding(6.dp),
             style = MaterialTheme.typography.bodyMedium,
         )

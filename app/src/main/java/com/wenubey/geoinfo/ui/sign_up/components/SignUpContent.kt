@@ -52,7 +52,7 @@ fun SignUpContent(
     val isPasswordVisible: MutableState<Boolean> = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
-            .testTag(SIGN_UP_COLUMN)
+            .testTag(stringResource(id = R.string.sign_up_column_test_tag))
             .fillMaxSize()
             .padding(paddingValues),
         verticalArrangement = Arrangement.Center,
@@ -76,14 +76,14 @@ fun SignUpContent(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Button(
-            modifier = Modifier.testTag(SIGN_UP_BUTTON),
+            modifier = Modifier.testTag(stringResource(id = R.string.sign_up_button_test_tag)),
             onClick = {
                 keyboard?.hide()
                 signUp(email.text, password.text)
             },
         ) {
             Text(
-                text = stringResource(id = R.string.SIGN_UP),
+                text = stringResource(id = R.string.sign_up),
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
@@ -92,16 +92,13 @@ fun SignUpContent(
                 .clickable {
                     navigateToSignInScreen()
                 }
-                .testTag(NAVIGATE_TO_SIGN_IN_BUTTON),
-            text = stringResource(id = R.string.ALREADY_USER),
+                .testTag(stringResource(id = R.string.navigate_to_sign_in_button_test_tag)),
+            text = stringResource(id = R.string.already_user),
             style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
 
-const val SIGN_UP_COLUMN = "signUpColumn"
-const val SIGN_UP_BUTTON = "signUpButton"
-const val NAVIGATE_TO_SIGN_IN_BUTTON = "navigateToSignInButton"
 
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)

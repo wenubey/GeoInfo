@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.utils.Constants.FORGOT_PASSWORD_SCREEN_TITLE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,22 +20,19 @@ fun ForgotPasswordTopBar(
     navigateBack: () -> Unit,
 ) {
     TopAppBar(
-        modifier = Modifier.testTag(FORGOT_PASSWORD_TOP_BAR_TEST_TAG),
-        title = { Text(text = FORGOT_PASSWORD_SCREEN_TITLE, style = MaterialTheme.typography.titleMedium) },
+        modifier = Modifier.testTag(stringResource(id = R.string.forgot_password_top_bar_test_tag)),
+        title = { Text(text = stringResource(id = R.string.forgot_password_screen_title), style = MaterialTheme.typography.titleMedium) },
         navigationIcon = {
             IconButton(
                 modifier = Modifier
-                    .testTag(FORGOT_PASSWORD_TOP_BAR_BUTTON_TEST_TAG),
+                    .testTag(stringResource(id = R.string.forgot_password_top_bar_button_test_tag)),
                 onClick = navigateBack) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = stringResource(id= R.string.BACK_BUTTON_DESCRIPTION)
+                    contentDescription = stringResource(id= R.string.back_button_description)
                 )
             }
         },
     )
 }
-
-const val FORGOT_PASSWORD_TOP_BAR_TEST_TAG = "forgotPasswordTopBarTest"
-const val FORGOT_PASSWORD_TOP_BAR_BUTTON_TEST_TAG = "forgotPasswordTopBarButtonTest"
 

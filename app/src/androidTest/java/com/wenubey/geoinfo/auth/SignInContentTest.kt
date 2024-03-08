@@ -1,22 +1,18 @@
 package com.wenubey.geoinfo.auth
 
+import android.content.Context
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.wenubey.geoinfo.ui.sign_in.components.FACEBOOK_SIGN_IN_BUTTON
-import com.wenubey.geoinfo.ui.sign_in.components.FORGOT_PASSWORD_BUTTON
+import androidx.test.platform.app.InstrumentationRegistry
+import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.sign_in.components.FacebookSignInButton
-import com.wenubey.geoinfo.ui.sign_in.components.GOOGLE_SIGN_IN_BUTTON
 import com.wenubey.geoinfo.ui.sign_in.components.GoogleSignInButton
-import com.wenubey.geoinfo.ui.sign_in.components.SIGN_IN_BUTTON
-import com.wenubey.geoinfo.ui.sign_in.components.SIGN_IN_COLUMN
-import com.wenubey.geoinfo.ui.sign_in.components.NAVIGATE_TO_SIGN_UP_BUTTON
 import com.wenubey.geoinfo.ui.sign_in.components.SignInContent
 import com.wenubey.geoinfo.ui.sign_in.components.XSignInButton
-import com.wenubey.geoinfo.ui.sign_in.components.X_SIGN_IN_BUTTON
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +24,8 @@ class SignInContentTest {
     @get:Rule
     val rule = createComposeRule()
 
+    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
+
     /**
      * Test to ensure that the SignInContent composable is displayed.
      */
@@ -37,7 +35,7 @@ class SignInContentTest {
             SignInContent()
         }
 
-        rule.onNodeWithTag(SIGN_IN_COLUMN)
+        rule.onNodeWithTag(context.getString(R.string.sign_in_column_test_tag))
             .assertIsDisplayed()
     }
 
@@ -51,11 +49,12 @@ class SignInContentTest {
 
         rule.setContent {
             SignInContent(
-                signIn = { _, _ -> signInClicked = true}
+                signIn = { _, _ -> signInClicked = true }
             )
         }
 
-        rule.onNodeWithTag(SIGN_IN_BUTTON).performClick()
+        rule.onNodeWithTag(context.getString(R.string.sign_in_button_test_tag))
+            .performClick()
             .assertHasClickAction()
             .assertIsDisplayed()
 
@@ -76,7 +75,8 @@ class SignInContentTest {
             }
         }
 
-        rule.onNodeWithTag(GOOGLE_SIGN_IN_BUTTON).performClick()
+        rule.onNodeWithTag(context.getString(R.string.google_sign_in_button_test_tag))
+            .performClick()
             .assertHasClickAction()
             .assertIsDisplayed()
 
@@ -97,7 +97,8 @@ class SignInContentTest {
             }
         }
 
-        rule.onNodeWithTag(FACEBOOK_SIGN_IN_BUTTON).performClick()
+        rule.onNodeWithTag(context.getString(R.string.facebook_sign_in_button_test_tag))
+            .performClick()
             .assertHasClickAction()
             .assertIsDisplayed()
 
@@ -118,7 +119,7 @@ class SignInContentTest {
             }
         }
 
-        rule.onNodeWithTag(X_SIGN_IN_BUTTON)
+        rule.onNodeWithTag(context.getString(R.string.x_sign_in_button_test_tag))
             .performClick()
             .assertIsDisplayed()
             .assertHasClickAction()
@@ -136,11 +137,11 @@ class SignInContentTest {
 
         rule.setContent {
             SignInContent(
-                navigateToForgotPasswordScreen = { forgotButtonClicked = true}
+                navigateToForgotPasswordScreen = { forgotButtonClicked = true }
             )
         }
 
-        rule.onNodeWithTag(FORGOT_PASSWORD_BUTTON)
+        rule.onNodeWithTag(context.getString(R.string.forgot_password_button_test_tag))
             .performClick()
             .assertHasClickAction()
             .assertIsDisplayed()
@@ -158,11 +159,11 @@ class SignInContentTest {
 
         rule.setContent {
             SignInContent(
-                navigateToSignUpScreen = { signUpButtonClicked = true}
+                navigateToSignUpScreen = { signUpButtonClicked = true }
             )
         }
 
-        rule.onNodeWithTag(NAVIGATE_TO_SIGN_UP_BUTTON)
+        rule.onNodeWithTag(context.getString(R.string.navigate_to_sign_up_button_test_tag))
             .performClick()
             .assertHasClickAction()
             .assertIsDisplayed()

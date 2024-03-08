@@ -24,7 +24,7 @@ import com.wenubey.geoinfo.utils.emailVerifier
 
 @Composable
 fun EmailTextField(
-    email: TextFieldValue = TextFieldValue(stringResource(id= R.string.PREVIEW_EMAIL)),
+    email: TextFieldValue = TextFieldValue(stringResource(id= R.string.preview_email)),
     onEmailValueChange: (email: TextFieldValue, isError: Boolean) -> Unit = { _, _ ->},
     keyboardActions: KeyboardActions = KeyboardActions(),
 ) {
@@ -33,17 +33,17 @@ fun EmailTextField(
     }
     isError = email.emailVerifier()
     OutlinedTextField(
-        modifier = Modifier.testTag(EMAIL_TEXT_FIELD_TEST_TAG),
+        modifier = Modifier.testTag(stringResource(id = R.string.email_text_field_test_tag)),
         value = email,
         onValueChange = {
             onEmailValueChange(it, !email.emailVerifier())
         },
         textStyle = MaterialTheme.typography.bodyMedium,
-        label = { Text(text = stringResource(id= R.string.EMAIL_LABEL), style = MaterialTheme.typography.bodySmall) },
+        label = { Text(text = stringResource(id= R.string.email_label), style = MaterialTheme.typography.bodySmall) },
         isError = isError,
         supportingText = {
             if (isError) {
-                Text(text = stringResource(id= R.string.EMAIL_ERROR), style = MaterialTheme.typography.bodySmall)
+                Text(text = stringResource(id= R.string.email_error), style = MaterialTheme.typography.bodySmall)
             }
         },
         singleLine = true,
@@ -62,5 +62,3 @@ private fun EmailTextFieldPreview() {
         }
     }
 }
-
-const val EMAIL_TEXT_FIELD_TEST_TAG = "email_text_field_tag"
