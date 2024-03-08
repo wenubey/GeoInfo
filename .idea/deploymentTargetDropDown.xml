@@ -2,7 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ImagePickerTest">
+      <entry key="AccountSettingsMenuTest">
+        <State />
+      </entry>
+      <entry key="UserInfoUpdateDialogTest">
         <State />
       </entry>
       <entry key="app">
@@ -21,16 +24,26 @@
           <timeTargetWasSelectedWithDropDown value="2024-01-26T16:07:05.481309100Z" />
         </State>
       </entry>
-      <entry key="dropdown_menu_behavior()">
+      <entry key="dialog_is_exists_and_displayed()">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\fatih\.android\avd\Pixel_7_Pro_API_33.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-03-08T10:48:42.228314400Z" />
+        </State>
+      </entry>
+      <entry key="dialog_text_fields_is_exists_and_showed_values()">
         <State />
       </entry>
       <entry key="fav_countries_row_is_displayed_and_row_item_behavior()">
-        <State />
-      </entry>
-      <entry key="user_fields_is_displayed()">
-        <State />
-      </entry>
-      <entry key="user_photo_displayed()">
         <State />
       </entry>
     </value>

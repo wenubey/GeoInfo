@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,35 +35,6 @@ import com.wenubey.geoinfo.utils.components.EmailTextField
 
 @Composable
 fun UserInfoUpdateDialog(
-    showDialog: MutableState<Boolean>,
-    email: TextFieldValue,
-    phoneNumberBody: TextFieldValue,
-    countryCode: String,
-    onEmailValueChange: (email: TextFieldValue) -> Unit,
-    displayName: TextFieldValue,
-    onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit,
-    onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit,
-    onCountryCodeValueChange: (phoneCode: String?) -> Unit,
-    onClickConfirm: () -> Unit,
-    countryCodeMap: Map<String?, String?>,
-) {
-    AlertDialogContent(
-        showDialog = showDialog,
-        email = email,
-        phoneNumberBody = phoneNumberBody,
-        onEmailValueChange = onEmailValueChange,
-        displayName = displayName,
-        onDisplayNameValueChange = onDisplayNameValueChange,
-        onPhoneNumberValueChange = onPhoneNumberValueChange,
-        onPhoneCodeValueChange = onCountryCodeValueChange,
-        onClickConfirm = onClickConfirm,
-        countryCodeMap = countryCodeMap,
-        countryCode = countryCode,
-    )
-}
-
-@Composable
-private fun AlertDialogContent(
     showDialog: MutableState<Boolean> = mutableStateOf(false),
     email: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_EMAIL)),
     phoneNumberBody: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_PHONE)),
@@ -71,7 +43,7 @@ private fun AlertDialogContent(
     displayName: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_NAME)),
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit = {},
     onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit = {},
-    onPhoneCodeValueChange: (phoneCode: String?) -> Unit = {},
+    onCountryCodeValueChange: (phoneCode: String?) -> Unit = {},
     onClickConfirm: () -> Unit = {},
     countryCodeMap: Map<String?, String?> = fakeCountryCode,
 ) {
@@ -81,6 +53,7 @@ private fun AlertDialogContent(
     }
 
     AlertDialog(
+        modifier = Modifier.testTag(USER_INFO_UPDATE_DIALOG_TEST_TAG),
         onDismissRequest = { showDialog.value = false },
         title = {
             Text(
@@ -104,6 +77,8 @@ private fun AlertDialogContent(
                     ),
                 )
                 OutlinedTextField(
+                    modifier = Modifier
+                        .testTag(USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG),
                     value = displayName,
                     onValueChange = onDisplayNameValueChange,
                     label = {
@@ -116,7 +91,7 @@ private fun AlertDialogContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 PhonePicker(
                     countryData = countryCodeMap,
-                    onSelectCountryCode = onPhoneCodeValueChange,
+                    onSelectCountryCode = onCountryCodeValueChange,
                     phoneNumberBody = phoneNumberBody,
                     countryCode = countryCode,
                     onPhoneCodeValueChange = onPhoneNumberValueChange
@@ -126,6 +101,7 @@ private fun AlertDialogContent(
         },
         confirmButton = {
             Button(
+                modifier = Modifier.testTag(USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG),
                 onClick = onClickConfirm,
                 enabled = isButtonEnabled,
             ) {
@@ -138,13 +114,17 @@ private fun AlertDialogContent(
     )
 }
 
+const val USER_INFO_UPDATE_DIALOG_TEST_TAG = "userInfoUpdateDialogTestTag"
+const val USER_INFO_UPDATE_DIALOG_SAVE_BUTTON_TEST_TAG = "userInfoUpdateDialogSaveButtonTestTag"
+const val USER_INFO_UPDATE_DIALOG_DISPLAY_NAME_FIELD_TEST_TAG = "userInfoUpdateDialogDisplayNameFieldTestTag"
+
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun AlertDialogContentPreview() {
     GeoInfoAppTheme {
         Surface {
-            AlertDialogContent()
+            UserInfoUpdateDialog()
         }
     }
 }
