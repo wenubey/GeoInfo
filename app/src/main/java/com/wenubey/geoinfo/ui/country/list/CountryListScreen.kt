@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
@@ -28,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,8 +41,6 @@ import com.wenubey.geoinfo.ui.country.CountryViewModel
 import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.SortOption
 import com.wenubey.geoinfo.utils.SortOrder
-import com.wenubey.geoinfo.utils.components.ErrorScreen
-import com.wenubey.geoinfo.utils.components.ProgressBar
 import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.toIcon
 import org.koin.androidx.compose.koinViewModel
@@ -47,31 +48,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CountryListScreen(
-    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit,
-    countryViewModel: CountryViewModel = koinViewModel(),
-) {
-    val uiState = countryViewModel.countryListDataState
-    if (uiState.isLoading) {
-        ProgressBar()
-    } else if (uiState.countries != null) {
-        val countries = uiState.countries
-        CountryListContent(
-            countries = countries,
-            navigateToCountryDetailScreen = navigateToCountryDetailScreen
-        )
-    } else if (uiState.error != null) {
-        ErrorScreen(error = uiState.error)
-    }
-}
-
-@Composable
-private fun CountryListContent(
     countries: List<Country> = listOf(fakeCountry),
     navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     countryViewModel: CountryViewModel = koinViewModel(),
-
-    ) {
-
+) {
     CountryList(
         query = countryViewModel.searchQuery.value,
         onQueryChange = {
@@ -83,7 +63,7 @@ private fun CountryListContent(
         onSortButtonClicked = { sortOption, sortOrder, query ->
             onSortButtonClicked(sortOption, sortOrder, query, countryViewModel)
         },
-        onCardClick = navigateToCountryDetailScreen,
+        navigateToCountryDetailScreen = navigateToCountryDetailScreen,
         onFavButtonClicked = { country, countryUpdatedFav ->
             countryViewModel.onEvent(
                 CountryEvent.OnUserUpdateFavorite(country, countryUpdatedFav)
@@ -94,14 +74,16 @@ private fun CountryListContent(
 }
 
 @Composable
-private fun CountryList(
+fun CountryList(
     query: String = "",
     onQueryChange: (String) -> Unit = {},
     countries: List<Country> = listOf(fakeCountry),
     onSortButtonClicked: (sortOption: SortOption, sortOrder: SortOrder, query: String?) -> Unit = { _, _, _ -> },
-    onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
+    navigateToCountryDetailScreen: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ -> },
+    lazyListState: LazyListState = rememberLazyListState(),
 ) {
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -112,11 +94,15 @@ private fun CountryList(
             query = query,
             onSortButtonClicked = onSortButtonClicked,
         )
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .testTag(stringResource(R.string.country_list_test_tag)),
+            state = lazyListState,
+        ) {
             items(countries) { country ->
                 CountryListCard(
                     country = country,
-                    onCardClick = onCardClick,
+                    onCardClick = navigateToCountryDetailScreen,
                     onFavButtonClicked = onFavButtonClicked
                 )
             }
@@ -125,9 +111,10 @@ private fun CountryList(
 }
 
 @Composable
-private fun CountrySearchBar(query: String = "", onQueryChange: (String) -> Unit = {}) {
+fun CountrySearchBar(query: String = "", onQueryChange: (String) -> Unit = {}) {
     OutlinedTextField(
         modifier = Modifier
+            .testTag(stringResource(R.string.country_search_bar_test_tag))
             .fillMaxWidth()
             .padding(4.dp),
         shape = MaterialTheme.shapes.medium,
@@ -180,7 +167,7 @@ private fun CountryListSortButtons(
 }
 
 @Composable
-private fun SortButton(
+fun SortButton(
     sortOption: SortOption = SortOption.FAV,
     onSortButtonClicked: (SortOption, SortOrder) -> Unit = { _, _ -> }
 ) {
@@ -188,8 +175,9 @@ private fun SortButton(
         mutableStateOf(SortOrder.ASC)
     }
     OutlinedButton(
+        modifier = Modifier.testTag(stringResource(R.string.sort_button_test_tag)),
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
-        onClick ={
+        onClick = {
             sortOrder = if (sortOrder == SortOrder.ASC) SortOrder.DESC else SortOrder.ASC
             onSortButtonClicked(sortOption, sortOrder)
         }

@@ -32,13 +32,13 @@ import com.wenubey.geoinfo.utils.fakeCountry
 
 @Composable
 fun EconomicInformation(country: Country) {
-    InfoHeader(header = stringResource(id = R.string.economical_information))
+    CountryInfoHeader(header = stringResource(id = R.string.economical_information))
     CurrencyRow(country = country)
     DemonymsRow(country = country)
 }
 
 @Composable
-private fun CurrencyRow(country: Country? = fakeCountry) {
+fun CurrencyRow(country: Country? = fakeCountry) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -68,7 +68,7 @@ private fun CurrencyRow(country: Country? = fakeCountry) {
 }
 
 @Composable
-private fun DemonymsRow(country: Country = fakeCountry) {
+fun DemonymsRow(country: Country = fakeCountry) {
     val localConfig = LocalConfiguration.current
     val screenWidth = localConfig.screenWidthDp
     Row(

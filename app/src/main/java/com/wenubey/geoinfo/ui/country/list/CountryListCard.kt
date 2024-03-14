@@ -46,21 +46,9 @@ import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.formatWithCommasForArea
 import com.wenubey.geoinfo.utils.formatWithCommasForPopulation
 
-@Composable
-fun CountryListCard(
-    country: Country,
-    onCardClick: (countryCode: String?, countryName: String?) -> Unit,
-    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
-) {
-    CardContent(
-        country = country,
-        onCardClick = onCardClick,
-        onFavButtonClicked = onFavButtonClicked
-    )
-}
 
 @Composable
-private fun CardContent(
+ fun CountryListCard(
     country: Country = fakeCountry,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ -> },
@@ -87,7 +75,7 @@ private fun CardContent(
 }
 
 @Composable
-private fun CountryFlag(
+fun CountryFlag(
     country: Country
 ) {
     val painter = rememberAsyncImagePainter(
@@ -112,7 +100,7 @@ private fun CountryFlag(
 }
 
 @Composable
-private fun CountryInfoColumn(
+fun CountryInfoColumn(
     country: Country,
     onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
 ) {
@@ -163,7 +151,7 @@ private fun CountryInfoColumn(
 }
 
 @Composable
-private fun AreaPopulationRow(
+fun AreaPopulationRow(
     country: Country
 ) {
     Column(
@@ -203,7 +191,7 @@ private fun AreaPopulationRow(
 private fun CountryListCardContentPreview() {
     GeoInfoAppTheme {
         Surface {
-            CardContent()
+            CountryListCard()
         }
     }
 }

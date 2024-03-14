@@ -26,7 +26,7 @@ fun CulturalInformation(country: Country) {
 @Composable
 private fun InfoContent(country: Country = fakeCountry) {
     Column {
-        InfoHeader(header =stringResource(id= R.string.cultural_information))
+        CountryInfoHeader(header =stringResource(id= R.string.cultural_information))
         CountryInfoRow(
             header = stringResource(id= R.string.languages),
             imageVector = Icons.Default.Translate,

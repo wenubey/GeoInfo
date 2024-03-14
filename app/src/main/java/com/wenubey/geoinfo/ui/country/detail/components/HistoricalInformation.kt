@@ -41,14 +41,14 @@ private fun HistoryContent(
     histories: List<History> = fakeCountry.history!!,
 ) {
     Column {
-        InfoHeader(header = stringResource(id= R.string.historical_information))
+        CountryInfoHeader(header = stringResource(id= R.string.historical_information))
         HistorySlider(histories = histories)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HistorySlider(
+fun HistorySlider(
     histories: List<History> = fakeCountry.history!!
 ) {
     var thumbPosition by remember {

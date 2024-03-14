@@ -26,7 +26,7 @@ import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 @Composable
 fun CountryInfoRow(
     imageVector: ImageVector = Icons.Default.DeveloperMode,
-    contentDescription: String = "",
+    contentDescription: String = stringResource(R.string.preview_content_description),
     content: String = stringResource(id = R.string.preview_content),
     header: String = stringResource(id = R.string.preview_header)
 ) {
@@ -53,7 +53,7 @@ fun CountryInfoRow(
 }
 
 @Composable
-fun InfoHeader(
+fun CountryInfoHeader(
     header: String = stringResource(id = R.string.preview_header)
 ) {
     Text(
@@ -85,7 +85,7 @@ private fun CountryInfoRowPreview() {
 private fun InfoHeaderPreview() {
      GeoInfoAppTheme {
         Surface {
-             InfoHeader()
+             CountryInfoHeader()
         }
     }
 }

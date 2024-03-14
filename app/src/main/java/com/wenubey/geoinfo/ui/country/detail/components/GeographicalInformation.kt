@@ -31,7 +31,7 @@ private fun InfoContent(
     country: Country = fakeCountry
 ) {
     Column {
-        InfoHeader(header = stringResource(id= R.string.geographical_information))
+        CountryInfoHeader(header = stringResource(id= R.string.geographical_information))
         CountryInfoRow(
             header = stringResource(id= R.string.area),
             imageVector = Icons.Default.Fullscreen,

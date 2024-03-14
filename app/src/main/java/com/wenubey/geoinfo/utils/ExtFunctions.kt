@@ -5,17 +5,14 @@ import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.SortByAlpha
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import com.google.android.gms.maps.model.LatLng
-import com.wenubey.geoinfo.R
 
-@Composable
+
 fun Double?.formatWithCommasForArea(): String {
     if (this == null) {
-        return stringResource(id = R.string.undefined)
+        return "Undefined"
     }
     val formattedValue = String.format("%,.2f", this)
     return if (formattedValue.endsWith(".00")) {
@@ -25,10 +22,10 @@ fun Double?.formatWithCommasForArea(): String {
     }
 }
 
-@Composable
+
 fun Int?.formatWithCommasForPopulation(): String {
     return if (this == null) {
-        stringResource(id = R.string.undefined)
+        "Undefined"
     } else {
         String.format("%,d", this)
     }

@@ -116,6 +116,8 @@ val fakeCountry = Country(
     language = mapOf(
         "pol" to "Polish",
         "tur" to "Turkish",
+        "eng" to "English",
+        "ger" to "German",
     ),
     latlng = LatLng(52.0, 20.0),
     area = 312679.0,
@@ -139,8 +141,10 @@ val fakeCountry = Country(
         "eng" to mapOf("f" to "Polish", "m" to "Polish")
     ),
     translations = mapOf(
+        "tur" to Translation(official = "Polonya Cumhuriyeti", common = "Polonya"),
+        "eng" to Translation(official = "Republic of Poland", common = "Poland"),
+        "fra" to Translation(official = "République de Pologne", common = "Pologne"),
         "deu" to Translation(official = "Republik Polen", common = "Polen"),
-        "tur" to Translation(official = "Polonya Cumhuriyeti", common = "Polonya")
     ),
     gini = mapOf(
         "2018" to 30.2

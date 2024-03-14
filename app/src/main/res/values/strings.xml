@@ -30,7 +30,7 @@
     <string name="country_selected_icon_description">You change flag to coat of arms image with this button.</string>
     <string name="country_translations_expanded_content_description">You can expand for translations from other countries.</string>
     <string name="tabs_content_description">You can go to these tab pressing this buttons.</string>
-    <string name="add_fav_content_description">You can log out or request a revoke or go to forgot password screen.</string>
+    <string name="add_fav_content_description">You can add or remove this country when you clicked this button.</string>
     <string name="share_content_description">You can share country info when you clicked this button.</string>
     <string name="add_remove_fav_content_description">You can add/remove favorite when you clicked this button.</string>
     <string name="back_button_description">Back to previous screen</string>
@@ -66,6 +66,8 @@
     <string name="timezones">Timezones:</string>
     <string name="demonyms">Demonyms:</string>
     <string name="currencies">Currencies:</string>
+    <string name="official">Official: %1$s</string>
+    <string name="common">Common: %1$s</string>
     <string name="translations">Translations</string>
     <string name="more_info_wikipedia">More info on Wikipedia</string>
     <string name="go_to_country_location">Go to country\'s location on Map</string>
@@ -123,6 +125,7 @@
     <string name="preview_email">helloworld@helloworld.com</string>
     <string name="preview_name">Hello World</string>
     <string name="preview_phone">12345678</string>
+    <string name="preview_content_description">Preview content description</string>
 
     - Test TAGS
     <string name="sign_in_column_test_tag">signInColumnTestTag</string>
@@ -154,8 +157,16 @@
     <string name="verify_email_content_test_tag">verifyEmailContentTestTag</string>
     <string name="verify_email_top_bar_menu_test_tag">verifyEmailTopBarMenuTestTag</string>
     <string name="user_reload_request_cd">User reload request</string>
+    <string name="translation_information_column_test_tag">translationInformationColumnTestTag</string>
+    <string name="translation_content_column_test_tag">translationContentColumnTestTag%1$s</string>
 
 
     - Logcat TAGS
     <string name="profile_screen_tag">profileScreenTag</string>
+    <string name="translation_header_row_test_tag">translationHeaderRowTestTag</string>
+    <string name="sort_button_test_tag">sortButtonTestTag</string>
+    <string name="country_search_bar_test_tag">countrySearchBarTestTag</string>
+    <string name="country_list_test_tag">countryListTestTag</string>
+
+
 </resources>

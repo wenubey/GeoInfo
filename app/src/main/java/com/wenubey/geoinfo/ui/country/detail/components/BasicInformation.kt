@@ -19,7 +19,7 @@ import com.wenubey.geoinfo.utils.formatWithCommasForPopulation
 
 @Composable
 fun BasicInformation(country: Country) {
-    InfoHeader(header = stringResource(id = R.string.basic_information))
+    CountryInfoHeader(header = stringResource(id = R.string.basic_information))
     CountryInfoRow(
         header = stringResource(id = R.string.known_as),
         imageVector = Icons.Default.TravelExplore,
