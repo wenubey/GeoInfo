@@ -8,8 +8,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.profile.ProfileViewModel
-import com.wenubey.geoinfo.utils.Constants.ACCESS_REVOKED_MESSAGE
-import com.wenubey.geoinfo.utils.Constants.SENSITIVE_OPERATION_MESSAGE
 import com.wenubey.geoinfo.utils.Resource
 import com.wenubey.geoinfo.utils.Utils.Companion.makeToast
 import com.wenubey.geoinfo.utils.Utils.Companion.printLog
@@ -24,10 +22,10 @@ fun RevokeAccess(
     coroutineScope: CoroutineScope,
 ) {
     val context = LocalContext.current
-    val signOut = stringResource(id= R.string.SIGN_OUT)
+    val signOut = stringResource(id= R.string.sign_out)
     fun showRevokeAccessMessage() = coroutineScope.launch {
         val result = snackBarHostState.showSnackbar(
-            message = ACCESS_REVOKED_MESSAGE,
+            message = context.getString(R.string.access_revoked_message),
             actionLabel = signOut,
         )
         if (result == SnackbarResult.ActionPerformed) {
@@ -41,7 +39,7 @@ fun RevokeAccess(
             val isAccessRevoked = result.data
             LaunchedEffect(isAccessRevoked) {
                 if (isAccessRevoked!!) {
-                    context.makeToast(ACCESS_REVOKED_MESSAGE)
+                    context.makeToast(context.getString(R.string.access_revoked_message))
                 }
             }
         }
@@ -49,7 +47,7 @@ fun RevokeAccess(
         is Resource.Error -> result.apply {
             LaunchedEffect(error) {
                 printLog(error)
-                if (error.message == SENSITIVE_OPERATION_MESSAGE) {
+                if (error.message == context.getString(R.string.sensitive_operation_message)) {
                     showRevokeAccessMessage()
                 }
             }

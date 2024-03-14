@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CountryApp"
+rootProject.name = "GeoInfo"
 include(":app")
  

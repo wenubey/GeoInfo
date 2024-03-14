@@ -18,20 +18,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
+
 
 @Composable
-fun ImagePicker(onImageSelected: (Uri) -> Unit, modifier: Modifier = Modifier) {
-    ImagePickerContent(modifier = modifier, onImageSelected = onImageSelected)
-
-}
-
-@Composable
-private fun ImagePickerContent(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = {}) {
+fun ImagePicker(modifier: Modifier = Modifier, onImageSelected: (Uri) -> Unit = {}) {
     val context = LocalContext.current
 
     val launcherImage = rememberLauncherForActivityResult(
@@ -60,7 +56,8 @@ private fun ImagePickerContent(modifier: Modifier = Modifier, onImageSelected: (
     )
 
     IconButton(
-        modifier = modifier,
+        modifier = modifier
+            .testTag(stringResource(id = R.string.image_picker_button_test_tag)),
         onClick = {
             checkAndRequestPermissions(
                 launcher = launcherPermission,
@@ -75,7 +72,7 @@ private fun ImagePickerContent(modifier: Modifier = Modifier, onImageSelected: (
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.UPLOAD_PROFILE_PHOTO_CONTENT_DESC)
+            contentDescription = stringResource(R.string.upload_profile_photo_content_desc)
         )
     }
 }
@@ -107,9 +104,9 @@ fun checkAndRequestPermissions(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun ImagePickerContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
-            ImagePickerContent()
+            ImagePicker()
         }
     }
 }

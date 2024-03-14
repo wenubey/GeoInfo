@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.wenubey.geoinfo.ui.deep_link.DeepLinkViewModel
 import com.wenubey.geoinfo.ui.navigation.NavGraph
 import com.wenubey.geoinfo.ui.tab_screen.TabViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 
@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             KoinContext {
-                CountryAppTheme {
+                GeoInfoAppTheme {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background

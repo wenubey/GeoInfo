@@ -55,8 +55,7 @@ import com.wenubey.geoinfo.domain.model.Country
 import com.wenubey.geoinfo.ui.country.CountryEvent
 import com.wenubey.geoinfo.ui.country.CountryViewModel
 import com.wenubey.geoinfo.ui.deep_link.DeepLinkViewModel
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.fakeCountry
 import org.koin.androidx.compose.koinViewModel
 
@@ -186,7 +185,7 @@ private fun FlagWithCoatOfArms(
         contentScale = ContentScale.Fit,
         painter = painter,
         contentDescription = country.flag?.get("alt")
-            ?: stringResource(id= R.string.COUNTRY_FLAG_CONTENT_DESCRIPTION),
+            ?: stringResource(id= R.string.country_flag_content_description),
     )
 }
 
@@ -205,7 +204,7 @@ private fun CountryName(
     ) {
         Text(
             modifier = Modifier.weight(0.7f),
-            text = country.countryOfficialName ?: UNDEFINED,
+            text = country.countryOfficialName ?: stringResource(id = R.string.undefined),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 24.sp),
             overflow = TextOverflow.Clip
         )
@@ -213,13 +212,13 @@ private fun CountryName(
             IconButton(onClick = onChangeFlagToCoatOfArms) {
                 Icon(
                     imageVector = selectedIcon,
-                    contentDescription = stringResource(id= R.string.COUNTRY_SELECTED_ICON_DESCRIPTION)
+                    contentDescription = stringResource(id= R.string.country_selected_icon_description)
                 )
             }
             IconButton(onClick = { isMenuExpanded.value = !isMenuExpanded.value }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = stringResource(id= R.string.COUNTRY_DROPDOWN_MENU_CONTENT_DESCRIPTION)
+                    contentDescription = stringResource(id= R.string.country_dropdown_menu_content_description)
                 )
             }
         }
@@ -252,10 +251,10 @@ private fun DetailDropDownMenu(
                         modifier = Modifier
                             .size(25.dp),
                         painter = painterResource(id = R.drawable.wikipedia_logo),
-                        contentDescription = stringResource(id= R.string.WIKIPEDIA_CONTENT_DESCRIPTION),
+                        contentDescription = stringResource(id= R.string.wikipedia_content_description),
                     )
                     Text(
-                        text = stringResource(id= R.string.MORE_INFO_WIKIPEDIA),
+                        text = stringResource(id= R.string.more_info_wikipedia),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -270,10 +269,10 @@ private fun DetailDropDownMenu(
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     Image(
                         imageVector = Icons.Default.PinDrop,
-                        contentDescription = stringResource(id= R.string.COUNTRY_MAP_CONTENT_DESCRIPTION),
+                        contentDescription = stringResource(id= R.string.country_map_content_description),
                         colorFilter = ColorFilter.tint(LocalContentColor.current)
                     )
-                    Text(text = stringResource(id= R.string.GO_TO_COUNTRY_LOCATION))
+                    Text(text = stringResource(id= R.string.go_to_country_location))
                 }
             },
             onClick = {
@@ -285,9 +284,9 @@ private fun DetailDropDownMenu(
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                 Image(
                     imageVector = Icons.Default.Share,
-                    contentDescription = stringResource(id= R.string.SHARE_CONTENT_DESCRIPTION)
+                    contentDescription = stringResource(id= R.string.share_content_description)
                 )
-                Text(text = stringResource(id= R.string.SHARE))
+                Text(text = stringResource(id= R.string.share))
             }
         }, onClick = { shareCountryInfo() })
         DropdownMenuItem(
@@ -295,9 +294,9 @@ private fun DetailDropDownMenu(
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     Image(
                         imageVector = if (countryIsFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
-                        contentDescription = stringResource(id= R.string.ADD_REMOVE_FAV_CONTENT_DESCRIPTION)
+                        contentDescription = stringResource(id= R.string.add_remove_fav_content_description)
                     )
-                    Text(text = stringResource(id= R.string.FAVORITE))
+                    Text(text = stringResource(id= R.string.favorite))
                 }
             },
             onClick = {
@@ -312,7 +311,7 @@ private fun DetailDropDownMenu(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryNamePreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             CountryName()
         }
@@ -323,7 +322,7 @@ private fun CountryNamePreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun DetailDropDownMenuPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             DetailDropDownMenu()
         }

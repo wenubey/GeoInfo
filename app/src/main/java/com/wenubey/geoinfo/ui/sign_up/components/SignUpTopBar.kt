@@ -11,23 +11,22 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.utils.Constants.SIGN_UP_SCREEN_TITLE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpTopBar(
-    navigateBack: () -> Unit
+    navigateToSignInScreen: () -> Unit
 ) {
     TopAppBar(
         title = {
-            Text(text = SIGN_UP_SCREEN_TITLE, style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(id = R.string.sign_up_screen_title), style = MaterialTheme.typography.bodyMedium)
         },
 
         navigationIcon = {
-            IconButton(onClick = navigateBack) {
+            IconButton(onClick = navigateToSignInScreen) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = stringResource(id= R.string.BACK_BUTTON_DESCRIPTION)
+                    contentDescription = stringResource(id= R.string.back_button_description)
                 )
             }
         }

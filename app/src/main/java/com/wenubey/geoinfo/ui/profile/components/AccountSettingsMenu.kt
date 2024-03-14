@@ -16,45 +16,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
 @Composable
 fun AccountSettingsMenu(
     modifier: Modifier = Modifier,
-    signOut: () -> Unit,
-    revokeAccess: () -> Unit,
-    navigateToForgotPasswordScreen: (() -> Unit)? = null,
-) {
-    MenuContent(
-        signOut = signOut,
-        revokeAccess = revokeAccess,
-        navigateToForgotPasswordScreen = navigateToForgotPasswordScreen,
-        modifier = modifier
-    )
-}
-
-@Composable
-private fun MenuContent(
-    modifier: Modifier = Modifier,
-    signOut: () -> Unit,
-    revokeAccess: () -> Unit,
+    signOut: () -> Unit = {},
+    revokeAccess: () -> Unit = {},
     navigateToForgotPasswordScreen: (() -> Unit)? = null,
 ) {
     var openMenu by remember { mutableStateOf(false) }
 
     IconButton(
-        modifier = modifier,
+        modifier = modifier.testTag(stringResource(id = R.string.settings_menu_icon_button_test_tag)),
         onClick = { openMenu = !openMenu },
     ) {
         Icon(
             modifier = Modifier.size(50.dp),
             imageVector = Icons.Default.MoreVert,
-            contentDescription = stringResource(id= R.string.PROFILE_SCREEN_ACCOUNT_SETTINGS_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.profile_screen_account_settings_content_description),
         )
         DropdownMenu(
             expanded = openMenu,
@@ -62,14 +48,16 @@ private fun MenuContent(
             onDismissRequest = { openMenu = !openMenu },
         ) {
             DropdownMenuItem(
-                text = { Text(text = stringResource(id= R.string.SIGN_OUT)) },
+                modifier = Modifier.testTag(stringResource(id = R.string.sign_out)),
+                text = { Text(text = stringResource(id= R.string.sign_out)) },
                 onClick = {
                     signOut()
                     openMenu = !openMenu
                 },
             )
             DropdownMenuItem(
-                text = { Text(text = stringResource(id= R.string.REVOKE_ACCESS)) },
+                modifier = Modifier.testTag(stringResource(id = R.string.revoke_access)),
+                text = { Text(text = stringResource(id= R.string.revoke_access)) },
                 onClick = {
                     revokeAccess()
                     openMenu = !openMenu
@@ -77,7 +65,8 @@ private fun MenuContent(
             )
             if (navigateToForgotPasswordScreen != null) {
                 DropdownMenuItem(
-                    text = { Text(text = stringResource(id= R.string.FORGOT_PASSWORD)) },
+                    modifier = Modifier.testTag(stringResource(id = R.string.forgot_password)),
+                    text = { Text(text = stringResource(id= R.string.forgot_password)) },
                     onClick = {
                         navigateToForgotPasswordScreen()
                     },
@@ -88,16 +77,14 @@ private fun MenuContent(
     }
 }
 
+
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun MenuContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
-            MenuContent(
-                signOut = {},
-                revokeAccess = {},
-            )
+            AccountSettingsMenu()
         }
     }
 }

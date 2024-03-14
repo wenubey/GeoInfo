@@ -12,34 +12,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
+import com.wenubey.geoinfo.utils.emailVerifier
 
 @Composable
 fun EmailTextField(
-    email: TextFieldValue = TextFieldValue(stringResource(id= R.string.PREVIEW_EMAIL)),
+    email: TextFieldValue = TextFieldValue(stringResource(id= R.string.preview_email)),
     onEmailValueChange: (email: TextFieldValue, isError: Boolean) -> Unit = { _, _ ->},
     keyboardActions: KeyboardActions = KeyboardActions(),
 ) {
     var isError by remember {
         mutableStateOf(false)
     }
-    isError = emailVerifier(email)
+    isError = email.emailVerifier()
     OutlinedTextField(
+        modifier = Modifier.testTag(stringResource(id = R.string.email_text_field_test_tag)),
         value = email,
         onValueChange = {
-            onEmailValueChange(it, !emailVerifier(it))
+            onEmailValueChange(it, !email.emailVerifier())
         },
         textStyle = MaterialTheme.typography.bodyMedium,
-        label = { Text(text = stringResource(id= R.string.EMAIL_LABEL), style = MaterialTheme.typography.bodySmall) },
+        label = { Text(text = stringResource(id= R.string.email_label), style = MaterialTheme.typography.bodySmall) },
         isError = isError,
         supportingText = {
             if (isError) {
-                Text(text = stringResource(id= R.string.EMAIL_ERROR), style = MaterialTheme.typography.bodySmall)
+                Text(text = stringResource(id= R.string.email_error), style = MaterialTheme.typography.bodySmall)
             }
         },
         singleLine = true,
@@ -52,11 +56,9 @@ fun EmailTextField(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun EmailTextFieldPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             EmailTextField()
         }
     }
 }
-
-private fun emailVerifier(email: TextFieldValue): Boolean = !(email.text.contains("@") && email.text.contains(".com")) && email.text.isNotBlank()

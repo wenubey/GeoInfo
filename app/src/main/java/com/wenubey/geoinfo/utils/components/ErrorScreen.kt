@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier, error: String) {
@@ -30,7 +30,7 @@ fun ErrorScreen(modifier: Modifier = Modifier, error: String) {
 }
 
 @Composable
-private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = stringResource(id= R.string.PREVIEW_ERROR)) {
+private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = stringResource(id= R.string.preview_error)) {
     val config = LocalConfiguration.current
     val screenWidth = config.screenWidthDp
     val screenHeight = config.screenHeightDp
@@ -43,7 +43,7 @@ private fun ErrorScreenContent(modifier: Modifier = Modifier, error: String = st
                 .fillMaxSize()
                 .alpha(0.3f),
             imageVector = Icons.Default.Error,
-            contentDescription = stringResource(id= R.string.ERROR_SCREEN_CONTENT_DESCRIPTION),
+            contentDescription = stringResource(id= R.string.error_screen_content_description),
             tint = Color.Red.copy(alpha = 0.3f)
         )
         Text(error, style = errorTypography(), textAlign = TextAlign.Center)
@@ -58,7 +58,7 @@ private fun errorTypography(): TextStyle =
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun ErrorScreenContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             ErrorScreenContent()
         }

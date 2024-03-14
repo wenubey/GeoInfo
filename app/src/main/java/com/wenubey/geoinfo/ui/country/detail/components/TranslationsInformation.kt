@@ -26,25 +26,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.fakeCountry
+
 
 @Composable
 fun TranslationsInformation(
-    country: Country?,
-    languages: Map<String, String>,
-) {
-    InfoContent(country = country, languages = languages)
-}
-
-@Composable
-private fun InfoContent(
     country: Country?  = fakeCountry,
     languages: Map<String, String>  = fakeCountry.language
 ) {
@@ -64,14 +58,16 @@ private fun InfoContent(
         }
     }
     Column(
-        modifier = Modifier
-            .clickable(
-                interactionSource = mutableInteractionSource,
-                indication = null,
-                onClick = {
-                    toggleExpansion()
-                },
-            ),
+        modifier = Modifier.run {
+            testTag(stringResource(R.string.translation_information_column_test_tag))
+                .clickable(
+                    interactionSource = mutableInteractionSource,
+                    indication = null,
+                    onClick = {
+                        toggleExpansion()
+                    },
+                )
+        },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TranslationHeader(isExpandedIcon = isExpandedIcon, onClick = { toggleExpansion() })
@@ -81,7 +77,7 @@ private fun InfoContent(
 }
 
 @Composable
-private fun TranslationContent(
+fun TranslationContent(
     country: Country? = fakeCountry,
     languages: Map<String, String> = fakeCountry.language,
     isExpanded: Boolean = false,
@@ -93,9 +89,18 @@ private fun TranslationContent(
             if (isExpanded) it else it?.take(3)
         }?.toMap()
 
+
+
     translationsToShow?.forEach { translation ->
         Column(
-            modifier = Modifier.padding(horizontal = 36.dp, vertical = 4.dp)
+            modifier = Modifier
+                .testTag(
+                    stringResource(
+                        R.string.translation_content_column_test_tag,
+                        translation.key ?: ""
+                    )
+                )
+                .padding(horizontal = 36.dp, vertical = 4.dp)
         ) {
             Text(
                 text = "${languages[translation.key]}",
@@ -106,11 +111,11 @@ private fun TranslationContent(
                 style = MaterialTheme.typography.bodyLarge
             )
             Text(
-                text = "Official: ${translation.value?.official}",
+                text = stringResource(R.string.official, translation.value?.official ?: ""),
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "Common: ${translation.value?.common}",
+                text = stringResource(R.string.common, translation.value?.common ?: ""),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -119,8 +124,8 @@ private fun TranslationContent(
 
 
 @Composable
-private fun TranslationHeader(
-    isExpandedIcon: ImageVector,
+fun TranslationHeader(
+    isExpandedIcon: ImageVector = Icons.Default.KeyboardArrowDown,
     onClick: () -> Unit
 ) {
 
@@ -136,20 +141,21 @@ private fun TranslationHeader(
                 .clickable { onClick() }
                 .align(Alignment.CenterEnd),
             imageVector = isExpandedIcon,
-            contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_EXPANDED_CONTENT_DESCRIPTION)
+            contentDescription = stringResource(id= R.string.country_translations_expanded_content_description)
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
+                .testTag(stringResource(R.string.translation_header_row_test_tag))
                 .padding(end = 16.dp)
                 .align(Alignment.Center)
         ) {
             Icon(
                 imageVector = Icons.Default.Translate,
-                contentDescription = stringResource(id= R.string.COUNTRY_TRANSLATIONS_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.country_translations_content_description)
             )
             Text(
-                text = stringResource(id= R.string.TRANSLATIONS),
+                text = stringResource(id= R.string.translations),
                 style = MaterialTheme.typography.titleSmall
             )
         }
@@ -160,9 +166,9 @@ private fun TranslationHeader(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun InfoContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
-             InfoContent()
+            TranslationsInformation()
         }
     }
 }
@@ -171,7 +177,7 @@ private fun InfoContentPreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun TranslationContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              TranslationContent()
         }

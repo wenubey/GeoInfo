@@ -20,12 +20,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.components.EmailTextField
 
 @Composable
@@ -43,7 +44,8 @@ fun ForgotPasswordContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues),
+            .padding(paddingValues)
+            .testTag(stringResource(id = R.string.forgot_password_content_test_tag)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -59,16 +61,17 @@ fun ForgotPasswordContent(
             enabled = isButtonEnabled,
             onClick = { sendPasswordResetMail(email.text) },
         ) {
-            Text(text = stringResource(id= R.string.RESET_PASSWORD), style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(id= R.string.reset_password), style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
+
 
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun ForgotPasswordContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              ForgotPasswordContent()
         }

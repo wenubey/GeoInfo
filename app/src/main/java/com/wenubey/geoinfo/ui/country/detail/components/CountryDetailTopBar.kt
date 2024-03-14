@@ -33,7 +33,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,11 +71,11 @@ fun CountryDetailTopBar(
                     Image(
                         modifier = Modifier.size(50.dp),
                         painter = painter,
-                        contentDescription = stringResource(id= R.string.COUNTRY_FLAG_CONTENT_DESCRIPTION)
+                        contentDescription = stringResource(id= R.string.country_flag_content_description)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = country.countryCommonName ?: UNDEFINED,
+                        text = country.countryCommonName ?: stringResource(id = R.string.undefined),
                         style = MaterialTheme.typography.titleLarge,
                         textAlign = TextAlign.Center
                     )
@@ -91,7 +90,7 @@ fun CountryDetailTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = stringResource(id= R.string.NAVIGATION_BACK_CONTENT_DESCRIPTION),
+                        contentDescription = stringResource(id= R.string.navigation_back_content_description),
                     )
                 }
             },

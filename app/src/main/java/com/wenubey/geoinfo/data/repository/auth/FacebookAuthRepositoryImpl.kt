@@ -12,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.wenubey.geoinfo.domain.repository.auth.FacebookAuthRepository
 import com.wenubey.geoinfo.utils.AuthProvider
-import com.wenubey.geoinfo.utils.Constants.CANCEL_OPERATION
 import com.wenubey.geoinfo.utils.Resource
 import com.wenubey.geoinfo.utils.addUserToFirestore
 import com.wenubey.geoinfo.utils.getCurrentTime
@@ -60,5 +59,7 @@ class FacebookAuthRepositoryImpl(
         }
     }
 
-
+   companion object {
+       private const val CANCEL_OPERATION = "You canceled the operation"
+   }
 }

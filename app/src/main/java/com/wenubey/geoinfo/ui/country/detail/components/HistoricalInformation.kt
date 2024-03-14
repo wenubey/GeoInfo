@@ -24,8 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.History
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.fakeCountry
 
 
@@ -42,14 +41,14 @@ private fun HistoryContent(
     histories: List<History> = fakeCountry.history!!,
 ) {
     Column {
-        InfoHeader(header = stringResource(id= R.string.HISTORICAL_INFORMATION))
+        CountryInfoHeader(header = stringResource(id= R.string.historical_information))
         HistorySlider(histories = histories)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HistorySlider(
+fun HistorySlider(
     histories: List<History> = fakeCountry.history!!
 ) {
     var thumbPosition by remember {
@@ -82,7 +81,7 @@ private fun HistorySlider(
                             ),
                         ) {
                             Text(
-                                text = selectedHistory.date ?: UNDEFINED,
+                                text = selectedHistory.date ?: stringResource(id = R.string.undefined),
                                 modifier = Modifier.padding(4.dp),
                                 style = MaterialTheme.typography.bodyMedium
                             )
@@ -93,7 +92,7 @@ private fun HistorySlider(
             }
         )
         Text(
-            text = selectedHistory.event ?: UNDEFINED,
+            text = selectedHistory.event ?: stringResource(id = R.string.undefined),
             style = MaterialTheme.typography.bodyMedium
         )
     }
@@ -103,7 +102,7 @@ private fun HistorySlider(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun HistoryContentPreview() {
-     CountryAppTheme {
+     GeoInfoAppTheme {
         Surface {
              HistoryContent()
         }
@@ -114,7 +113,7 @@ private fun HistoryContentPreview() {
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun HistorySliderPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             HistorySlider()
         }

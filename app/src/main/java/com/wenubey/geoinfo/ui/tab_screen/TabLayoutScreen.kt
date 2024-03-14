@@ -38,8 +38,7 @@ import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.ui.country.list.CountryListScreen
 import com.wenubey.geoinfo.ui.map.MapScreen
 import com.wenubey.geoinfo.ui.profile.ProfileScreen
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
-import com.wenubey.geoinfo.utils.Constants
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 
 
 @Composable
@@ -72,6 +71,7 @@ private fun TabLayoutContent(
     val snackBarHostState = SnackbarHostState()
 
     var selectedTabIndex by tabViewModel.currentIndex
+    val tabs = tabs()
     val pagerState = rememberPagerState {
         tabs.size
     }
@@ -115,7 +115,7 @@ private fun TabLayoutContent(
                                 } else {
                                     item.unselectedIcon
                                 },
-                                contentDescription = stringResource(id = R.string.TABS_CONTENT_DESCRIPTION)
+                                contentDescription = stringResource(id = R.string.tabs_content_description)
                             )
                         }
                     )
@@ -156,19 +156,20 @@ private fun TabLayoutContent(
     }
 }
 
-private val tabs = listOf(
+@Composable
+private fun tabs() = listOf(
     TabItem(
-        title = Constants.MAP_SCREEN_TITLE,
+        title = stringResource(id = R.string.map_screen_title),
         selectedIcon = Icons.Filled.Map,
         unselectedIcon = Icons.Outlined.Map
     ),
     TabItem(
-        title = Constants.COUNTRY_LIST_SCREEN_TITLE,
+        title = stringResource(id = R.string.country_list_screen_title),
         selectedIcon = Icons.Filled.Search,
         unselectedIcon = Icons.Outlined.Search
     ),
     TabItem(
-        title = Constants.PROFILE_SCREEN_TITLE,
+        title = stringResource(id = R.string.profile_screen_title),
         selectedIcon = Icons.Filled.AccountCircle,
         unselectedIcon = Icons.Outlined.AccountCircle,
     )
@@ -184,7 +185,7 @@ data class TabItem(
 @Preview(name = "Dark Mode", uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 private fun TabLayoutContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             //TabLayoutContent()
         }

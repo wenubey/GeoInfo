@@ -41,27 +41,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.wenubey.geoinfo.R
 import com.wenubey.geoinfo.domain.model.Country
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
-import com.wenubey.geoinfo.utils.Constants.UNDEFINED
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.fakeCountry
 import com.wenubey.geoinfo.utils.formatWithCommasForArea
 import com.wenubey.geoinfo.utils.formatWithCommasForPopulation
 
-@Composable
-fun CountryListCard(
-    country: Country,
-    onCardClick: (countryCode: String?, countryName: String?) -> Unit,
-    onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
-) {
-    CardContent(
-        country = country,
-        onCardClick = onCardClick,
-        onFavButtonClicked = onFavButtonClicked
-    )
-}
 
 @Composable
-private fun CardContent(
+ fun CountryListCard(
     country: Country = fakeCountry,
     onCardClick: (countryCode: String?, countryName: String?) -> Unit = { _, _ -> },
     onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit = { _, _ -> },
@@ -88,7 +75,7 @@ private fun CardContent(
 }
 
 @Composable
-private fun CountryFlag(
+fun CountryFlag(
     country: Country
 ) {
     val painter = rememberAsyncImagePainter(
@@ -108,12 +95,12 @@ private fun CountryFlag(
                 width = (screenWidth * 0.30).dp,
             ),
         painter = painter,
-        contentDescription = stringResource(id= R.string.COUNTRY_FLAG_CONTENT_DESCRIPTION)
+        contentDescription = stringResource(id= R.string.country_flag_content_description)
     )
 }
 
 @Composable
-private fun CountryInfoColumn(
+fun CountryInfoColumn(
     country: Country,
     onFavButtonClicked: (country: Country, countryUpdatedFav: Boolean) -> Unit
 ) {
@@ -132,7 +119,7 @@ private fun CountryInfoColumn(
             Text(
                 modifier = Modifier
                     .weight(0.8f),
-                text = country.countryCommonName ?: UNDEFINED,
+                text = country.countryCommonName ?: stringResource(id = R.string.undefined),
                 fontSize = 24.sp,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
@@ -151,12 +138,12 @@ private fun CountryInfoColumn(
                         },
                     ),
                 imageVector = if (isFav) Icons.Filled.Star else Icons.Outlined.StarBorder,
-                contentDescription = stringResource(id= R.string.ADD_FAV_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.add_fav_content_description)
             )
         }
 
         Text(
-            text = country.capital?.first() ?: UNDEFINED,
+            text = country.capital?.first() ?: stringResource(id = R.string.undefined),
             style = MaterialTheme.typography.bodySmall
         )
         AreaPopulationRow(country = country)
@@ -164,7 +151,7 @@ private fun CountryInfoColumn(
 }
 
 @Composable
-private fun AreaPopulationRow(
+fun AreaPopulationRow(
     country: Country
 ) {
     Column(
@@ -174,7 +161,7 @@ private fun AreaPopulationRow(
         Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
             Icon(
                 imageVector = Icons.Filled.People,
-                contentDescription = stringResource(id= R.string.POPULATION_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.population_content_description)
             )
             Text(
                 text = country.population.formatWithCommasForPopulation(),
@@ -187,7 +174,7 @@ private fun AreaPopulationRow(
         ) {
             Icon(
                 imageVector = Icons.Filled.Fullscreen,
-                contentDescription = stringResource(id= R.string.AREA_CONTENT_DESCRIPTION)
+                contentDescription = stringResource(id= R.string.area_content_description)
             )
             Text(
                 text = country.area.formatWithCommasForArea(),
@@ -202,9 +189,9 @@ private fun AreaPopulationRow(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryListCardContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
-            CardContent()
+            CountryListCard()
         }
     }
 }

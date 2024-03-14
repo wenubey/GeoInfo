@@ -22,56 +22,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
-import com.wenubey.geoinfo.utils.Constants.fakeCountryCode
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.components.EmailTextField
+import com.wenubey.geoinfo.utils.fakeCountryCode
 
 
 @Composable
 fun UserInfoUpdateDialog(
-    showDialog: MutableState<Boolean>,
-    email: TextFieldValue,
-    phoneNumberBody: TextFieldValue,
-    countryCode: String,
-    onEmailValueChange: (email: TextFieldValue) -> Unit,
-    displayName: TextFieldValue,
-    onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit,
-    onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit,
-    onCountryCodeValueChange: (phoneCode: String?) -> Unit,
-    onClickConfirm: () -> Unit,
-    countryCodeMap: Map<String?, String?>,
-) {
-    AlertDialogContent(
-        showDialog = showDialog,
-        email = email,
-        phoneNumberBody = phoneNumberBody,
-        onEmailValueChange = onEmailValueChange,
-        displayName = displayName,
-        onDisplayNameValueChange = onDisplayNameValueChange,
-        onPhoneNumberValueChange = onPhoneNumberValueChange,
-        onPhoneCodeValueChange = onCountryCodeValueChange,
-        onClickConfirm = onClickConfirm,
-        countryCodeMap = countryCodeMap,
-        countryCode = countryCode,
-    )
-}
-
-@Composable
-private fun AlertDialogContent(
     showDialog: MutableState<Boolean> = mutableStateOf(false),
-    email: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_EMAIL)),
-    phoneNumberBody: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_PHONE)),
+    email: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_email)),
+    phoneNumberBody: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_phone)),
     countryCode: String = "",
     onEmailValueChange: (email: TextFieldValue) -> Unit = {},
-    displayName: TextFieldValue = TextFieldValue(stringResource(id = R.string.PREVIEW_NAME)),
+    displayName: TextFieldValue = TextFieldValue(stringResource(id = R.string.preview_name)),
     onDisplayNameValueChange: (displayName: TextFieldValue) -> Unit = {},
     onPhoneNumberValueChange: (phoneNumber: TextFieldValue) -> Unit = {},
-    onPhoneCodeValueChange: (phoneCode: String?) -> Unit = {},
+    onCountryCodeValueChange: (phoneCode: String?) -> Unit = {},
     onClickConfirm: () -> Unit = {},
     countryCodeMap: Map<String?, String?> = fakeCountryCode,
 ) {
@@ -81,10 +53,11 @@ private fun AlertDialogContent(
     }
 
     AlertDialog(
+        modifier = Modifier.testTag(stringResource(id = R.string.user_info_update_dialog_test_tag)),
         onDismissRequest = { showDialog.value = false },
         title = {
             Text(
-                text = stringResource(id = R.string.PROFILE_INFO),
+                text = stringResource(id = R.string.profile_info),
                 style = MaterialTheme.typography.titleMedium
             )
         },
@@ -104,11 +77,13 @@ private fun AlertDialogContent(
                     ),
                 )
                 OutlinedTextField(
+                    modifier = Modifier
+                        .testTag(stringResource(id = R.string.user_info_update_dialog_display_name_field_test_tag)),
                     value = displayName,
                     onValueChange = onDisplayNameValueChange,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.DISPLAY_NAME_LABEL),
+                            text = stringResource(id = R.string.display_name_label),
                             style = MaterialTheme.typography.bodySmall
                         )
                     },
@@ -116,7 +91,7 @@ private fun AlertDialogContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 PhonePicker(
                     countryData = countryCodeMap,
-                    onSelectCountryCode = onPhoneCodeValueChange,
+                    onSelectCountryCode = onCountryCodeValueChange,
                     phoneNumberBody = phoneNumberBody,
                     countryCode = countryCode,
                     onPhoneCodeValueChange = onPhoneNumberValueChange
@@ -126,11 +101,12 @@ private fun AlertDialogContent(
         },
         confirmButton = {
             Button(
+                modifier = Modifier.testTag(stringResource(id = R.string.user_info_update_dialog_save_button_test_tag)),
                 onClick = onClickConfirm,
                 enabled = isButtonEnabled,
             ) {
                 Text(
-                    text = stringResource(id = R.string.SAVE),
+                    text = stringResource(id = R.string.save),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -138,13 +114,14 @@ private fun AlertDialogContent(
     )
 }
 
+
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 fun AlertDialogContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
-            AlertDialogContent()
+            UserInfoUpdateDialog()
         }
     }
 }

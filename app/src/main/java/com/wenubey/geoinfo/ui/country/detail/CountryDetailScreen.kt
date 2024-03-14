@@ -28,7 +28,7 @@ import com.wenubey.geoinfo.ui.country.detail.components.FlagWithCountryCommonNam
 import com.wenubey.geoinfo.ui.country.detail.components.GeographicalInformation
 import com.wenubey.geoinfo.ui.country.detail.components.HistoricalInformation
 import com.wenubey.geoinfo.ui.country.detail.components.TranslationsInformation
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.components.ErrorScreen
 import com.wenubey.geoinfo.utils.components.ProgressBar
 import com.wenubey.geoinfo.utils.fakeCountry
@@ -122,7 +122,7 @@ private fun CountryDetailContent(
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryDetailContentPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
             CountryDetailContent()
         }

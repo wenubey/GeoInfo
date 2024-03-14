@@ -31,30 +31,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wenubey.geoinfo.R
-import com.wenubey.geoinfo.ui.theme.CountryAppTheme
+import com.wenubey.geoinfo.ui.theme.GeoInfoAppTheme
 import com.wenubey.geoinfo.utils.fakeCountryCodeData
 import java.util.Locale
 
-@Composable
-fun CountryDropdownMenu(
-    countryData: Map<String?, String?>,
-    currentCountryCode: String,
-    onSelectCountryCode: (String?) -> Unit,
-) {
-    CountryDropdownMenuContent(
-        countryData = countryData,
-        currentCountryCode = currentCountryCode,
-        onSelectCountryCode = onSelectCountryCode,
-    )
-}
 
 @Composable
-private fun CountryDropdownMenuContent(
+fun CountryDropdownMenu(
     countryData: Map<String?, String?> = fakeCountryCodeData,
     currentCountryCode: String = fakeCountryCodeData.values.first()!!,
     onSelectCountryCode: (String?) -> Unit = {},
@@ -71,14 +60,18 @@ private fun CountryDropdownMenuContent(
     val filteredItems = rememberUpdatedState(getFilteredItems(countryData, searchText))
     Box {
         Row(
-            modifier = Modifier.clickable {
-                expanded = !expanded
-            }
+            modifier = Modifier
+                .clickable {
+                    expanded = !expanded
+                }
+                .testTag(stringResource(id = R.string.row_dropdown_test_tag))
         ) {
             Text(text = currentValue ?: "")
             Icon(imageVector = Icons.Default.ArrowDropDown, contentDescription = null)
         }
         DropdownMenu(
+            modifier = Modifier
+                .testTag(stringResource(id = R.string.country_dropdown_menu_test_tag)),
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
@@ -89,19 +82,20 @@ private fun CountryDropdownMenuContent(
             ) {
                 item {
                     OutlinedTextField(
+                        modifier = Modifier
+                            .testTag(stringResource(id = R.string.country_dropdown_menu_search_bar_test_tag))
+                            .fillMaxWidth()
+                            .padding(4.dp),
                         value = searchText,
                         onValueChange = {
                             searchText = it
                         },
                         placeholder = {
                             Text(
-                                stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER),
+                                stringResource(id= R.string.search_countries_placeholder),
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
                         trailingIcon = {
                             IconToggleButton(
                                 checked = searchText.isNotEmpty(),
@@ -109,7 +103,7 @@ private fun CountryDropdownMenuContent(
                                     searchText = if (it) "" else currentValue.orEmpty()
                                 }
                             ) {
-                                Icon(Icons.Default.Search, contentDescription = stringResource(id= R.string.SEARCH_COUNTRIES_PLACEHOLDER))
+                                Icon(Icons.Default.Search, contentDescription = stringResource(id= R.string.search_countries_placeholder))
                             }
                         },
                         keyboardOptions = KeyboardOptions.Default.copy(
@@ -143,13 +137,16 @@ private fun CountryDropdownMenuContent(
     }
 }
 
+
+
+
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Preview(name = "Light mode", uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
 @Composable
 private fun CountryDropDownMenuPreview() {
-    CountryAppTheme {
+    GeoInfoAppTheme {
         Surface {
-            CountryDropdownMenuContent()
+            CountryDropdownMenu()
         }
     }
 }

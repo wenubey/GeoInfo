@@ -3,7 +3,6 @@ package com.wenubey.geoinfo.ui.tab_screen
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.wenubey.geoinfo.utils.Constants.SELECTED_TAB_INDEX_KEY
 
 class TabViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -18,4 +17,7 @@ class TabViewModel(
         savedStateHandle[SELECTED_TAB_INDEX_KEY] = index
     }
 
+    companion object {
+        private const val  SELECTED_TAB_INDEX_KEY = "selected_tab_index_key"
+    }
 }

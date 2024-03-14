@@ -86,11 +86,11 @@ fun normalizeCountryName(countryName: String?): String? {
 
 val fakeCountryCodeData = mapOf<String?, String?>(
     "🇦🇩 Andorra" to "+376",
+    "🇦🇱 Albania" to "+355",
     "🇦🇪 United Arab Emirates" to "+971",
     "🇦🇫 Afghanistan" to "+93",
     "🇦🇬 Antigua and Barbuda" to "+1268",
     "🇦🇮 Anguilla" to "+1264",
-    "🇦🇱 Albania" to "+355",
     "🇦🇲 Armenia" to "+374",
     "🇦🇴 Angola" to "+244",
     "🇦🇷 Argentina" to "+54",
@@ -116,6 +116,8 @@ val fakeCountry = Country(
     language = mapOf(
         "pol" to "Polish",
         "tur" to "Turkish",
+        "eng" to "English",
+        "ger" to "German",
     ),
     latlng = LatLng(52.0, 20.0),
     area = 312679.0,
@@ -139,8 +141,10 @@ val fakeCountry = Country(
         "eng" to mapOf("f" to "Polish", "m" to "Polish")
     ),
     translations = mapOf(
+        "tur" to Translation(official = "Polonya Cumhuriyeti", common = "Polonya"),
+        "eng" to Translation(official = "Republic of Poland", common = "Poland"),
+        "fra" to Translation(official = "République de Pologne", common = "Pologne"),
         "deu" to Translation(official = "Republik Polen", common = "Polen"),
-        "tur" to Translation(official = "Polonya Cumhuriyeti", common = "Polonya")
     ),
     gini = mapOf(
         "2018" to 30.2
@@ -155,4 +159,4 @@ val fakeCountry = Country(
     isFavorite = false,
     flagEmoji = "\uD83C\uDDF5\uD83C\uDDF1"
 )
-
+val fakeCountryCode = mapOf<String?, String?>("\uD83C\uDDF5\uD83C\uDDF1" to "+48")

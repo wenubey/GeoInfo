@@ -34,7 +34,7 @@ fun NavGraph(
 
         composable(route = Screen.SignUpScreen.route) {
             SignUpScreen(
-                navigateBack = {
+                navigateToSignInScreen = {
                     navController.popBackStack()
                 },
             )
@@ -135,7 +135,7 @@ fun NavGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "https://countryapp.com/detail/{countryCode}/{countryName}"
+                    uriPattern = "https://GeoInfo.com/detail/{countryCode}/{countryName}"
                     action = Intent.ACTION_VIEW
                 }
             )
