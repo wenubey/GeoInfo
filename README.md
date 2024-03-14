@@ -27,6 +27,13 @@ GeoInfo is an Android application that allows users to explore and manage their 
     <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/dark-9.png" alt="not found" width="240" height="600">
 </div>
 
+## Test Screenshots
+
+<div style="display:flex">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/test_1.jpg" alt="not found" width="600" height="240">
+    <img src="https://github.com/wenubey/GeoInfo/blob/main/app/src/main/assets/test_2.jpg" alt="not found" width="600" height="600">
+</div>
+
 ## Dependencies
 
 - [Compose](https://developer.android.com/jetpack/compose) - Android's modern UI toolkit.
